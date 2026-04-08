@@ -20,7 +20,7 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
     :root{
       --bg:#111010;--card:#1a1918;--card2:#141312;--borde:#2a2725;
-      --naranja:#E8943A;--naranja-l:#f0a84e;
+      --naranja:#E8943A;--naranja-l:#f0a84e;--terracota:#C9502A;
       --blanco:#f8f4f0;--muted:#a89880;--texto:#c4b09a;
       --verde:#4ade80;--proximo:#a78bfa;
     }
@@ -29,9 +29,8 @@
 
     /* NAV */
     nav{background:rgba(17,16,16,.97);border-bottom:1px solid var(--borde);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px;}
-    .lv-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-    .logo-mark{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:var(--blanco);letter-spacing:3px;text-transform:uppercase;}
-    .logo-mark span{color:var(--naranja);}
+    .lv-logo{display:flex;align-items:center;text-decoration:none;}
+    .lv-logo img{height:32px;width:auto;}
     .nav-links{display:flex;gap:28px;}
     .nav-links a{font-size:13px;color:var(--texto);text-decoration:none;transition:color .15s;}
     .nav-links a:hover{color:var(--blanco);}
@@ -40,18 +39,20 @@
     .btn-nav:hover{background:var(--naranja-l);}
 
     /* HERO */
-    .hero{padding:96px 32px 80px;max-width:1060px;margin:0 auto;}
+    .hero-wrap{position:relative;background:url('hero.webp') center 30%/cover no-repeat;}
+    .hero-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(17,16,16,.72) 0%,rgba(17,16,16,.80) 60%,rgba(17,16,16,1) 100%);pointer-events:none;}
+    .hero{position:relative;padding:96px 32px 80px;max-width:1060px;margin:0 auto;}
     .eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(232,148,58,.25);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--naranja);margin-bottom:28px;letter-spacing:.5px;background:rgba(232,148,58,.06);}
     .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
     .hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(36px,5.5vw,66px);font-weight:800;line-height:1.05;letter-spacing:-2.5px;margin-bottom:18px;max-width:720px;}
     .hero h1 em{color:var(--naranja);font-style:normal;}
-    .hero-sub{font-size:16px;color:var(--texto);max-width:520px;line-height:1.8;margin-bottom:36px;}
+    .hero-sub{font-size:16px;color:#d4c4b2;max-width:520px;line-height:1.8;margin-bottom:36px;}
     .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:60px;}
     .btn-pri{background:var(--naranja);color:#fff;padding:14px 30px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:'Montserrat',sans-serif;transition:background .15s;}
     .btn-pri:hover{background:var(--naranja-l);}
     .btn-sec{background:transparent;color:var(--blanco);padding:14px 30px;border-radius:8px;font-size:14px;cursor:pointer;border:1px solid var(--borde);font-family:'Montserrat',sans-serif;transition:border-color .15s;}
     .btn-sec:hover{border-color:#666;}
-    .hero-stats{display:flex;gap:52px;padding-top:32px;border-top:1px solid var(--borde);flex-wrap:wrap;}
+    .hero-stats{display:flex;gap:52px;padding-top:32px;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap;}
     .stat-n{font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;color:var(--naranja);}
     .stat-l{font-size:12px;color:var(--texto);margin-top:4px;line-height:1.5;}
 
@@ -234,12 +235,7 @@
 <!-- NAV -->
 <nav>
   <a class="lv-logo" href="#">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="none" stroke="#E8943A" stroke-width="1.5"/>
-      <path d="M12 6L18 12L12 18L6 12L12 6Z" fill="rgba(232,148,58,.2)"/>
-      <circle cx="12" cy="12" r="2" fill="#E8943A"/>
-    </svg>
-    <div class="logo-mark">Land <span>Ventures</span></div>
+    <img src="PNG/Logotipo_Color@4x.png" alt="Land Ventures" style="height:32px;width:auto;display:block;"/>
   </a>
   <div class="nav-links">
     <a href="#historia">Historia</a>
@@ -252,6 +248,7 @@
 </nav>
 
 <!-- HERO -->
+<div class="hero-wrap">
 <section class="hero">
   <div class="eyebrow"><div class="eyebrow-dot"></div>Inversiones en tierra · CABA · Cupos limitados</div>
   <h1>Los mejores precios<br/>de <em>m² en Buenos Aires.</em></h1>
@@ -266,6 +263,7 @@
     <div><div class="stat-n">+25.000 m²</div><div class="stat-l">Vendibles generados<br/>en canje</div></div>
   </div>
 </section>
+</div>
 
 <!-- HISTORIA -->
 <section class="historia" id="historia">
