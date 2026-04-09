@@ -370,9 +370,7 @@
       <a href="#proyectos">Proyectos</a>
       <a href="#mapa">Mapa</a>
       <a href="#modelo">El modelo</a>
-      <a href="#contacto">Contacto</a>
-    </div>
-    <button class="btn-nav" onclick="lvScroll('contacto')">Quiero invertir</button>
+      </div>
   </div>
 </nav>
 
@@ -382,10 +380,6 @@
   <div class="eyebrow fade-up"><div class="eyebrow-dot"></div>Inversiones en tierra · CABA · Cupos limitados</div>
   <h1 class="fade-up fade-up-d1">Los mejores precios<br/>de <em>m² en Buenos Aires.</em></h1>
   <p class="hero-sub fade-up fade-up-d2">Invertís junto a Land Ventures en la compra de terrenos estratégicos en CABA. Participación desde el 10%. Recibís metros cuadrados a precio imbatible, con seguridad jurídica desde el día uno.</p>
-  <div class="hero-actions fade-up fade-up-d3">
-    <button class="btn-pri" onclick="lvScroll('proyectos')">Ver proyectos abiertos</button>
-    <button class="btn-sec" onclick="lvScroll('modelo')">Conocer el modelo</button>
-  </div>
   <div class="hero-stats fade-up fade-up-d4">
     <div><div class="stat-n">+20</div><div class="stat-l">Terrenos comprados<br/>y canjeados</div></div>
     <div><div class="stat-n">+USD 15M</div><div class="stat-l">Invertidos en<br/>terrenos</div></div>
@@ -520,25 +514,6 @@
   </div>
 </section>
 
-<!-- Netlify Forms hidden form for bot detection -->
-<form name="leads" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-  <input type="text" name="nombre"/>
-  <input type="tel" name="whatsapp"/>
-</form>
-
-<!-- CTA -->
-<section class="cta-section" id="contacto">
-  <div class="cta-inner">
-    <div class="cta-title fade-section">El m² más barato<br/>de <em>Buenos Aires.</em></div>
-    <p class="cta-sub">Dejá tu nombre y WhatsApp y te contactamos en menos de 24hs para explicarte el próximo proyecto disponible y cómo entrar.</p>
-    <div class="cta-form">
-      <input class="cta-input" type="text" id="inp-nombre" placeholder="Tu nombre" autocomplete="name"/>
-      <input class="cta-input" type="tel" id="inp-whatsapp" placeholder="Tu WhatsApp (ej: 11 1234-5678)" autocomplete="tel"/>
-      <button class="btn-pri" onclick="enviarContacto()">Quiero invertir</button>
-    </div>
-    <div class="cta-note" id="cta-msg">Te contactamos en menos de 24hs</div>
-  </div>
-</section>
 
 <footer>
   <div class="footer-brand">Land <span>Ventures</span></div>
@@ -771,7 +746,6 @@ function renderAbiertoCard(p, i) {
       </table>
       <div class="esc-lbl">Modelo (${p.modelo_pct || ''})</div>
       <div class="modelo-box">${modeloRows}</div>
-      <button class="cta-card-btn" onclick="event.stopPropagation();scrollTo('contacto')">Quiero participar</button>
     </div>
   </div>`;
 }
@@ -792,7 +766,6 @@ function renderProximoCard(p, i) {
     </div>
     <div class="pcard-foot" style="border-top:1px solid #201e1c;">
       <div class="pcard-esc" style="color:var(--muted)">En estructuración</div>
-      <button class="aviso-btn" onclick="lvScroll('contacto')">Avisame</button>
     </div>
   </div>`;
 }
