@@ -52,7 +52,8 @@
     .fade-section-d5{transition-delay:.48s;}
 
     /* NAV */
-    nav{background:rgba(17,16,16,.97);border-bottom:1px solid var(--borde);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px;}
+    nav{background:rgba(17,16,16,.97);border-bottom:1px solid var(--borde);padding:0;height:64px;position:sticky;top:0;z-index:100;}
+    .nav-inner{max-width:1060px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;}
     .lv-logo{display:flex;align-items:center;text-decoration:none;}
     .lv-logo img{height:18px;width:auto;}
     .nav-links{display:flex;gap:28px;}
@@ -285,7 +286,7 @@
 
     /* ── IPAD (768–1024px) — primary target ── */
     @media(min-width:768px) and (max-width:1024px){
-      nav{padding:0 28px;height:68px;}
+      nav{height:68px;} .nav-inner{padding:0 28px;}
       .lv-logo img{height:20px;}
       .nav-links a{font-size:14px;}
       .btn-nav{padding:11px 24px;font-size:14px;}
@@ -344,7 +345,7 @@
 
     /* ── Mobile ── */
     @media(max-width:767px){
-      nav{padding:0 16px;height:56px;}
+      nav{height:56px;} .nav-inner{padding:0 16px;}
       .hero{padding:56px 16px 48px;}
       .proy-grid{grid-template-columns:1fr;}
       .pilares-grid{grid-template-columns:1fr;}
@@ -360,17 +361,19 @@
 
 <!-- NAV -->
 <nav>
-  <a class="lv-logo" href="#">
-    <img src="PNG/Logotipo_Color@4x.png" alt="Land Ventures" style="height:18px;width:auto;display:block;"/>
-  </a>
-  <div class="nav-links">
-    <a href="#historia">Historia</a>
-    <a href="#proyectos">Proyectos</a>
-    <a href="#mapa">Mapa</a>
-    <a href="#modelo">El modelo</a>
-    <a href="#contacto">Contacto</a>
+  <div class="nav-inner">
+    <a class="lv-logo" href="#">
+      <img src="PNG/Logotipo_Color@4x.png" alt="Land Ventures" style="height:18px;width:auto;display:block;"/>
+    </a>
+    <div class="nav-links">
+      <a href="#historia">Historia</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#mapa">Mapa</a>
+      <a href="#modelo">El modelo</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <button class="btn-nav" onclick="lvScroll('contacto')">Quiero invertir</button>
   </div>
-  <button class="btn-nav" onclick="lvScroll('contacto')">Quiero invertir</button>
 </nav>
 
 <!-- HERO -->
