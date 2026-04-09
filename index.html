@@ -149,8 +149,10 @@
     .paso.highlight .paso-title{color:var(--naranja);}
 
     /* PROYECTOS */
-    .proy-section{background:var(--card2);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);padding:80px 32px;}
-    .proy-inner{max-width:1060px;margin:0 auto;}
+    .proy-section{position:relative;border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);padding:80px 32px;}
+    .proy-section::before{content:'';position:absolute;inset:0;background:url('proyectos-bg.webp') center center/cover no-repeat;opacity:.07;pointer-events:none;z-index:0;}
+    .proy-section::after{content:'';position:absolute;inset:0;background:var(--card2);opacity:.88;pointer-events:none;z-index:1;}
+    .proy-inner{position:relative;z-index:2;max-width:1060px;margin:0 auto;}
     .proy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:32px;}
     .pcard{background:var(--card);border:1px solid var(--borde);border-radius:14px;overflow:hidden;transition:border-color .35s cubic-bezier(.22,1,.36,1),box-shadow .35s cubic-bezier(.22,1,.36,1);}
     .pcard.clickable:hover{box-shadow:0 8px 32px rgba(232,148,58,.08);}
