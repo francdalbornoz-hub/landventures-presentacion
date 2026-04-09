@@ -24,8 +24,17 @@
       --blanco:#f8f4f0;--muted:#a89880;--texto:#c4b09a;
       --verde:#4ade80;--proximo:#a78bfa;
     }
-    html{scroll-behavior:smooth;}
+    html{scroll-behavior:smooth;scroll-padding-top:64px;}
     body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg);color:var(--blanco);line-height:1.5;overflow-x:hidden;}
+
+    /* PREMIUM ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .fade-up-d1{transition-delay:.08s;}
+    .fade-up-d2{transition-delay:.16s;}
+    .fade-up-d3{transition-delay:.24s;}
+    .fade-up-d4{transition-delay:.32s;}
 
     /* NAV */
     nav{background:rgba(17,16,16,.97);border-bottom:1px solid var(--borde);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px;}
@@ -110,7 +119,7 @@
     .mapa-stats strong{color:var(--naranja);}
 
     /* Leaflet custom */
-    .lv-pin{display:flex;align-items:center;justify-content:center;border-radius:50%;font-family:'Montserrat',sans-serif;font-weight:600;font-size:9px;transition:transform .2s ease,box-shadow .2s ease;cursor:pointer;}
+    .lv-pin{display:flex;align-items:center;justify-content:center;border-radius:50%;font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;letter-spacing:.3px;line-height:1;text-align:center;transition:transform .2s ease,box-shadow .2s ease;cursor:pointer;}
     .lv-pin:hover{transform:scale(1.25);}
     .lv-pin.abierto{width:52px;height:52px;background:var(--verde);box-shadow:0 0 0 8px rgba(74,222,128,.22),0 0 18px rgba(74,222,128,.35);color:#0d0c0b;border:2px solid rgba(255,255,255,.25);}
     .lv-pin.cerrado{width:46px;height:46px;background:var(--naranja);box-shadow:0 0 0 8px rgba(232,148,58,.22),0 0 18px rgba(232,148,58,.35);color:#0d0c0b;border:2px solid rgba(255,255,255,.25);}
@@ -143,7 +152,8 @@
     .proy-section{background:var(--card2);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);padding:80px 32px;}
     .proy-inner{max-width:1060px;margin:0 auto;}
     .proy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:32px;}
-    .pcard{background:var(--card);border:1px solid var(--borde);border-radius:14px;overflow:hidden;transition:border-color .2s;}
+    .pcard{background:var(--card);border:1px solid var(--borde);border-radius:14px;overflow:hidden;transition:border-color .35s cubic-bezier(.22,1,.36,1),box-shadow .35s cubic-bezier(.22,1,.36,1);}
+    .pcard.clickable:hover{box-shadow:0 8px 32px rgba(232,148,58,.08);}
     .pcard.clickable{cursor:pointer;}
     .pcard.clickable:hover{border-color:rgba(232,148,58,.35);}
     .pcard.open{border-color:rgba(232,148,58,.5);}
@@ -200,7 +210,7 @@
     .cta-title{font-family:'Montserrat',sans-serif;font-size:clamp(28px,4.5vw,44px);font-weight:600;letter-spacing:-1.5px;margin-bottom:14px;line-height:1.08;}
     .cta-title em{color:var(--naranja);font-style:normal;}
     .cta-sub{color:var(--texto);font-size:14px;margin-bottom:30px;line-height:1.75;}
-    .cta-form{display:flex;gap:8px;max-width:420px;margin:0 auto 12px;flex-wrap:wrap;}
+    .cta-form{display:flex;flex-direction:column;gap:10px;max-width:380px;margin:0 auto 12px;}
     .cta-input{flex:1;min-width:200px;padding:13px 16px;border-radius:8px;border:1px solid var(--borde);background:#1a1918;color:var(--blanco);font-size:14px;font-family:'Montserrat',sans-serif;outline:none;transition:border-color .15s;}
     .cta-input:focus{border-color:rgba(232,148,58,.5);}
     .cta-input::placeholder{color:#5a5048;}
@@ -244,20 +254,20 @@
     <a href="#modelo">El modelo</a>
     <a href="#contacto">Contacto</a>
   </div>
-  <button class="btn-nav" onclick="scrollTo('contacto')">Quiero invertir</button>
+  <button class="btn-nav" onclick="lvScroll('contacto')">Quiero invertir</button>
 </nav>
 
 <!-- HERO -->
 <div class="hero-wrap">
 <section class="hero">
-  <div class="eyebrow"><div class="eyebrow-dot"></div>Inversiones en tierra · CABA · Cupos limitados</div>
-  <h1>Los mejores precios<br/>de <em>m² en Buenos Aires.</em></h1>
-  <p class="hero-sub">Invertís junto a Land Ventures en la compra de terrenos estratégicos en CABA. Participación desde el 10%. Recibís metros cuadrados a precio imbatible, con seguridad jurídica desde el día uno.</p>
-  <div class="hero-actions">
-    <button class="btn-pri" onclick="scrollTo('proyectos')">Ver proyectos abiertos</button>
-    <button class="btn-sec" onclick="scrollTo('modelo')">Conocer el modelo</button>
+  <div class="eyebrow fade-up"><div class="eyebrow-dot"></div>Inversiones en tierra · CABA · Cupos limitados</div>
+  <h1 class="fade-up fade-up-d1">Los mejores precios<br/>de <em>m² en Buenos Aires.</em></h1>
+  <p class="hero-sub fade-up fade-up-d2">Invertís junto a Land Ventures en la compra de terrenos estratégicos en CABA. Participación desde el 10%. Recibís metros cuadrados a precio imbatible, con seguridad jurídica desde el día uno.</p>
+  <div class="hero-actions fade-up fade-up-d3">
+    <button class="btn-pri" onclick="lvScroll('proyectos')">Ver proyectos abiertos</button>
+    <button class="btn-sec" onclick="lvScroll('modelo')">Conocer el modelo</button>
   </div>
-  <div class="hero-stats">
+  <div class="hero-stats fade-up fade-up-d4">
     <div><div class="stat-n">+20</div><div class="stat-l">Terrenos comprados<br/>y canjeados</div></div>
     <div><div class="stat-n">+USD 15M</div><div class="stat-l">Invertidos en<br/>terrenos</div></div>
     <div><div class="stat-n">+25.000 m²</div><div class="stat-l">Vendibles generados<br/>en canje</div></div>
@@ -397,7 +407,8 @@
     <div class="cta-title">El m² más barato<br/>de <em>Buenos Aires.</em></div>
     <p class="cta-sub">Dejá tu nombre y WhatsApp y te contactamos en menos de 24hs para explicarte el próximo proyecto disponible y cómo entrar.</p>
     <div class="cta-form">
-      <input class="cta-input" type="text" id="inp-contacto" placeholder="Nombre y WhatsApp" autocomplete="name"/>
+      <input class="cta-input" type="text" id="inp-nombre" placeholder="Tu nombre" autocomplete="name"/>
+      <input class="cta-input" type="tel" id="inp-whatsapp" placeholder="Tu WhatsApp (ej: 11 1234-5678)" autocomplete="tel"/>
       <button class="btn-pri" onclick="enviarContacto()">Quiero invertir</button>
     </div>
     <div class="cta-note" id="cta-msg">Te contactamos en menos de 24hs</div>
@@ -656,7 +667,7 @@ function renderProximoCard(p, i) {
     </div>
     <div class="pcard-foot" style="border-top:1px solid #201e1c;">
       <div class="pcard-esc" style="color:var(--muted)">En estructuración</div>
-      <button class="aviso-btn" onclick="scrollTo('contacto')">Avisame</button>
+      <button class="aviso-btn" onclick="lvScroll('contacto')">Avisame</button>
     </div>
   </div>`;
 }
@@ -732,23 +743,48 @@ function initMap() {
 // CONTACTO / WHATSAPP
 // ============================================================
 function enviarContacto() {
-  const val = document.getElementById('inp-contacto').value.trim();
+  const nombre = document.getElementById('inp-nombre').value.trim();
+  const wa = document.getElementById('inp-whatsapp').value.trim();
   const msg = document.getElementById('cta-msg');
-  if (!val) {
-    msg.textContent = 'Por favor ingresá tu nombre y WhatsApp.';
+  if (!nombre || !wa) {
+    msg.textContent = 'Por favor completá tu nombre y WhatsApp.';
     msg.style.color = '#ef4444';
     return;
   }
-  const txt = encodeURIComponent('Hola, me interesa invertir en terrenos con Land Ventures. Mi nombre es: ' + val);
+  const txt = encodeURIComponent('Hola, me interesa invertir en terrenos con Land Ventures. Mi nombre es: ' + nombre + '. Mi WhatsApp: ' + wa);
   window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + txt, '_blank');
   msg.textContent = '¡Gracias! Te contactamos a la brevedad.';
   msg.style.color = 'var(--verde)';
-  document.getElementById('inp-contacto').value = '';
+  document.getElementById('inp-nombre').value = '';
+  document.getElementById('inp-whatsapp').value = '';
 }
 
-function scrollTo(id) {
+// ============================================================
+// INTERSECTION OBSERVER — fade-up on scroll
+// ============================================================
+(function(){
+  // Hero elements animate on load immediately
+  document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 80 + i * 80);
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+  // also observe section titles/cards added dynamically
+  const mutObs = new MutationObserver(() => {
+    document.querySelectorAll('.fade-up:not(.observed)').forEach(el => { el.classList.add('observed'); io.observe(el); });
+  });
+  mutObs.observe(document.body, { childList: true, subtree: true });
+})();
+
+function lvScroll(id) {
   const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 64;
+  window.scrollTo({ top, behavior: 'smooth' });
 }
 
 // ============================================================
