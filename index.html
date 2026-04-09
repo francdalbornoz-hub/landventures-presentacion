@@ -517,6 +517,12 @@
   </div>
 </section>
 
+<!-- Netlify Forms hidden form for bot detection -->
+<form name="leads" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+  <input type="text" name="nombre"/>
+  <input type="tel" name="whatsapp"/>
+</form>
+
 <!-- CTA -->
 <section class="cta-section" id="contacto">
   <div class="cta-inner">
@@ -872,8 +878,23 @@ function enviarContacto() {
     msg.style.color = '#ef4444';
     return;
   }
+
+  // 1. Guardar en localStorage para el panel admin
+  const leads = JSON.parse(localStorage.getItem('lv_leads') || '[]');
+  leads.unshift({ nombre, whatsapp: wa, fecha: new Date().toISOString() });
+  localStorage.setItem('lv_leads', JSON.stringify(leads));
+
+  // 2. Enviar a Netlify Forms
+  const formData = new FormData();
+  formData.append('form-name', 'leads');
+  formData.append('nombre', nombre);
+  formData.append('whatsapp', wa);
+  fetch('/', { method: 'POST', body: formData }).catch(() => {});
+
+  // 3. Abrir WhatsApp
   const txt = encodeURIComponent('Hola, me interesa invertir en terrenos con Land Ventures. Mi nombre es: ' + nombre + '. Mi WhatsApp: ' + wa);
   window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + txt, '_blank');
+
   msg.textContent = '¡Gracias! Te contactamos a la brevedad.';
   msg.style.color = 'var(--verde)';
   document.getElementById('inp-nombre').value = '';

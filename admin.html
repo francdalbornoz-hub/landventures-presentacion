@@ -126,6 +126,20 @@
     .toast.show{transform:translateY(0);opacity:1;}
     .empty-state{text-align:center;padding:48px 24px;color:var(--texto);}
     .empty-state p{font-size:14px;margin-bottom:16px;}
+
+    /* LEADS */
+    .lead-row{background:var(--card);border:1px solid var(--borde);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px;}
+    .lead-row:hover{border-color:rgba(232,148,58,.2);}
+    .lead-avatar{width:38px;height:38px;border-radius:50%;background:rgba(232,148,58,.1);border:1px solid rgba(232,148,58,.2);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:var(--naranja);flex-shrink:0;}
+    .lead-info{flex:1;}
+    .lead-name{font-weight:600;font-size:14px;margin-bottom:2px;}
+    .lead-wa{font-size:12px;color:var(--texto);}
+    .lead-date{font-size:11px;color:var(--muted);white-space:nowrap;}
+    .lead-del{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);color:var(--rojo);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:11px;font-family:Montserrat,sans-serif;}
+    .lead-del:hover{background:rgba(239,68,68,.15);}
+    .leads-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap;}
+    .leads-count{font-size:13px;color:var(--texto);}
+    .leads-count strong{color:var(--blanco);}
   </style>
 </head>
 <body>
@@ -158,6 +172,7 @@
     <div class="tabs">
       <button class="tab active" onclick="setTab('proyectos')">Proyectos</button>
       <button class="tab" onclick="setTab('timeline')">Historia / Timeline</button>
+      <button class="tab" onclick="setTab('leads')">Leads <span id="leads-badge" style="background:var(--naranja);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;margin-left:4px;display:none;"></span></button>
       <button class="tab" onclick="setTab('datos')">Datos y backup</button>
     </div>
 
@@ -177,6 +192,18 @@
         <button class="add-btn" onclick="openTimelineModal()">+ Agregar hito</button>
       </div>
       <div class="items-list" id="timeline-list"></div>
+    </div>
+
+    <!-- LEADS TAB -->
+    <div id="tab-leads" style="display:none;">
+      <div class="leads-bar">
+        <div class="leads-count">Contactos recibidos: <strong id="leads-total">0</strong></div>
+        <div style="display:flex;gap:8px;">
+          <button class="data-btn" onclick="exportLeads()">Exportar CSV</button>
+          <button class="data-btn danger" onclick="clearLeads()">Limpiar lista</button>
+        </div>
+      </div>
+      <div class="items-list" id="leads-list"></div>
     </div>
 
     <!-- DATOS TAB -->
@@ -762,13 +789,93 @@ function deleteTlItem(i) {
 // TABS
 // ============================================================
 function setTab(name) {
-  ['proyectos', 'timeline', 'datos'].forEach(t => {
+  ['proyectos', 'timeline', 'leads', 'datos'].forEach(t => {
     document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
   });
   document.querySelectorAll('.tab').forEach((btn, i) => {
-    btn.classList.toggle('active', ['proyectos', 'timeline', 'datos'][i] === name);
+    btn.classList.toggle('active', ['proyectos', 'timeline', 'leads', 'datos'][i] === name);
   });
+  if (name === 'leads') renderLeads();
 }
+
+// ============================================================
+// LEADS
+// ============================================================
+function getLeads() {
+  try { return JSON.parse(localStorage.getItem('lv_leads') || '[]'); } catch { return []; }
+}
+function saveLeads(arr) {
+  localStorage.setItem('lv_leads', JSON.stringify(arr));
+}
+
+function renderLeads() {
+  const leads = getLeads();
+  const list = document.getElementById('leads-list');
+  const total = document.getElementById('leads-total');
+  const badge = document.getElementById('leads-badge');
+  total.textContent = leads.length;
+  badge.textContent = leads.length;
+  badge.style.display = leads.length ? 'inline' : 'none';
+
+  if (!leads.length) {
+    list.innerHTML = `<div class="empty-state"><p>Todavía no hay contactos registrados.</p><p style="font-size:12px;">Cuando alguien complete el formulario del sitio, aparecerá acá.</p></div>`;
+    return;
+  }
+  list.innerHTML = leads.map((l, i) => {
+    const fecha = new Date(l.fecha);
+    const fechaStr = fecha.toLocaleDateString('es-AR', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    const inicial = (l.nombre || '?')[0].toUpperCase();
+    return `
+    <div class="lead-row">
+      <div class="lead-avatar">${inicial}</div>
+      <div class="lead-info">
+        <div class="lead-name">${l.nombre}</div>
+        <div class="lead-wa">📱 ${l.whatsapp}</div>
+      </div>
+      <div class="lead-date">${fechaStr}</div>
+      <button class="lead-del" onclick="deleteLead(${i})">Eliminar</button>
+    </div>`;
+  }).join('');
+}
+
+function deleteLead(i) {
+  const leads = getLeads();
+  leads.splice(i, 1);
+  saveLeads(leads);
+  renderLeads();
+  toast('Contacto eliminado');
+}
+
+function clearLeads() {
+  if (!confirm('¿Eliminar todos los contactos? Esta acción no se puede deshacer.')) return;
+  saveLeads([]);
+  renderLeads();
+  toast('Lista limpiada');
+}
+
+function exportLeads() {
+  const leads = getLeads();
+  if (!leads.length) { toast('No hay contactos para exportar'); return; }
+  const rows = [['Nombre', 'WhatsApp', 'Fecha']];
+  leads.forEach(l => {
+    const fecha = new Date(l.fecha).toLocaleString('es-AR');
+    rows.push([l.nombre, l.whatsapp, fecha]);
+  });
+  const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'leads-landventures.csv'; a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV descargado');
+}
+
+// Mostrar badge en tab al cargar
+window.addEventListener('DOMContentLoaded', () => {
+  const leads = getLeads();
+  const badge = document.getElementById('leads-badge');
+  if (leads.length) { badge.textContent = leads.length; badge.style.display = 'inline'; }
+});
 
 // ============================================================
 // DATA MANAGEMENT
