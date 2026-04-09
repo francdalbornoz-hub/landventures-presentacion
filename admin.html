@@ -172,6 +172,7 @@
     <div class="tabs">
       <button class="tab active" onclick="setTab('proyectos')">Proyectos</button>
       <button class="tab" onclick="setTab('timeline')">Historia / Timeline</button>
+      <button class="tab" onclick="setTab('terrenos')">Terrenos</button>
       <button class="tab" onclick="setTab('leads')">Leads <span id="leads-badge" style="background:var(--naranja);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;margin-left:4px;display:none;"></span></button>
       <button class="tab" onclick="setTab('datos')">Datos y backup</button>
     </div>
@@ -192,6 +193,15 @@
         <button class="add-btn" onclick="openTimelineModal()">+ Agregar hito</button>
       </div>
       <div class="items-list" id="timeline-list"></div>
+    </div>
+
+    <!-- TERRENOS TAB -->
+    <div id="tab-terrenos" style="display:none;">
+      <div class="sec-hdr">
+        <h2>Terrenos (track record mapa)</h2>
+        <button class="add-btn" onclick="openTerrenoModal()">+ Agregar terreno</button>
+      </div>
+      <div class="items-list" id="terrenos-list"></div>
     </div>
 
     <!-- LEADS TAB -->
@@ -294,6 +304,11 @@
               <input type="text" id="f-escritura" placeholder="15 may 2026"/>
             </div>
             <div class="form-group">
+              <label>Participación disponible</label>
+              <input type="text" id="f-participacion" placeholder="36%"/>
+              <span class="form-hint">Porcentaje editable manualmente</span>
+            </div>
+            <div class="form-group">
               <label>% modelo (participación mín.)</label>
               <input type="text" id="f-modelo-pct" placeholder="15%"/>
             </div>
@@ -382,6 +397,56 @@
   </div>
 </div>
 
+<!-- MODAL TERRENO -->
+<div class="modal-overlay" id="terreno-modal-overlay" onclick="closeTerrenoModalOutside(event)">
+  <div class="modal" style="max-width:540px;">
+    <div class="modal-hdr">
+      <div class="modal-title" id="terreno-modal-title">Nuevo terreno</div>
+      <button class="modal-close" onclick="closeTerrenoModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Dirección</label>
+          <input type="text" id="t-dir" placeholder="Amenábar 696"/>
+        </div>
+        <div class="form-group">
+          <label>Zona</label>
+          <input type="text" id="t-zona" placeholder="Colegiales"/>
+        </div>
+        <div class="form-group">
+          <label>Canje %</label>
+          <input type="text" id="t-canje" placeholder="35% realizado"/>
+        </div>
+        <div class="form-group full">
+          <label>Info / descripción</label>
+          <input type="text" id="t-info" placeholder="Canje realizado"/>
+        </div>
+        <div class="form-group">
+          <label>Subtipo</label>
+          <select id="t-subtipo">
+            <option value="edificio">Edificio</option>
+            <option value="local">Local</option>
+            <option value="venta">Venta</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Latitud</label>
+          <input type="number" id="t-lat" placeholder="-34.5756" step="0.0001"/>
+        </div>
+        <div class="form-group">
+          <label>Longitud</label>
+          <input type="number" id="t-lng" placeholder="-58.4489" step="0.0001"/>
+        </div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="cancel-btn" onclick="closeTerrenoModal()">Cancelar</button>
+      <button class="save-btn" onclick="saveTerrenoModal()">Guardar terreno</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -452,7 +517,7 @@ const defaultProyectos = [
     id: 'ugarte-2729', estado: 'abierto', badge_mes: 'May 2026',
     nombre: 'Ugarte', numero: '2729', zona: 'Belgrano · CABA',
     precio_desde: '1.899', precio_sub: 'por m² · escenario base (28% canje)',
-    escritura: '15 may 2026',
+    escritura: '15 may 2026', participacion_disponible: '42%',
     dh: [
       { val: 'USD 718K', lbl: 'Valor terreno' }, { val: 'USD 532', lbl: 'Incidencia /m²' },
       { val: '27–29%', lbl: '% canje' }, { val: '15% mín.', lbl: 'Participación' }
@@ -475,7 +540,7 @@ const defaultProyectos = [
     id: 'amenábar-2546', estado: 'abierto', badge_mes: 'Jun 2026',
     nombre: 'Amenábar', numero: '2546', zona: 'Colegiales · CABA',
     precio_desde: '2.008', precio_sub: 'por m² · escenario base (29% canje)',
-    escritura: '15 jun 2026',
+    escritura: '15 jun 2026', participacion_disponible: '36%',
     dh: [
       { val: 'USD 990K', lbl: 'Valor terreno' }, { val: 'USD 582', lbl: 'Incidencia /m²' },
       { val: '28–30%', lbl: '% canje' }, { val: '10% mín.', lbl: 'Participación' }
@@ -498,7 +563,7 @@ const defaultProyectos = [
     id: 'serrano-534', estado: 'abierto', badge_mes: 'Ago 2026',
     nombre: 'Serrano', numero: '534', zona: 'Villa Crespo · CABA',
     precio_desde: '1.756', precio_sub: 'por m² · escenario base (25% canje)',
-    escritura: '1 ago 2026',
+    escritura: '1 ago 2026', participacion_disponible: '28%',
     dh: [
       { val: 'USD 790K', lbl: 'Valor terreno' }, { val: 'USD 439', lbl: 'Incidencia /m²' },
       { val: '24–26%', lbl: '% canje' }, { val: '12% mín.', lbl: 'Participación' }
@@ -540,6 +605,7 @@ let timeline = loadData('lv_timeline', defaultTimeline);
 function renderAll() {
   renderProyectosList();
   renderTimelineList();
+  // Terrenos list is rendered on tab switch; no need to render upfront
 }
 
 if (sessionStorage.getItem(SESSION_KEY)) renderAll();
@@ -605,6 +671,7 @@ function openModal(p = null, idx = null) {
   document.getElementById('f-precio').value = p?.precio_desde || '';
   document.getElementById('f-precio-sub').value = p?.precio_sub || '';
   document.getElementById('f-escritura').value = p?.escritura || '';
+  document.getElementById('f-participacion').value = p?.participacion_disponible || '';
   document.getElementById('f-modelo-pct').value = p?.modelo_pct || '';
   document.getElementById('f-nota').value = p?.nota || '';
   document.getElementById('f-proximo-nota').value = p?.nota || '';
@@ -714,6 +781,7 @@ function saveProyecto() {
     p.precio_desde = document.getElementById('f-precio').value.trim();
     p.precio_sub = document.getElementById('f-precio-sub').value.trim();
     p.escritura = document.getElementById('f-escritura').value.trim();
+    p.participacion_disponible = document.getElementById('f-participacion').value.trim();
     p.modelo_pct = document.getElementById('f-modelo-pct').value.trim();
     p.nota = document.getElementById('f-nota').value.trim();
     p.dh = getDhData();
@@ -789,13 +857,105 @@ function deleteTlItem(i) {
 // TABS
 // ============================================================
 function setTab(name) {
-  ['proyectos', 'timeline', 'leads', 'datos'].forEach(t => {
+  ['proyectos', 'timeline', 'terrenos', 'leads', 'datos'].forEach(t => {
     document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
   });
   document.querySelectorAll('.tab').forEach((btn, i) => {
-    btn.classList.toggle('active', ['proyectos', 'timeline', 'leads', 'datos'][i] === name);
+    btn.classList.toggle('active', ['proyectos', 'timeline', 'terrenos', 'leads', 'datos'][i] === name);
   });
   if (name === 'leads') renderLeads();
+  if (name === 'terrenos') renderTerrenosList();
+}
+
+// ============================================================
+// TERRENOS
+// ============================================================
+const defaultTerrenosCerrados = [
+  { dir: 'Amenábar 696', zona: 'Colegiales', canje: '35% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5756, lng: -58.4489 },
+  { dir: 'Amenábar 1001', zona: 'Colegiales', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5764, lng: -58.4499 },
+  { dir: 'Aguilar 2403', zona: 'Belgrano', canje: '35% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5626, lng: -58.4511 },
+  { dir: 'Aguilar 2578', zona: 'Belgrano', canje: '28% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5619, lng: -58.4525 },
+  { dir: 'Cramer 2848', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5612, lng: -58.4570 },
+  { dir: 'Olleros 2636', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5653, lng: -58.4553 },
+  { dir: 'Forest 1248', zona: 'Colegiales', canje: '23.6% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5783, lng: -58.4474 },
+  { dir: 'Moldes 2982', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5599, lng: -58.4587 },
+  { dir: 'Juramento 1543', zona: 'Belgrano', canje: '32.1% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5592, lng: -58.4531 },
+  { dir: 'Moldes 2661', zona: 'Belgrano', canje: '29.1% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5606, lng: -58.4546 },
+  { dir: 'Darwin 566', zona: 'Villa Crespo', canje: '24% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5978, lng: -58.4438 },
+  { dir: 'Vidal 2697', zona: 'Belgrano', canje: '29.3% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5641, lng: -58.4560 }
+];
+
+let terrenosCerrados = loadData('lv_terrenos_cerrados', defaultTerrenosCerrados);
+
+function renderTerrenosList() {
+  const el = document.getElementById('terrenos-list');
+  if (!terrenosCerrados.length) {
+    el.innerHTML = '<div class="empty-state"><p>No hay terrenos. Agregá el primero.</p></div>';
+    return;
+  }
+  el.innerHTML = terrenosCerrados.map((t, i) => `
+    <div class="item-row">
+      <span class="drag-handle" title="Reordenar">⠿</span>
+      <span class="item-badge cerrado">${t.subtipo || 'edificio'}</span>
+      <div class="item-info">
+        <div class="item-name">${t.dir}</div>
+        <div class="item-sub">${t.zona} · ${t.canje}</div>
+      </div>
+      <div class="item-actions">
+        <button class="icon-btn edit" onclick="openTerrenoModal(${i})">Editar</button>
+        <button class="icon-btn del" onclick="deleteTerrenoItem(${i})">Eliminar</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+let editingTerrenoIndex = null;
+
+function openTerrenoModal(i) {
+  editingTerrenoIndex = (i !== undefined && i !== null) ? i : null;
+  const t = (editingTerrenoIndex !== null) ? terrenosCerrados[editingTerrenoIndex] : null;
+  document.getElementById('terreno-modal-title').textContent = t ? 'Editar terreno' : 'Nuevo terreno';
+  document.getElementById('t-dir').value = t?.dir || '';
+  document.getElementById('t-zona').value = t?.zona || '';
+  document.getElementById('t-canje').value = t?.canje || '';
+  document.getElementById('t-info').value = t?.info || 'Canje realizado';
+  document.getElementById('t-subtipo').value = t?.subtipo || 'edificio';
+  document.getElementById('t-lat').value = t?.lat || '';
+  document.getElementById('t-lng').value = t?.lng || '';
+  document.getElementById('terreno-modal-overlay').classList.add('show');
+}
+
+function closeTerrenoModal() { document.getElementById('terreno-modal-overlay').classList.remove('show'); }
+function closeTerrenoModalOutside(e) { if (e.target.id === 'terreno-modal-overlay') closeTerrenoModal(); }
+
+function saveTerrenoModal() {
+  const item = {
+    dir: document.getElementById('t-dir').value.trim(),
+    zona: document.getElementById('t-zona').value.trim(),
+    canje: document.getElementById('t-canje').value.trim(),
+    info: document.getElementById('t-info').value.trim(),
+    subtipo: document.getElementById('t-subtipo').value,
+    lat: parseFloat(document.getElementById('t-lat').value) || null,
+    lng: parseFloat(document.getElementById('t-lng').value) || null,
+  };
+  if (!item.dir) { alert('Ingresá una dirección'); return; }
+  if (editingTerrenoIndex !== null) {
+    terrenosCerrados[editingTerrenoIndex] = item;
+  } else {
+    terrenosCerrados.push(item);
+  }
+  saveData('lv_terrenos_cerrados', terrenosCerrados);
+  renderTerrenosList();
+  closeTerrenoModal();
+  toast('Terreno guardado');
+}
+
+function deleteTerrenoItem(i) {
+  if (!confirm('¿Eliminar este terreno?')) return;
+  terrenosCerrados.splice(i, 1);
+  saveData('lv_terrenos_cerrados', terrenosCerrados);
+  renderTerrenosList();
+  toast('Terreno eliminado');
 }
 
 // ============================================================
@@ -881,7 +1041,7 @@ window.addEventListener('DOMContentLoaded', () => {
 // DATA MANAGEMENT
 // ============================================================
 function exportData() {
-  const data = { proyectos, timeline, exported: new Date().toISOString() };
+  const data = { proyectos, timeline, terrenosCerrados, exported: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -899,6 +1059,7 @@ function importData(event) {
       const data = JSON.parse(e.target.result);
       if (data.proyectos) { proyectos = data.proyectos; saveData('lv_proyectos', proyectos); }
       if (data.timeline) { timeline = data.timeline; saveData('lv_timeline', timeline); }
+      if (data.terrenosCerrados) { terrenosCerrados = data.terrenosCerrados; saveData('lv_terrenos_cerrados', terrenosCerrados); }
       renderAll();
       toast('Datos importados correctamente');
     } catch { alert('Error al leer el archivo JSON'); }
@@ -911,8 +1072,10 @@ function resetData() {
   if (!confirm('¿Restablecer todos los datos? Se perderán todos los cambios.')) return;
   localStorage.removeItem('lv_proyectos');
   localStorage.removeItem('lv_timeline');
+  localStorage.removeItem('lv_terrenos_cerrados');
   proyectos = defaultProyectos;
   timeline = defaultTimeline;
+  terrenosCerrados = defaultTerrenosCerrados;
   renderAll();
   toast('Datos restablecidos');
 }

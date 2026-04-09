@@ -131,7 +131,7 @@
     .leg-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--texto);}
     .leg-dot{width:10px;height:10px;border-radius:50%;}
     .leg-dot.abierto{background:var(--verde);}
-    .leg-dot.cerrado{background:var(--naranja);}
+    .leg-dot.canje{background:var(--naranja);}
     .leg-dot.proximo{background:var(--proximo);}
     #map{height:440px;width:100%;}
     .mapa-stats{display:flex;gap:24px;padding:12px 20px;border-top:1px solid var(--borde);flex-wrap:wrap;}
@@ -142,7 +142,10 @@
     .lv-pin{display:flex;align-items:center;justify-content:center;border-radius:50%;font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;letter-spacing:.3px;line-height:1;text-align:center;transition:transform .2s ease,box-shadow .2s ease;cursor:pointer;}
     .lv-pin:hover{transform:scale(1.25);}
     .lv-pin.abierto{width:52px;height:52px;background:var(--verde);box-shadow:0 0 0 8px rgba(74,222,128,.22),0 0 18px rgba(74,222,128,.35);color:#0d0c0b;border:2px solid rgba(255,255,255,.25);}
-    .lv-pin.cerrado{width:46px;height:46px;background:var(--naranja);box-shadow:0 0 0 8px rgba(232,148,58,.22),0 0 18px rgba(232,148,58,.35);color:#0d0c0b;border:2px solid rgba(255,255,255,.25);}
+    .lv-pin.canje{width:44px;height:44px;background:var(--naranja);box-shadow:0 0 0 7px rgba(232,148,58,.22),0 0 16px rgba(232,148,58,.3);color:#0d0c0b;border:2px solid rgba(255,255,255,.25);}
+    .lv-pin.canje-edificio{background:var(--naranja);}
+    .lv-pin.canje-local{background:var(--terracota);box-shadow:0 0 0 7px rgba(201,80,42,.22),0 0 16px rgba(201,80,42,.3);}
+    .lv-pin.canje-venta{background:#b8860b;box-shadow:0 0 0 7px rgba(184,134,11,.22),0 0 16px rgba(184,134,11,.3);color:#fff;}
     .lv-pin.proximo{width:42px;height:42px;background:var(--proximo);box-shadow:0 0 0 7px rgba(167,139,250,.2),0 0 16px rgba(167,139,250,.3);color:#fff;border:2px solid rgba(255,255,255,.2);}
     .leaflet-popup-content-wrapper{background:#1e1c1a !important;border:1px solid #3a3230 !important;border-radius:10px !important;box-shadow:0 6px 24px rgba(0,0,0,.6) !important;color:var(--blanco) !important;}
     .leaflet-popup-tip{background:#1e1c1a !important;}
@@ -153,6 +156,7 @@
     .popup-canje{font-size:16px;font-weight:600;margin-bottom:3px;}
     .popup-canje.abierto{color:var(--verde);}
     .popup-canje.cerrado{color:var(--naranja);}
+    .popup-canje.canje{color:var(--naranja);}
     .popup-canje.proximo{color:var(--proximo);}
     .popup-info{font-size:11px;color:var(--texto);}
     .leaflet-container{background:#0d0c0b !important;}
@@ -378,8 +382,8 @@
 <div class="hero-wrap">
 <section class="hero">
   <div class="eyebrow fade-up"><div class="eyebrow-dot"></div>Inversiones en tierra · CABA · Cupos limitados</div>
-  <h1 class="fade-up fade-up-d1">Los mejores precios<br/>de <em>m² en Buenos Aires.</em></h1>
-  <p class="hero-sub fade-up fade-up-d2">Invertís junto a Land Ventures en la compra de terrenos estratégicos en CABA. Participación desde el 10%. Recibís metros cuadrados a precio imbatible, con seguridad jurídica desde el día uno.</p>
+  <h1 class="fade-up fade-up-d1">Compramos tierra en conjunto<br/>con inversores para <em>maximizar la rentabilidad.</em></h1>
+  <p class="hero-sub fade-up fade-up-d2">Hemos desarrollado un modelo con seguridad jurídica que alinea los intereses del grupo inversor con los del desarrollador. Participación desde el 10%. Precio cerrado en USD.</p>
   <div class="hero-stats fade-up fade-up-d4">
     <div><div class="stat-n">+20</div><div class="stat-l">Terrenos comprados<br/>y canjeados</div></div>
     <div><div class="stat-n">+USD 15M</div><div class="stat-l">Invertidos en<br/>terrenos</div></div>
@@ -398,7 +402,7 @@
         <p class="historia-lead fade-section fade-section-d2">
           Land Ventures nació con una premisa simple: identificar los mejores terrenos en CABA <strong>antes de que el mercado los descubra</strong> y estructurar la compra de forma que el inversor acceda a metros cuadrados a precio de costo real.
           <br/><br/>
-          En más de diez años operando construimos un modelo de <strong>canje por metros cuadrados</strong> que alinea los intereses del grupo inversor con los del desarrollador. El terreno queda en manos del grupo hasta recibir los m² acordados. Sin excepciones.
+          Hemos desarrollado un modelo con seguridad jurídica que alinea los intereses del grupo inversor con los del desarrollador. El terreno queda en manos del grupo hasta recibir los m² acordados. Sin excepciones.
         </p>
         <div class="historia-metrics fade-section fade-section-d3">
           <div class="hm-card"><div class="hm-n">+20</div><div class="hm-l">Terrenos comprados y canjeados en CABA</div></div>
@@ -451,14 +455,14 @@
 <!-- MAPA -->
 <section class="mapa-section" id="mapa">
   <div class="mapa-inner">
-    <div class="sec-eyebrow fade-section">Track record</div>
-    <div class="sec-title fade-section fade-section-d1">Todos los terrenos de LV en CABA</div>
+    <div class="sec-eyebrow fade-section">Nuestros proyectos</div>
+    <div class="sec-title fade-section fade-section-d1">Mapa de terrenos</div>
     <p class="sec-sub fade-section fade-section-d2">+20 operaciones en el historial. Tocá cada punto para ver el detalle del terreno.</p>
     <div class="mapa-wrap">
       <div class="mapa-legend">
         <span class="leg-lbl">Referencias</span>
-        <div class="leg-item"><div class="leg-dot abierto"></div>Abierto</div>
-        <div class="leg-item"><div class="leg-dot cerrado"></div>Canje realizado</div>
+        <div class="leg-item"><div class="leg-dot abierto"></div>Oportunidad Abierta</div>
+        <div class="leg-item"><div class="leg-dot canje"></div>Canje Realizado</div>
         <div class="leg-item"><div class="leg-dot proximo"></div>Próximamente</div>
       </div>
       <div id="map"></div>
@@ -557,6 +561,7 @@ const defaultProyectos = [
     precio_desde: '1.899',
     precio_sub: 'por m² · escenario base (28% canje)',
     escritura: '15 may 2026',
+    participacion_disponible: '42%',
     dh: [
       { val: 'USD 718K', lbl: 'Valor terreno' },
       { val: 'USD 532', lbl: 'Incidencia /m²' },
@@ -587,6 +592,7 @@ const defaultProyectos = [
     precio_desde: '2.008',
     precio_sub: 'por m² · escenario base (29% canje)',
     escritura: '15 jun 2026',
+    participacion_disponible: '36%',
     dh: [
       { val: 'USD 990K', lbl: 'Valor terreno' },
       { val: 'USD 582', lbl: 'Incidencia /m²' },
@@ -617,6 +623,7 @@ const defaultProyectos = [
     precio_desde: '1.756',
     precio_sub: 'por m² · escenario base (25% canje)',
     escritura: '1 ago 2026',
+    participacion_disponible: '28%',
     dh: [
       { val: 'USD 790K', lbl: 'Valor terreno' },
       { val: 'USD 439', lbl: 'Incidencia /m²' },
@@ -649,19 +656,19 @@ const defaultProyectos = [
 ];
 
 // Terrenos cerrados (track record del mapa)
-const terrenosCerrados = [
-  { dir: 'Amenábar 696', zona: 'Colegiales', canje: '35% realizado', info: 'Canje realizado', lat: -34.5756, lng: -58.4489 },
-  { dir: 'Amenábar 1001', zona: 'Colegiales', canje: '30% realizado', info: 'Canje realizado', lat: -34.5764, lng: -58.4499 },
-  { dir: 'Aguilar 2403', zona: 'Belgrano', canje: '35% realizado', info: 'Canje realizado', lat: -34.5626, lng: -58.4511 },
-  { dir: 'Aguilar 2578', zona: 'Belgrano', canje: '28% realizado', info: 'Canje realizado', lat: -34.5619, lng: -58.4525 },
-  { dir: 'Cramer 2848', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', lat: -34.5612, lng: -58.4570 },
-  { dir: 'Olleros 2636', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', lat: -34.5653, lng: -58.4553 },
-  { dir: 'Forest 1248', zona: 'Colegiales', canje: '23.6% realizado', info: 'Canje realizado', lat: -34.5783, lng: -58.4474 },
-  { dir: 'Moldes 2982', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', lat: -34.5599, lng: -58.4587 },
-  { dir: 'Juramento 1543', zona: 'Belgrano', canje: '32.1% realizado', info: 'Canje realizado', lat: -34.5592, lng: -58.4531 },
-  { dir: 'Moldes 2661', zona: 'Belgrano', canje: '29.1% realizado', info: 'Canje realizado', lat: -34.5606, lng: -58.4546 },
-  { dir: 'Darwin 566', zona: 'Villa Crespo', canje: '24% realizado', info: 'Canje realizado', lat: -34.5978, lng: -58.4438 },
-  { dir: 'Vidal 2697', zona: 'Belgrano', canje: '29.3% realizado', info: 'Canje realizado', lat: -34.5641, lng: -58.4560 }
+const defaultTerrenosCerrados = [
+  { dir: 'Amenábar 696', zona: 'Colegiales', canje: '35% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5756, lng: -58.4489 },
+  { dir: 'Amenábar 1001', zona: 'Colegiales', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5764, lng: -58.4499 },
+  { dir: 'Aguilar 2403', zona: 'Belgrano', canje: '35% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5626, lng: -58.4511 },
+  { dir: 'Aguilar 2578', zona: 'Belgrano', canje: '28% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5619, lng: -58.4525 },
+  { dir: 'Cramer 2848', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5612, lng: -58.4570 },
+  { dir: 'Olleros 2636', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5653, lng: -58.4553 },
+  { dir: 'Forest 1248', zona: 'Colegiales', canje: '23.6% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5783, lng: -58.4474 },
+  { dir: 'Moldes 2982', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5599, lng: -58.4587 },
+  { dir: 'Juramento 1543', zona: 'Belgrano', canje: '32.1% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5592, lng: -58.4531 },
+  { dir: 'Moldes 2661', zona: 'Belgrano', canje: '29.1% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5606, lng: -58.4546 },
+  { dir: 'Darwin 566', zona: 'Villa Crespo', canje: '24% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5978, lng: -58.4438 },
+  { dir: 'Vidal 2697', zona: 'Belgrano', canje: '29.3% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5641, lng: -58.4560 }
 ];
 
 // ============================================================
@@ -676,6 +683,7 @@ function getData(key, fallback) {
 
 const timeline = getData('lv_timeline', defaultTimeline);
 const proyectos = getData('lv_proyectos', defaultProyectos);
+const terrenosCerrados = getData('lv_terrenos_cerrados', defaultTerrenosCerrados);
 
 // ============================================================
 // RENDER TIMELINE
@@ -746,6 +754,10 @@ function renderAbiertoCard(p, i) {
       </table>
       <div class="esc-lbl">Modelo (${p.modelo_pct || ''})</div>
       <div class="modelo-box">${modeloRows}</div>
+      <div class="dh-grid" style="margin-top:14px;">
+        <div class="dh-item"><div class="dh-val">${p.escritura || '—'}</div><div class="dh-lbl">Fecha escrituración</div></div>
+        <div class="dh-item"><div class="dh-val" style="color:var(--verde)">${p.participacion_disponible || '—'}</div><div class="dh-lbl">Participación disponible</div></div>
+      </div>
     </div>
   </div>`;
 }
@@ -802,12 +814,26 @@ function initMap() {
     maxZoom: 19
   }).addTo(map);
 
-  function makeIcon(tipo, label) {
+  function makeIcon(tipo, subtipo) {
+    const icons = {
+      'edificio': '<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="4" y="4" width="12" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="7" y="9" width="2" height="2" fill="currentColor"/><rect x="11" y="9" width="2" height="2" fill="currentColor"/><rect x="7" y="13" width="2" height="2" fill="currentColor"/><rect x="11" y="13" width="2" height="2" fill="currentColor"/><path d="M8 18v-3h4v3" stroke="currentColor" stroke-width="1.5"/></svg>',
+      'local': '<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 8l1.5-4h11L17 8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="3" y="8" width="14" height="9" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M8 17v-4h4v4" stroke="currentColor" stroke-width="1.5"/><path d="M3 8h14" stroke="currentColor" stroke-width="1.5"/></svg>',
+      'venta': '<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10c2-3 5-4 8-2s6 1 6-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M17 10c-2 3-5 4-8 2s-6-1-6 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+      'abierto': 'ABTO',
+      'proximo': 'PROX'
+    };
+    const st = subtipo || tipo;
+    const isAbierto = tipo === 'abierto';
+    const isProximo = tipo === 'proximo';
+    const isCanje = tipo === 'canje';
+    const pinClass = isCanje ? `lv-pin canje canje-${st}` : `lv-pin ${tipo}`;
+    const label = isAbierto ? icons.abierto : isProximo ? icons.proximo : (icons[st] || icons.edificio);
+    const size = isAbierto ? 52 : isProximo ? 42 : 44;
     return L.divIcon({
       className: '',
-      html: `<div class="lv-pin ${tipo}">${label}</div>`,
-      iconSize: tipo === 'abierto' ? [52, 52] : tipo === 'cerrado' ? [46, 46] : [42, 42],
-      iconAnchor: tipo === 'abierto' ? [26, 26] : tipo === 'cerrado' ? [23, 23] : [21, 21]
+      html: `<div class="${pinClass}">${label}</div>`,
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2]
     });
   }
 
@@ -818,10 +844,10 @@ function initMap() {
       <div class="popup-info">${info}</div>`;
   }
 
-  // Cerrados
+  // Cerrados / Canje realizado
   terrenosCerrados.forEach(t => {
-    const m = L.marker([t.lat, t.lng], { icon: makeIcon('cerrado', t.canje.split('%')[0] + '%') });
-    m.bindPopup(makePopup(t.dir, t.zona, t.canje, 'cerrado', t.info));
+    const m = L.marker([t.lat, t.lng], { icon: makeIcon('canje', t.subtipo || 'edificio') });
+    m.bindPopup(makePopup(t.dir, t.zona, t.canje, 'canje', t.info));
     m.addTo(map);
   });
 
@@ -829,13 +855,12 @@ function initMap() {
   proyectos.forEach(p => {
     if (!p.lat || !p.lng) return;
     if (p.estado === 'abierto') {
-      const label = 'ABTO';
-      const m = L.marker([p.lat, p.lng], { icon: makeIcon('abierto', label) });
+      const m = L.marker([p.lat, p.lng], { icon: makeIcon('abierto', 'abierto') });
       const canje = p.dh ? (p.dh.find(d => d.lbl.includes('canje')) || {}).val || '' : '';
-      m.bindPopup(makePopup(p.nombre + ' ' + p.numero, p.zona, canje, 'abierto', `Abierto · ${p.badge_mes || ''} · desde USD ${p.precio_desde}/m²`));
+      m.bindPopup(makePopup(p.nombre + ' ' + p.numero, p.zona, canje, 'abierto', `Abierto · ${p.badge_mes || ''} · Participación disponible: ${p.participacion_disponible || '—'}`));
       m.addTo(map);
     } else if (p.estado === 'proximo') {
-      const m = L.marker([p.lat, p.lng], { icon: makeIcon('proximo', 'PROX') });
+      const m = L.marker([p.lat, p.lng], { icon: makeIcon('proximo', 'proximo') });
       m.bindPopup(makePopup(p.nombre + ' ' + p.numero, p.zona, 'Próximamente', 'proximo', 'En estructuración'));
       m.addTo(map);
     }
