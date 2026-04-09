@@ -28,13 +28,28 @@
     body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg);color:var(--blanco);line-height:1.5;overflow-x:hidden;}
 
     /* PREMIUM ANIMATIONS */
-    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-    .fade-up{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);}
+    .fade-up{
+      opacity:0;
+      transform:translateY(28px);
+      transition:opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1);
+    }
     .fade-up.visible{opacity:1;transform:translateY(0);}
-    .fade-up-d1{transition-delay:.08s;}
-    .fade-up-d2{transition-delay:.16s;}
-    .fade-up-d3{transition-delay:.24s;}
-    .fade-up-d4{transition-delay:.32s;}
+    .fade-up-d1{transition-delay:.10s;}
+    .fade-up-d2{transition-delay:.20s;}
+    .fade-up-d3{transition-delay:.30s;}
+    .fade-up-d4{transition-delay:.42s;}
+    /* section-level fade: slower, barely moves */
+    .fade-section{
+      opacity:0;
+      transform:translateY(14px);
+      transition:opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
+    }
+    .fade-section.visible{opacity:1;transform:translateY(0);}
+    .fade-section-d1{transition-delay:.08s;}
+    .fade-section-d2{transition-delay:.18s;}
+    .fade-section-d3{transition-delay:.28s;}
+    .fade-section-d4{transition-delay:.38s;}
+    .fade-section-d5{transition-delay:.48s;}
 
     /* NAV */
     nav{background:rgba(17,16,16,.97);border-bottom:1px solid var(--borde);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px;}
@@ -379,16 +394,16 @@
 <!-- HISTORIA -->
 <section class="historia" id="historia">
   <div class="historia-inner">
-    <div class="sec-eyebrow">Quiénes somos</div>
-    <div class="sec-title">Diez años operando en el mercado de tierras de CABA</div>
+    <div class="sec-eyebrow fade-section">Quiénes somos</div>
+    <div class="sec-title fade-section fade-section-d1">Diez años operando en el mercado de tierras de CABA</div>
     <div class="historia-layout">
       <div>
-        <p class="historia-lead">
+        <p class="historia-lead fade-section fade-section-d2">
           Land Ventures nació con una premisa simple: identificar los mejores terrenos en CABA <strong>antes de que el mercado los descubra</strong> y estructurar la compra de forma que el inversor acceda a metros cuadrados a precio de costo real.
           <br/><br/>
           En más de diez años operando construimos un modelo de <strong>canje por metros cuadrados</strong> que alinea los intereses del grupo inversor con los del desarrollador. El terreno queda en manos del grupo hasta recibir los m² acordados. Sin excepciones.
         </p>
-        <div class="historia-metrics">
+        <div class="historia-metrics fade-section fade-section-d3">
           <div class="hm-card"><div class="hm-n">+20</div><div class="hm-l">Terrenos comprados y canjeados en CABA</div></div>
           <div class="hm-card"><div class="hm-n">+USD 15M</div><div class="hm-l">Invertidos en tierra desde el inicio</div></div>
           <div class="hm-card"><div class="hm-n">~29.8%</div><div class="hm-l">Promedio histórico de canje</div></div>
@@ -405,10 +420,10 @@
 <!-- PILARES -->
 <section class="pilares" id="pilares">
   <div class="pilares-inner">
-    <div class="sec-eyebrow">Por qué Land Ventures</div>
-    <div class="sec-title">Tres razones únicas</div>
+    <div class="sec-eyebrow fade-section">Por qué Land Ventures</div>
+    <div class="sec-title fade-section fade-section-d1">Tres razones únicas</div>
     <div class="pilares-grid">
-      <div class="pilar">
+      <div class="pilar fade-section fade-section-d2">
         <div class="pilar-icon">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1.5l2.25 4.95H16l-3.94 3.06 1.5 4.95L9 11.7l-4.56 2.76 1.5-4.95L2 7.5h4.75z" stroke="#E8943A" stroke-width="1.3" stroke-linejoin="round"/></svg>
         </div>
@@ -416,7 +431,7 @@
         <div class="pilar-desc">Comprás por debajo de cualquier lista de precios. Sos parte de la escritura del terreno desde el primer día.</div>
         <div class="pilar-hl">Hasta 20% debajo de lista cero</div>
       </div>
-      <div class="pilar">
+      <div class="pilar fade-section fade-section-d3">
         <div class="pilar-icon">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="7" width="14" height="10" rx="2" stroke="#E8943A" stroke-width="1.3"/><path d="M6 7V5.5a3 3 0 016 0V7" stroke="#E8943A" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
@@ -424,7 +439,7 @@
         <div class="pilar-desc">El terreno es del grupo inversor hasta recibir los m² acordados. Queda explícito en el instrumento del canje desde la escritura.</div>
         <div class="pilar-hl">Propiedad del grupo hasta los m²</div>
       </div>
-      <div class="pilar">
+      <div class="pilar fade-section fade-section-d4">
         <div class="pilar-icon">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#E8943A" stroke-width="1.3"/><path d="M9 5.5v3.5l2 2" stroke="#E8943A" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
@@ -439,9 +454,9 @@
 <!-- MAPA -->
 <section class="mapa-section" id="mapa">
   <div class="mapa-inner">
-    <div class="sec-eyebrow">Track record</div>
-    <div class="sec-title">Todos los terrenos de LV en CABA</div>
-    <p class="sec-sub">+20 operaciones en el historial. Tocá cada punto para ver el detalle del terreno.</p>
+    <div class="sec-eyebrow fade-section">Track record</div>
+    <div class="sec-title fade-section fade-section-d1">Todos los terrenos de LV en CABA</div>
+    <p class="sec-sub fade-section fade-section-d2">+20 operaciones en el historial. Tocá cada punto para ver el detalle del terreno.</p>
     <div class="mapa-wrap">
       <div class="mapa-legend">
         <span class="leg-lbl">Referencias</span>
@@ -461,30 +476,30 @@
 
 <!-- COMO FUNCIONA -->
 <section class="como" id="modelo">
-  <div class="sec-eyebrow">El modelo</div>
-  <div class="sec-title">Cómo funciona tu inversión</div>
+  <div class="sec-eyebrow fade-section">El modelo</div>
+  <div class="sec-title fade-section fade-section-d1">Cómo funciona tu inversión</div>
   <div class="pasos-grid">
-    <div class="paso">
+    <div class="paso fade-section fade-section-d1">
       <div class="paso-n">01</div>
       <div class="paso-title">Identificamos el terreno</div>
       <div class="paso-desc">LV detecta oportunidades estratégicas en CABA con due diligence completo antes de ofrecerlas.</div>
     </div>
-    <div class="paso">
+    <div class="paso fade-section fade-section-d2">
       <div class="paso-n">02</div>
       <div class="paso-title">Invertís junto a LV</div>
       <div class="paso-desc">Participás desde el 10% del valor. Tu capital entra para la escritura del terreno. Precio cerrado en USD.</div>
     </div>
-    <div class="paso">
+    <div class="paso fade-section fade-section-d3">
       <div class="paso-n">03</div>
       <div class="paso-title">Cerramos el canje</div>
       <div class="paso-desc">El terreno queda del grupo inversor hasta recibir los m² acordados con el developer. Explícito en el instrumento.</div>
     </div>
-    <div class="paso">
+    <div class="paso fade-section fade-section-d4">
       <div class="paso-n">04</div>
       <div class="paso-title">Recibís tus metros</div>
       <div class="paso-desc">Una vez aprobado el plano, recibís tu proporción de m² a precio muy por debajo del valor de lista del proyecto.</div>
     </div>
-    <div class="paso highlight">
+    <div class="paso highlight fade-section fade-section-d5">
       <div class="paso-n">05</div>
       <div class="paso-title">LV invierte en todos los proyectos</div>
       <div class="paso-desc">Land Ventures participa como inversor en cada operación. Nuestros intereses están alineados con los tuyos desde el primer día.</div>
@@ -495,8 +510,8 @@
 <!-- PROYECTOS -->
 <section class="proy-section" id="proyectos">
   <div class="proy-inner">
-    <div class="sec-eyebrow">Oportunidades activas</div>
-    <div class="sec-title">Proyectos abiertos hoy</div>
+    <div class="sec-eyebrow fade-section">Oportunidades activas</div>
+    <div class="sec-title fade-section fade-section-d1">Proyectos abiertos hoy</div>
     <p class="sec-sub" id="proy-subtitle">Cargando proyectos…</p>
     <div class="proy-grid" id="proy-grid"></div>
   </div>
@@ -505,7 +520,7 @@
 <!-- CTA -->
 <section class="cta-section" id="contacto">
   <div class="cta-inner">
-    <div class="cta-title">El m² más barato<br/>de <em>Buenos Aires.</em></div>
+    <div class="cta-title fade-section">El m² más barato<br/>de <em>Buenos Aires.</em></div>
     <p class="cta-sub">Dejá tu nombre y WhatsApp y te contactamos en menos de 24hs para explicarte el próximo proyecto disponible y cómo entrar.</p>
     <div class="cta-form">
       <input class="cta-input" type="text" id="inp-nombre" placeholder="Tu nombre" autocomplete="name"/>
@@ -866,31 +881,51 @@ function enviarContacto() {
 }
 
 // ============================================================
-// INTERSECTION OBSERVER — fade-up on scroll
+// INTERSECTION OBSERVER — fade-up + fade-section on scroll
 // ============================================================
 (function(){
-  // Hero elements animate on load immediately
   document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
-    setTimeout(() => el.classList.add('visible'), 80 + i * 80);
+    setTimeout(() => el.classList.add('visible'), 80 + i * 90);
   });
 
   const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-  // also observe section titles/cards added dynamically
+  document.querySelectorAll('.fade-up, .fade-section').forEach(el => io.observe(el));
+
   const mutObs = new MutationObserver(() => {
-    document.querySelectorAll('.fade-up:not(.observed)').forEach(el => { el.classList.add('observed'); io.observe(el); });
+    document.querySelectorAll('.fade-up:not(.observed), .fade-section:not(.observed)').forEach(el => {
+      el.classList.add('observed'); io.observe(el);
+    });
   });
   mutObs.observe(document.body, { childList: true, subtree: true });
 })();
 
+// ============================================================
+// SMOOTH SCROLL — custom easing ~1.4x slower, premium feel
+// ============================================================
+function easeInOutQuart(t) {
+  return t < 0.5 ? 8*t*t*t*t : 1 - Math.pow(-2*t+2,4)/2;
+}
 function lvScroll(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 64;
-  window.scrollTo({ top, behavior: 'smooth' });
+  const start = window.scrollY;
+  const target = el.getBoundingClientRect().top + window.scrollY - 64;
+  const distance = target - start;
+  const duration = Math.min(Math.max(Math.abs(distance) * 0.6, 600), 1400);
+  let startTime = null;
+  function step(ts) {
+    if (!startTime) startTime = ts;
+    const elapsed = ts - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, start + distance * easeInOutQuart(progress));
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 // ============================================================
