@@ -859,16 +859,8 @@ function initMap() {
     const S = 30; // icon size for naranja/proximo pins
     const SA = 34; // icon size for abierto (bigger circle)
 
-    // Handshake: clean flat — canje finalizado & compraventa
-    const handshake = `<svg width="${S}" height="${S}" viewBox="0 0 32 32" fill="none">
-      <path d="M2 22 L9 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M30 22 L23 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M9 15 L11 12 L13 14 L16 11 L19 14 L21 12 L23 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M11 15 L10 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M21 15 L22 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M13 15 L13 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M19 15 L19 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>`;
+    // Handshake: flat icon style
+    const handshake = `<img src="https://cdn-icons-png.flaticon.com/512/3439/3439283.png" width="${S}" height="${S}" style="filter:brightness(0) invert(0);display:block;"/>`;
 
     // Shop: tienda/local
     const shop = `<svg width="${S}" height="${S}" viewBox="0 0 32 32" fill="none">
