@@ -141,10 +141,10 @@
     /* Leaflet custom */
     .lv-pin{display:flex;align-items:center;justify-content:center;border-radius:50%;font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;letter-spacing:.3px;line-height:1;text-align:center;transition:transform .2s ease,box-shadow .2s ease;cursor:pointer;}
     .lv-pin:hover{transform:scale(1.25);}
-    .lv-pin.abierto{width:86px;height:86px;background:var(--verde);box-shadow:0 0 0 10px rgba(74,222,128,.18),0 0 24px rgba(74,222,128,.35);color:#0d0c0b;border:2.5px solid rgba(255,255,255,.3);}
-    .lv-pin.canje{width:76px;height:76px;background:var(--naranja);box-shadow:0 0 0 9px rgba(232,148,58,.2),0 0 20px rgba(232,148,58,.3);color:#0d0c0b;border:2.5px solid rgba(255,255,255,.3);}
-    .lv-pin.canje-edificio,.lv-pin.canje-local,.lv-pin.canje-venta,.lv-pin.canje-desarrollo{background:var(--naranja);box-shadow:0 0 0 9px rgba(232,148,58,.2),0 0 20px rgba(232,148,58,.3);color:#0d0c0b;}
-    .lv-pin.proximo{width:76px;height:76px;background:var(--proximo);box-shadow:0 0 0 9px rgba(167,139,250,.18),0 0 20px rgba(167,139,250,.3);color:#fff;border:2.5px solid rgba(255,255,255,.25);}
+    .lv-pin.abierto{width:44px;height:44px;background:var(--verde);box-shadow:0 0 0 7px rgba(74,222,128,.18),0 0 16px rgba(74,222,128,.35);color:#0d0c0b;border:2px solid rgba(255,255,255,.3);}
+    .lv-pin.canje{width:38px;height:38px;background:var(--naranja);box-shadow:0 0 0 6px rgba(232,148,58,.2),0 0 14px rgba(232,148,58,.3);color:#0d0c0b;border:2px solid rgba(255,255,255,.3);}
+    .lv-pin.canje-edificio,.lv-pin.canje-local,.lv-pin.canje-venta,.lv-pin.canje-desarrollo{background:var(--naranja);box-shadow:0 0 0 6px rgba(232,148,58,.2),0 0 14px rgba(232,148,58,.3);color:#0d0c0b;}
+    .lv-pin.proximo{width:38px;height:38px;background:var(--proximo);box-shadow:0 0 0 6px rgba(167,139,250,.18),0 0 14px rgba(167,139,250,.3);color:#fff;border:2px solid rgba(255,255,255,.25);}
     .leaflet-popup-content-wrapper{background:#1e1c1a !important;border:1px solid #3a3230 !important;border-radius:10px !important;box-shadow:0 6px 24px rgba(0,0,0,.6) !important;color:var(--blanco) !important;}
     .leaflet-popup-tip{background:#1e1c1a !important;}
     .leaflet-popup-content{margin:13px 16px !important;font-family:'Montserrat',sans-serif !important;min-width:170px;}
@@ -921,7 +921,7 @@ function initMap() {
     const isCanje = tipo === 'canje';
     const pinClass = isCanje ? `lv-pin canje canje-${st}` : `lv-pin ${tipo}`;
     const label = isAbierto ? icons.abierto : isProximo ? icons.proximo : (icons[st] || icons.edificio);
-    const size = isAbierto ? 86 : 76;
+    const size = isAbierto ? 44 : 38;
     return L.divIcon({
       className: '',
       html: `<div class="${pinClass}">${label}</div>`,
