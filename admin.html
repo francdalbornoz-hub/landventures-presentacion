@@ -99,17 +99,59 @@
     .modal-section{margin-top:20px;padding-top:20px;border-top:1px solid var(--borde);}
     .modal-section-title{font-size:11px;font-weight:700;color:var(--texto);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
 
-    /* Escenarios dinámicos */
-    .esc-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
-    .esc-row{display:grid;grid-template-columns:1fr 80px 1fr auto;gap:8px;align-items:center;}
-    .esc-row input{margin:0;}
-    .esc-del{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--rojo);border-radius:5px;padding:7px 10px;cursor:pointer;font-size:12px;font-family:'Montserrat',sans-serif;}
-    .esc-add{background:transparent;border:1px dashed var(--borde);color:var(--texto);border-radius:7px;padding:8px;cursor:pointer;font-size:12px;font-family:'Montserrat',sans-serif;width:100%;margin-top:4px;transition:border-color .15s;}
-    .esc-add:hover{border-color:var(--naranja);color:var(--naranja);}
+    /* Preview card — replica la tarjeta del frontend */
+    .card-preview{background:#111;border:1px solid var(--borde);border-radius:12px;overflow:hidden;margin-top:4px;}
+    .cp-head{padding:16px 18px 12px;border-bottom:1px solid var(--borde);}
+    .cp-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.2);color:var(--verde);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:8px;}
+    .cp-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--verde);}
+    .cp-name-row{display:flex;align-items:baseline;gap:6px;margin-bottom:2px;}
+    .cp-name{font-size:15px;font-weight:800;color:var(--blanco);}
+    .cp-num{font-size:15px;font-weight:800;color:var(--naranja);}
+    .cp-zona{font-size:11px;color:var(--texto);}
+    .cp-precio-block{padding:12px 18px;border-bottom:1px solid var(--borde);}
+    .cp-precio-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+    .cp-precio-val{font-size:20px;font-weight:800;color:var(--blanco);}
+    .cp-precio-val span{font-size:12px;font-weight:400;color:var(--texto);margin-left:4px;}
+    .cp-precio-sub{font-size:10px;color:var(--texto);margin-top:1px;}
+    .cp-foot{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid var(--borde);}
+    .cp-escritura{font-size:11px;color:var(--texto);}
+    .cp-escritura strong{color:var(--blanco);}
+    .cp-participacion{font-size:11px;color:var(--texto);}
+    .cp-participacion strong{color:var(--verde);font-size:13px;}
 
-    /* Modelo dinámico */
-    .modelo-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
-    .modelo-row-edit{display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:center;}
+    /* Inline editable fields inside the card preview */
+    .cp-input{background:transparent;border:none;border-bottom:1px dashed rgba(232,148,58,.4);color:inherit;font-family:'Montserrat',sans-serif;font-weight:inherit;font-size:inherit;outline:none;padding:1px 2px;min-width:40px;transition:border-color .15s;}
+    .cp-input:focus{border-bottom-color:var(--naranja);}
+    .cp-input.large{font-size:20px;font-weight:800;width:80px;}
+    .cp-input.med{font-size:13px;width:120px;}
+    .cp-input.sm{font-size:11px;width:90px;}
+    .cp-input.full-w{width:100%;}
+
+    /* DH grid inside card */
+    .cp-dh{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--borde);border-top:1px solid var(--borde);}
+    .cp-dh-item{background:#111;padding:10px 14px;}
+    .cp-dh-val{font-size:13px;font-weight:700;color:var(--naranja);margin-bottom:2px;}
+    .cp-dh-lbl{font-size:9px;color:var(--texto);text-transform:uppercase;letter-spacing:.4px;}
+
+    /* Escenarios table inside card */
+    .cp-esc-wrap{padding:12px 18px;border-top:1px solid var(--borde);}
+    .cp-esc-lbl{font-size:9px;font-weight:700;color:var(--texto);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+    .cp-esc-table{width:100%;border-collapse:collapse;font-size:11px;}
+    .cp-esc-table th{color:var(--muted);font-weight:500;padding:3px 6px;text-align:left;border-bottom:1px solid var(--borde);}
+    .cp-esc-table td{padding:5px 6px;color:var(--blanco);border-bottom:1px solid rgba(42,39,37,.5);}
+    .cp-esc-table td:last-child{color:var(--naranja);font-weight:600;}
+
+    /* Modelo inside card */
+    .cp-modelo-wrap{padding:12px 18px;border-top:1px solid var(--borde);}
+    .cp-modelo-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(42,39,37,.4);font-size:11px;}
+    .cp-modelo-row:last-child{border-bottom:none;}
+    .cp-modelo-lbl{color:var(--texto);}
+    .cp-modelo-val{font-weight:600;color:var(--blanco);}
+    .cp-modelo-val.naranja{color:var(--naranja);}
+
+    /* Nota legal */
+    .cp-nota{padding:10px 18px;border-top:1px solid var(--borde);font-size:10px;color:var(--muted);line-height:1.6;font-style:italic;}
+
 
     .modal-ftr{padding:16px 24px;border-top:1px solid var(--borde);display:flex;gap:8px;justify-content:flex-end;position:sticky;bottom:0;background:var(--card);}
     .save-btn{padding:11px 24px;background:var(--naranja);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;}
@@ -272,61 +314,103 @@
       </div><!-- /form-grid base -->
 
       <!-- ===================== CAMPOS OPORTUNIDAD ===================== -->
+      <!-- Edición inline dentro de una tarjeta que replica el frontend -->
       <div id="oportunidad-fields">
-
         <div class="modal-section">
-          <div class="modal-section-title">Datos del proyecto</div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Mes badge</label>
-              <input type="text" id="f-badge-mes" placeholder="May 2026"/>
-            </div>
-            <div class="form-group">
-              <label>Precio desde (USD)</label>
-              <input type="text" id="f-precio" placeholder="1.899"/>
-            </div>
-            <div class="form-group full">
-              <label>Subtítulo precio</label>
-              <input type="text" id="f-precio-sub" placeholder="por m² · esc. base (28% canje)"/>
-            </div>
-            <div class="form-group">
-              <label>Fecha escritura</label>
-              <input type="text" id="f-escritura" placeholder="15 may 2026"/>
-            </div>
-            <div class="form-group">
-              <label>Participación disponible</label>
-              <input type="text" id="f-participacion" placeholder="36%"/>
-              <span class="form-hint">Porcentaje editable manualmente</span>
-            </div>
-            <div class="form-group">
-              <label>% modelo (participación mín.)</label>
-              <input type="text" id="f-modelo-pct" placeholder="15%"/>
-            </div>
-            <div class="form-group full">
-              <label>Nota legal</label>
-              <textarea id="f-nota" placeholder="El terreno permanece en manos del grupo inversor…"></textarea>
-            </div>
-          </div>
-        </div>
+          <div class="modal-section-title">Así se verá la tarjeta — editá los valores directamente</div>
 
-        <div class="modal-section">
-          <div class="modal-section-title">Datos destacados (4 items)</div>
-          <div class="esc-list" id="dh-list"></div>
-          <button class="esc-add" onclick="addDhRow()">+ Agregar dato</button>
-        </div>
+          <div class="card-preview">
 
-        <div class="modal-section">
-          <div class="modal-section-title">Escenarios (m², %, costo)</div>
-          <div class="esc-list" id="esc-list"></div>
-          <button class="esc-add" onclick="addEscRow()">+ Agregar escenario</button>
-        </div>
+            <!-- HEAD -->
+            <div class="cp-head">
+              <div class="cp-badge"><div class="cp-badge-dot"></div>Abierto · <input class="cp-input sm" id="f-badge-mes" placeholder="May 2026"/></div>
+              <div class="cp-name-row">
+                <span class="cp-name" id="cp-name-preview">—</span>
+                <span class="cp-num" id="cp-num-preview"></span>
+              </div>
+              <div class="cp-zona" id="cp-zona-preview">—</div>
+            </div>
 
-        <div class="modal-section">
-          <div class="modal-section-title">Modelo financiero (filas)</div>
-          <div class="modelo-list" id="modelo-list"></div>
-          <button class="esc-add" onclick="addModeloRow()">+ Agregar fila</button>
-        </div>
+            <!-- PRECIO -->
+            <div class="cp-precio-block">
+              <div class="cp-precio-lbl">Desde</div>
+              <div class="cp-precio-val">USD <input class="cp-input large" id="f-precio" placeholder="1.899"/></div>
+              <div class="cp-precio-sub">por m² · esc. base (<input class="cp-input" style="width:40px;font-size:10px;" id="f-precio-pct" placeholder="28%"/>) canje</div>
+            </div>
 
+            <!-- ESCRITURA + PARTICIPACIÓN -->
+            <div class="cp-foot">
+              <div class="cp-escritura">Escritura <strong><input class="cp-input sm" id="f-escritura" placeholder="15 may 2026" style="color:var(--blanco);font-weight:600;"/></strong></div>
+              <div class="cp-participacion">Participación disponible <strong><input class="cp-input" id="f-participacion" placeholder="36%" style="width:44px;color:var(--verde);font-size:13px;font-weight:700;"/></strong></div>
+            </div>
+
+            <!-- DH GRID: 4 datos destacados fijos -->
+            <div class="cp-dh">
+              <div class="cp-dh-item">
+                <div class="cp-dh-val"><input class="cp-input full-w" id="dh-0-val" placeholder="USD 718K" style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
+                <div class="cp-dh-lbl">Valor terreno</div>
+              </div>
+              <div class="cp-dh-item">
+                <div class="cp-dh-val"><input class="cp-input full-w" id="dh-1-val" placeholder="USD 532" style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
+                <div class="cp-dh-lbl">Incidencia /m²</div>
+              </div>
+              <div class="cp-dh-item">
+                <div class="cp-dh-val"><input class="cp-input full-w" id="dh-2-val" placeholder="27–29%" style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
+                <div class="cp-dh-lbl">% canje</div>
+              </div>
+              <div class="cp-dh-item">
+                <div class="cp-dh-val"><input class="cp-input full-w" id="dh-3-val" placeholder="15% mín." style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
+                <div class="cp-dh-lbl">Participación</div>
+              </div>
+            </div>
+
+            <!-- ESCENARIOS: 3 filas fijas -->
+            <div class="cp-esc-wrap">
+              <div class="cp-esc-lbl">Escenarios</div>
+              <table class="cp-esc-table">
+                <tr><th>m² canje</th><th>%</th><th>Costo /m²</th></tr>
+                <tr>
+                  <td><input class="cp-input full-w" id="esc-0-m2" placeholder="365 m²"/></td>
+                  <td><input class="cp-input" id="esc-0-pct" placeholder="27%" style="width:46px;"/></td>
+                  <td><input class="cp-input full-w" id="esc-0-costo" placeholder="USD 1.970" style="color:var(--naranja);font-weight:600;"/></td>
+                </tr>
+                <tr>
+                  <td><input class="cp-input full-w" id="esc-1-m2" placeholder="378 m²"/></td>
+                  <td><input class="cp-input" id="esc-1-pct" placeholder="28%" style="width:46px;"/></td>
+                  <td><input class="cp-input full-w" id="esc-1-costo" placeholder="USD 1.899" style="color:var(--naranja);font-weight:600;"/></td>
+                </tr>
+                <tr>
+                  <td><input class="cp-input full-w" id="esc-2-m2" placeholder="392 m²"/></td>
+                  <td><input class="cp-input" id="esc-2-pct" placeholder="29%" style="width:46px;"/></td>
+                  <td><input class="cp-input full-w" id="esc-2-costo" placeholder="USD 1.834" style="color:var(--naranja);font-weight:600;"/></td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- MODELO: filas fijas -->
+            <div class="cp-modelo-wrap">
+              <div class="cp-esc-lbl">Modelo (<input class="cp-input" id="f-modelo-pct" placeholder="15%" style="width:38px;font-size:9px;"/>)</div>
+              <div class="cp-modelo-row">
+                <span class="cp-modelo-lbl">Inversión</span>
+                <span class="cp-modelo-val naranja"><input class="cp-input" id="mod-0-val" placeholder="USD 107.700" style="color:var(--naranja);font-weight:600;font-size:11px;width:120px;text-align:right;"/></span>
+              </div>
+              <div class="cp-modelo-row">
+                <span class="cp-modelo-lbl">m² a recibir</span>
+                <span class="cp-modelo-val"><input class="cp-input" id="mod-1-val" placeholder="Entre 55 m² y 59 m²" style="font-size:11px;width:140px;text-align:right;"/></span>
+              </div>
+              <div class="cp-modelo-row">
+                <span class="cp-modelo-lbl">Costo m²</span>
+                <span class="cp-modelo-val naranja"><input class="cp-input" id="mod-2-val" placeholder="USD 1.834 – 1.970" style="color:var(--naranja);font-weight:600;font-size:11px;width:140px;text-align:right;"/></span>
+              </div>
+            </div>
+
+            <!-- NOTA LEGAL -->
+            <div class="cp-nota">
+              <input class="cp-input full-w" id="f-nota" placeholder="El terreno permanece en manos del grupo inversor hasta recibir los metros acordados con el developer." style="font-size:10px;color:var(--muted);font-style:italic;width:100%;"/>
+            </div>
+
+          </div><!-- /card-preview -->
+        </div>
       </div><!-- /oportunidad-fields -->
 
       <!-- ===================== CAMPOS PRÓXIMO ===================== -->
@@ -638,16 +722,7 @@ function openPinModal(src, idx) {
     document.getElementById('f-lng').value = p.lng || '';
 
     if (tipo === 'oportunidad') {
-      document.getElementById('f-badge-mes').value = p.badge_mes || '';
-      document.getElementById('f-precio').value = p.precio_desde || '';
-      document.getElementById('f-precio-sub').value = p.precio_sub || '';
-      document.getElementById('f-escritura').value = p.escritura || '';
-      document.getElementById('f-participacion').value = p.participacion_disponible || '';
-      document.getElementById('f-modelo-pct').value = p.modelo_pct || '';
-      document.getElementById('f-nota').value = p.nota || '';
-      renderDhList(p.dh || []);
-      renderEscList(p.escenarios || []);
-      renderModeloList(p.modelo || []);
+      fillOportunidadFields(p);
     } else {
       document.getElementById('f-proximo-nota').value = p.nota || '';
     }
@@ -673,18 +748,63 @@ function closePinModal() { document.getElementById('pin-modal-overlay').classLis
 function closePinModalOutside(e) { if (e.target.id === 'pin-modal-overlay') closePinModal(); }
 
 function clearCommonFields() {
-  ['f-dir','f-numero','f-zona','f-info','f-badge-mes','f-precio','f-precio-sub',
-   'f-escritura','f-participacion','f-modelo-pct','f-nota','f-proximo-nota'].forEach(id => {
-    document.getElementById(id).value = '';
+  ['f-dir','f-numero','f-zona','f-info','f-badge-mes','f-precio','f-precio-pct',
+   'f-escritura','f-participacion','f-modelo-pct','f-nota','f-proximo-nota',
+   'dh-0-val','dh-1-val','dh-2-val','dh-3-val',
+   'esc-0-m2','esc-0-pct','esc-0-costo',
+   'esc-1-m2','esc-1-pct','esc-1-costo',
+   'esc-2-m2','esc-2-pct','esc-2-costo',
+   'mod-0-val','mod-1-val','mod-2-val'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
   });
   document.getElementById('f-lat').value = '';
   document.getElementById('f-lng').value = '';
 }
 
-function clearAbiertoFields() {
-  renderDhList([{ val: '', lbl: '' }, { val: '', lbl: '' }, { val: '', lbl: '' }, { val: '', lbl: '' }]);
-  renderEscList([{ m2: '', pct: '', costo: '' }]);
-  renderModeloList([{ label: '', val: '', n: false }]);
+function fillOportunidadFields(p) {
+  document.getElementById('f-badge-mes').value = p.badge_mes || '';
+  document.getElementById('f-precio').value = p.precio_desde || '';
+  // extraer % del precio_sub si existe
+  const pctMatch = (p.precio_sub || '').match(/\((\d+)%/);
+  document.getElementById('f-precio-pct').value = pctMatch ? pctMatch[1] + '%' : '';
+  document.getElementById('f-escritura').value = p.escritura || '';
+  document.getElementById('f-participacion').value = p.participacion_disponible || '';
+  document.getElementById('f-modelo-pct').value = p.modelo_pct || '';
+  document.getElementById('f-nota').value = p.nota || '';
+
+  const dh = p.dh || [{val:''},{val:''},{val:''},{val:''}];
+  [0,1,2,3].forEach(i => {
+    const el = document.getElementById('dh-' + i + '-val');
+    if (el) el.value = (dh[i] || {}).val || '';
+  });
+
+  const esc = p.escenarios || [{m2:'',pct:'',costo:''},{m2:'',pct:'',costo:''},{m2:'',pct:'',costo:''}];
+  [0,1,2].forEach(i => {
+    const e = esc[i] || {};
+    ['m2','pct','costo'].forEach(f => {
+      const el = document.getElementById('esc-' + i + '-' + f);
+      if (el) el.value = e[f] || '';
+    });
+  });
+
+  const mod = p.modelo || [{val:''},{val:''},{val:''}];
+  [0,1,2].forEach(i => {
+    const el = document.getElementById('mod-' + i + '-val');
+    if (el) el.value = (mod[i] || {}).val || '';
+  });
+
+  // Actualizar nombre/zona preview
+  updateCardPreview(p.nombre, p.numero, p.zona);
+}
+
+function updateCardPreview(nombre, numero, zona) {
+  const n = document.getElementById('cp-name-preview');
+  const nu = document.getElementById('cp-num-preview');
+  const z = document.getElementById('cp-zona-preview');
+  if (n) n.textContent = nombre || '—';
+  if (nu) nu.textContent = numero || '';
+  if (z) z.textContent = zona || '—';
 }
 
 function toggleTipoFields() {
@@ -698,14 +818,23 @@ function toggleTipoFields() {
   document.getElementById('f-info-group').style.display = isCanje ? '' : 'none';
   document.getElementById('f-numero-group').style.display = isOportunidad ? '' : 'none';
 
-  // Label dirección
   document.getElementById('f-dir-label').textContent = isOportunidad ? 'Nombre (calle)' : 'Dirección';
   document.getElementById('f-dir').placeholder = isOportunidad ? 'Ugarte' : 'Amenábar 696';
-
-  if (isOportunidad && !document.getElementById('dh-list').children.length) {
-    clearAbiertoFields();
-  }
 }
+
+// Live preview: actualizar nombre/num/zona mientras se escribe
+document.addEventListener('DOMContentLoaded', () => {
+  ['f-dir','f-numero','f-zona'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => {
+      updateCardPreview(
+        document.getElementById('f-dir').value,
+        document.getElementById('f-numero').value,
+        document.getElementById('f-zona').value
+      );
+    });
+  });
+});
 
 function savePin() {
   const tipo = document.getElementById('f-tipo').value;
@@ -728,16 +857,34 @@ function savePin() {
     };
 
     if (tipo === 'oportunidad') {
+      const pct = document.getElementById('f-precio-pct').value.trim();
       p.badge_mes = document.getElementById('f-badge-mes').value.trim();
       p.precio_desde = document.getElementById('f-precio').value.trim();
-      p.precio_sub = document.getElementById('f-precio-sub').value.trim();
+      p.precio_sub = `por m² · esc. base (${pct}) canje`;
       p.escritura = document.getElementById('f-escritura').value.trim();
       p.participacion_disponible = document.getElementById('f-participacion').value.trim();
       p.modelo_pct = document.getElementById('f-modelo-pct').value.trim();
       p.nota = document.getElementById('f-nota').value.trim();
-      p.dh = getDhData();
-      p.escenarios = getEscData();
-      p.modelo = getModeloData();
+
+      const DH_LABELS = ['Valor terreno', 'Incidencia /m²', '% canje', 'Participación'];
+      p.dh = [0,1,2,3].map(i => ({
+        val: (document.getElementById('dh-' + i + '-val') || {}).value?.trim() || '',
+        lbl: DH_LABELS[i]
+      }));
+
+      p.escenarios = [0,1,2].map(i => ({
+        m2:    (document.getElementById('esc-' + i + '-m2')    || {}).value?.trim() || '',
+        pct:   (document.getElementById('esc-' + i + '-pct')   || {}).value?.trim() || '',
+        costo: (document.getElementById('esc-' + i + '-costo') || {}).value?.trim() || '',
+      })).filter(e => e.m2 || e.costo);
+
+      const MOD_LABELS = ['Inversión', 'm² a recibir', 'Costo m²'];
+      const MOD_N = [true, false, true];
+      p.modelo = [0,1,2].map(i => ({
+        label: MOD_LABELS[i],
+        val:   (document.getElementById('mod-' + i + '-val') || {}).value?.trim() || '',
+        n:     MOD_N[i]
+      })).filter(m => m.val);
     } else {
       p.nota = document.getElementById('f-proximo-nota').value.trim();
     }
@@ -789,78 +936,6 @@ function deletePin(src, idx) {
   }
   renderMapaList();
   toast('Pin eliminado');
-}
-
-// ============================================================
-// DH rows
-// ============================================================
-function renderDhList(dh) {
-  document.getElementById('dh-list').innerHTML = dh.map((d, i) => `
-    <div class="esc-row" style="grid-template-columns:1fr 1fr auto;">
-      <input type="text" placeholder="Valor (USD 718K)" value="${d.val || ''}" data-dh="${i}" data-field="val"/>
-      <input type="text" placeholder="Etiqueta (Valor terreno)" value="${d.lbl || ''}" data-dh="${i}" data-field="lbl"/>
-      <button class="esc-del" onclick="removeDhRow(${i})">×</button>
-    </div>
-  `).join('');
-}
-function addDhRow() { const dh = getDhData(); dh.push({ val: '', lbl: '' }); renderDhList(dh); }
-function removeDhRow(i) { const dh = getDhData(); dh.splice(i, 1); renderDhList(dh); }
-function getDhData() {
-  const rows = document.querySelectorAll('[data-dh]');
-  const map = {};
-  rows.forEach(r => { const i = r.dataset.dh; if (!map[i]) map[i] = {}; map[i][r.dataset.field] = r.value; });
-  return Object.values(map);
-}
-
-// ============================================================
-// ESC rows
-// ============================================================
-function renderEscList(esc) {
-  document.getElementById('esc-list').innerHTML = esc.map((e, i) => `
-    <div class="esc-row">
-      <input type="text" placeholder="365 m²" value="${e.m2 || ''}" data-esc="${i}" data-field="m2"/>
-      <input type="text" placeholder="27%" value="${e.pct || ''}" data-esc="${i}" data-field="pct" style="max-width:80px;"/>
-      <input type="text" placeholder="USD 1.970" value="${e.costo || ''}" data-esc="${i}" data-field="costo"/>
-      <button class="esc-del" onclick="removeEscRow(${i})">×</button>
-    </div>
-  `).join('');
-}
-function addEscRow() { const esc = getEscData(); esc.push({ m2: '', pct: '', costo: '' }); renderEscList(esc); }
-function removeEscRow(i) { const esc = getEscData(); esc.splice(i, 1); renderEscList(esc); }
-function getEscData() {
-  const rows = document.querySelectorAll('[data-esc]');
-  const map = {};
-  rows.forEach(r => { const i = r.dataset.esc; if (!map[i]) map[i] = {}; map[i][r.dataset.field] = r.value; });
-  return Object.values(map);
-}
-
-// ============================================================
-// MODELO rows
-// ============================================================
-function renderModeloList(modelo) {
-  document.getElementById('modelo-list').innerHTML = modelo.map((m, i) => `
-    <div class="modelo-row-edit">
-      <input type="text" placeholder="Etiqueta" value="${m.label || ''}" data-mod="${i}" data-field="label"/>
-      <input type="text" placeholder="Valor" value="${m.val || ''}" data-mod="${i}" data-field="val"/>
-      <select data-mod="${i}" data-field="n" style="max-width:80px;">
-        <option value="false" ${!m.n ? 'selected' : ''}>Normal</option>
-        <option value="true" ${m.n ? 'selected' : ''}>Naranja</option>
-      </select>
-      <button class="esc-del" onclick="removeModeloRow(${i})">×</button>
-    </div>
-  `).join('');
-}
-function addModeloRow() { const m = getModeloData(); m.push({ label: '', val: '', n: false }); renderModeloList(m); }
-function removeModeloRow(i) { const m = getModeloData(); m.splice(i, 1); renderModeloList(m); }
-function getModeloData() {
-  const rows = document.querySelectorAll('[data-mod]');
-  const map = {};
-  rows.forEach(r => {
-    const i = r.dataset.mod;
-    if (!map[i]) map[i] = {};
-    map[i][r.dataset.field] = r.dataset.field === 'n' ? r.value === 'true' : r.value;
-  });
-  return Object.values(map);
 }
 
 // ============================================================
