@@ -82,8 +82,8 @@
     .btn-sec:hover{border-color:rgba(248,244,240,.4);transform:translateY(-1px);}
     .btn-sec:active{transform:translateY(0);}
     .hero-stats{display:flex;gap:52px;padding-top:32px;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap;}
-    .stat-n{font-family:'Montserrat',sans-serif;font-size:32px;font-weight:600;color:var(--naranja);}
-    .stat-l{font-size:12px;color:var(--texto);margin-top:4px;line-height:1.5;}
+    .stat-n{font-family:'Montserrat',sans-serif;font-size:32px;font-weight:600;color:var(--naranja);-webkit-user-select:none;user-select:none;}
+    .stat-l{font-size:12px;color:var(--texto);margin-top:4px;line-height:1.5;-webkit-user-select:none;user-select:none;}
 
     /* SECTION HELPERS */
     .sec-eyebrow{font-size:10px;color:var(--naranja);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;}
@@ -97,7 +97,7 @@
     @media(max-width:768px){.historia-layout{grid-template-columns:1fr;gap:40px;}}
     .historia-lead{font-size:16px;color:var(--blanco);line-height:1.85;font-weight:300;margin-bottom:24px;}
     .historia-lead strong{color:var(--naranja);font-weight:600;}
-    .historia-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .historia-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px;}
     .hm-card{background:var(--card);border:1px solid var(--borde);border-radius:10px;padding:16px 18px;}
     .hm-n{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:600;color:var(--naranja);margin-bottom:3px;}
     .hm-l{font-size:11px;color:var(--texto);line-height:1.4;}
@@ -306,7 +306,7 @@
       .sec-title{font-size:clamp(24px,3.2vw,34px);}
       .sec-sub{font-size:14px;}
       .historia-lead{font-size:17px;}
-      .historia-layout{gap:48px;}
+      .historia-metrics{grid-template-columns:repeat(4,1fr);}
       .hm-n{font-size:24px;}
       .hm-l{font-size:12px;}
 
@@ -356,7 +356,7 @@
       .pasos-grid{grid-template-columns:repeat(2,1fr);}
       .pilares,.como,.proy-section,.mapa-section,.historia,.cta-section{padding-left:16px;padding-right:16px;}
       footer{padding:20px 16px;}
-      .historia-layout{grid-template-columns:1fr;gap:32px;}
+      .historia-metrics{grid-template-columns:repeat(2,1fr);}
       #map{height:360px;}
     }
   </style>
@@ -395,24 +395,18 @@
 <!-- HISTORIA -->
 <section class="historia" id="historia">
   <div class="historia-inner">
-    <div class="sec-eyebrow fade-section">Quiénes somos</div>
+    <div class="sec-eyebrow fade-section">Track record</div>
     <div class="sec-title fade-section fade-section-d1">Diez años operando en el mercado de tierras de CABA</div>
-    <div class="historia-layout">
-      <div>
-        <p class="historia-lead fade-section fade-section-d2">
-          Land Ventures nació con una premisa simple: identificar los mejores terrenos en CABA <strong>antes de que el mercado los descubra</strong> y estructurar la compra de forma que el inversor acceda a metros cuadrados a precio de costo real.
-          <br/><br/>
-          Hemos desarrollado un modelo con seguridad jurídica que alinea los intereses del grupo inversor con los del desarrollador. El terreno queda en manos del grupo hasta recibir los m² acordados. Sin excepciones.
-        </p>
-        <div class="historia-metrics fade-section fade-section-d3">
-          <div class="hm-card"><div class="hm-n">+20</div><div class="hm-l">Terrenos comprados y canjeados en CABA</div></div>
-          <div class="hm-card"><div class="hm-n">+USD 15M</div><div class="hm-l">Invertidos en tierra desde el inicio</div></div>
-          <div class="hm-card"><div class="hm-n">~29.8%</div><div class="hm-l">Promedio histórico de canje</div></div>
-          <div class="hm-card"><div class="hm-n">+25.000 m²</div><div class="hm-l">Vendibles generados para inversores</div></div>
-        </div>
-      </div>
-      <div class="timeline" id="timeline-container">
-        <!-- Rendered by JS from data -->
+    <div style="margin-top:40px;">
+      <p class="historia-lead fade-section fade-section-d2">
+        Land Ventures nació con una premisa simple: identificar los mejores terrenos en CABA <strong>antes de que el mercado los descubra</strong> y estructurar la compra de forma que el inversor acceda a metros cuadrados a precio de costo real.<br/><br/>
+        Hemos desarrollado un modelo con seguridad jurídica que alinea los intereses del grupo inversor con los del desarrollador. El terreno queda en manos del grupo hasta recibir los m² acordados. Sin excepciones.
+      </p>
+      <div class="historia-metrics fade-section fade-section-d3">
+        <div class="hm-card"><div class="hm-n">+20</div><div class="hm-l">Terrenos comprados y canjeados en CABA</div></div>
+        <div class="hm-card"><div class="hm-n">+USD 15M</div><div class="hm-l">Invertidos en tierra desde el inicio</div></div>
+        <div class="hm-card"><div class="hm-n">~29.8%</div><div class="hm-l">Promedio histórico de canje</div></div>
+        <div class="hm-card"><div class="hm-n">+25.000 m²</div><div class="hm-l">Vendibles generados para inversores</div></div>
       </div>
     </div>
   </div>
