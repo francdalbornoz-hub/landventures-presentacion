@@ -60,26 +60,26 @@
     .items-list{display:grid;gap:10px;}
     .item-row{background:var(--card);border:1px solid var(--borde);border-radius:10px;padding:16px 18px;display:flex;align-items:center;gap:14px;}
     .item-row:hover{border-color:rgba(232,148,58,.2);}
-    .item-badge{padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;}
+    .item-badge{padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;white-space:nowrap;}
     .item-badge.abierto{background:rgba(74,222,128,.1);color:var(--verde);border:1px solid rgba(74,222,128,.2);}
     .item-badge.proximo{background:rgba(167,139,250,.1);color:var(--proximo);border:1px solid rgba(167,139,250,.2);}
     .item-badge.cerrado{background:rgba(232,148,58,.1);color:var(--naranja);border:1px solid rgba(232,148,58,.2);}
-    .item-info{flex:1;}
-    .item-name{font-weight:600;font-size:14px;margin-bottom:2px;}
+    .item-info{flex:1;min-width:0;}
+    .item-name{font-weight:600;font-size:14px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     .item-sub{font-size:11px;color:var(--texto);}
-    .item-actions{display:flex;gap:6px;}
+    .item-actions{display:flex;gap:6px;flex-shrink:0;}
     .icon-btn{padding:7px 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:none;font-family:'Montserrat',sans-serif;}
     .icon-btn.edit{background:rgba(232,148,58,.1);color:var(--naranja);border:1px solid rgba(232,148,58,.2);}
     .icon-btn.edit:hover{background:rgba(232,148,58,.2);}
     .icon-btn.del{background:rgba(239,68,68,.08);color:var(--rojo);border:1px solid rgba(239,68,68,.15);}
     .icon-btn.del:hover{background:rgba(239,68,68,.15);}
-    .drag-handle{cursor:grab;color:var(--borde);font-size:18px;user-select:none;}
+    .drag-handle{cursor:grab;color:var(--borde);font-size:18px;user-select:none;flex-shrink:0;}
 
     /* MODAL */
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;}
     .modal-overlay.show{display:flex;}
     .modal{background:var(--card);border:1px solid var(--borde);border-radius:16px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;}
-    .modal-hdr{padding:20px 24px;border-bottom:1px solid var(--borde);display:flex;align-items:center;justify-content:space-between;}
+    .modal-hdr{padding:20px 24px;border-bottom:1px solid var(--borde);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--card);z-index:1;}
     .modal-title{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:800;}
     .modal-close{background:none;border:none;color:var(--texto);font-size:20px;cursor:pointer;padding:4px;line-height:1;}
     .modal-close:hover{color:var(--blanco);}
@@ -95,6 +95,10 @@
     select option{background:#1a1918;}
     .form-hint{font-size:11px;color:var(--muted);margin-top:2px;}
 
+    /* Sección divisora dentro del modal */
+    .modal-section{margin-top:20px;padding-top:20px;border-top:1px solid var(--borde);}
+    .modal-section-title{font-size:11px;font-weight:700;color:var(--texto);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+
     /* Escenarios dinámicos */
     .esc-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
     .esc-row{display:grid;grid-template-columns:1fr 80px 1fr auto;gap:8px;align-items:center;}
@@ -107,7 +111,7 @@
     .modelo-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
     .modelo-row-edit{display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:center;}
 
-    .modal-ftr{padding:16px 24px;border-top:1px solid var(--borde);display:flex;gap:8px;justify-content:flex-end;}
+    .modal-ftr{padding:16px 24px;border-top:1px solid var(--borde);display:flex;gap:8px;justify-content:flex-end;position:sticky;bottom:0;background:var(--card);}
     .save-btn{padding:11px 24px;background:var(--naranja);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;}
     .save-btn:hover{background:var(--naranja-l);}
     .cancel-btn{padding:11px 18px;background:transparent;color:var(--texto);border:1px solid var(--borde);border-radius:8px;font-size:13px;cursor:pointer;font-family:'Montserrat',sans-serif;}
@@ -127,19 +131,8 @@
     .empty-state{text-align:center;padding:48px 24px;color:var(--texto);}
     .empty-state p{font-size:14px;margin-bottom:16px;}
 
-    /* LEADS */
-    .lead-row{background:var(--card);border:1px solid var(--borde);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px;}
-    .lead-row:hover{border-color:rgba(232,148,58,.2);}
-    .lead-avatar{width:38px;height:38px;border-radius:50%;background:rgba(232,148,58,.1);border:1px solid rgba(232,148,58,.2);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:var(--naranja);flex-shrink:0;}
-    .lead-info{flex:1;}
-    .lead-name{font-weight:600;font-size:14px;margin-bottom:2px;}
-    .lead-wa{font-size:12px;color:var(--texto);}
-    .lead-date{font-size:11px;color:var(--muted);white-space:nowrap;}
-    .lead-del{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);color:var(--rojo);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:11px;font-family:Montserrat,sans-serif;}
-    .lead-del:hover{background:rgba(239,68,68,.15);}
-    .leads-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap;}
-    .leads-count{font-size:13px;color:var(--texto);}
-    .leads-count strong{color:var(--blanco);}
+    /* Tipo badge colores extra */
+    .item-badge.desarrollo{background:rgba(232,148,58,.1);color:var(--naranja);border:1px solid rgba(232,148,58,.2);}
   </style>
 </head>
 <body>
@@ -170,57 +163,24 @@
 
   <main class="admin-main">
     <div class="tabs">
-      <button class="tab active" onclick="setTab('proyectos')">Proyectos</button>
-      <button class="tab" onclick="setTab('timeline')">Historia / Timeline</button>
-      <button class="tab" onclick="setTab('terrenos')">Terrenos</button>
-      <button class="tab" onclick="setTab('leads')">Leads <span id="leads-badge" style="background:var(--naranja);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;margin-left:4px;display:none;"></span></button>
+      <button class="tab active" onclick="setTab('mapa')">Mapa de terrenos</button>
       <button class="tab" onclick="setTab('datos')">Datos y backup</button>
     </div>
 
-    <!-- PROYECTOS TAB -->
-    <div id="tab-proyectos">
+    <!-- MAPA TAB -->
+    <div id="tab-mapa">
       <div class="sec-hdr">
-        <h2>Proyectos</h2>
-        <button class="add-btn" onclick="openModal()">+ Agregar proyecto</button>
+        <h2>Todos los pins del mapa</h2>
+        <button class="add-btn" onclick="openPinModal()">+ Agregar pin</button>
       </div>
-      <div class="items-list" id="proyectos-list"></div>
-    </div>
-
-    <!-- TIMELINE TAB -->
-    <div id="tab-timeline" style="display:none;">
-      <div class="sec-hdr">
-        <h2>Historia / Timeline</h2>
-        <button class="add-btn" onclick="openTimelineModal()">+ Agregar hito</button>
-      </div>
-      <div class="items-list" id="timeline-list"></div>
-    </div>
-
-    <!-- TERRENOS TAB -->
-    <div id="tab-terrenos" style="display:none;">
-      <div class="sec-hdr">
-        <h2>Terrenos (track record mapa)</h2>
-        <button class="add-btn" onclick="openTerrenoModal()">+ Agregar terreno</button>
-      </div>
-      <div class="items-list" id="terrenos-list"></div>
-    </div>
-
-    <!-- LEADS TAB -->
-    <div id="tab-leads" style="display:none;">
-      <div class="leads-bar">
-        <div class="leads-count">Contactos recibidos: <strong id="leads-total">0</strong></div>
-        <div style="display:flex;gap:8px;">
-          <button class="data-btn" onclick="exportLeads()">Exportar CSV</button>
-          <button class="data-btn danger" onclick="clearLeads()">Limpiar lista</button>
-        </div>
-      </div>
-      <div class="items-list" id="leads-list"></div>
+      <div class="items-list" id="mapa-list"></div>
     </div>
 
     <!-- DATOS TAB -->
     <div id="tab-datos" style="display:none;">
       <div class="data-panel">
         <h3>Exportar datos</h3>
-        <p>Descargá un archivo JSON con todos los proyectos y la historia. Podés usar esto como backup o para restaurar en otro dispositivo.</p>
+        <p>Descargá un archivo JSON con todos los pins del mapa. Podés usar esto como backup o para restaurar en otro dispositivo.</p>
         <div class="data-actions">
           <button class="data-btn" onclick="exportData()">Descargar backup JSON</button>
         </div>
@@ -255,47 +215,77 @@
   </main>
 </div>
 
-<!-- MODAL PROYECTO -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+<!-- MODAL PIN (unificado) -->
+<div class="modal-overlay" id="pin-modal-overlay" onclick="closePinModalOutside(event)">
   <div class="modal">
     <div class="modal-hdr">
-      <div class="modal-title" id="modal-title">Nuevo proyecto</div>
-      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="modal-title" id="pin-modal-title">Nuevo pin</div>
+      <button class="modal-close" onclick="closePinModal()">×</button>
     </div>
     <div class="modal-body">
       <div class="form-grid">
-        <div class="form-group">
-          <label>Estado</label>
-          <select id="f-estado" onchange="toggleEstadoFields()">
-            <option value="abierto">Abierto</option>
-            <option value="proximo">Próximamente</option>
+
+        <!-- TIPO -->
+        <div class="form-group full">
+          <label>Tipo de pin</label>
+          <select id="f-tipo" onchange="toggleTipoFields()">
+            <option value="oportunidad">Oportunidad (verde)</option>
+            <option value="proximo">Próximamente (violeta)</option>
+            <option value="edificio">Canje · Edificio (naranja)</option>
+            <option value="local">Canje · Local (naranja)</option>
+            <option value="venta">Compraventa (naranja)</option>
+            <option value="desarrollo">Desarrollo (naranja)</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Mes badge</label>
-          <input type="text" id="f-badge-mes" placeholder="May 2026"/>
-          <span class="form-hint">Solo si estado = abierto</span>
-        </div>
-        <div class="form-group">
-          <label>Nombre</label>
-          <input type="text" id="f-nombre" placeholder="Ugarte"/>
-        </div>
-        <div class="form-group">
-          <label>Número</label>
-          <input type="text" id="f-numero" placeholder="2729"/>
-        </div>
+
+        <!-- Campos comunes -->
         <div class="form-group full">
+          <label id="f-dir-label">Dirección</label>
+          <input type="text" id="f-dir" placeholder="Ugarte 2729"/>
+        </div>
+        <div class="form-group" id="f-numero-group">
+          <label>Número (calle)</label>
+          <input type="text" id="f-numero" placeholder="2729"/>
+          <span class="form-hint">Solo para Oportunidad</span>
+        </div>
+        <div class="form-group" id="f-zona-group">
           <label>Zona</label>
           <input type="text" id="f-zona" placeholder="Belgrano · CABA"/>
         </div>
 
-        <div id="abierto-fields">
-          <div class="form-grid" style="margin-top:0;">
+        <!-- Info — para tipos no-Oportunidad -->
+        <div class="form-group full" id="f-info-group">
+          <label>Info / descripción</label>
+          <input type="text" id="f-info" placeholder="35% realizado"/>
+        </div>
+
+        <!-- Lat/Lng -->
+        <div class="form-group">
+          <label>Latitud</label>
+          <input type="number" id="f-lat" placeholder="-34.5602" step="0.0001"/>
+        </div>
+        <div class="form-group">
+          <label>Longitud</label>
+          <input type="number" id="f-lng" placeholder="-58.4556" step="0.0001"/>
+        </div>
+
+      </div><!-- /form-grid base -->
+
+      <!-- ===================== CAMPOS OPORTUNIDAD ===================== -->
+      <div id="oportunidad-fields">
+
+        <div class="modal-section">
+          <div class="modal-section-title">Datos del proyecto</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Mes badge</label>
+              <input type="text" id="f-badge-mes" placeholder="May 2026"/>
+            </div>
             <div class="form-group">
               <label>Precio desde (USD)</label>
               <input type="text" id="f-precio" placeholder="1.899"/>
             </div>
-            <div class="form-group">
+            <div class="form-group full">
               <label>Subtítulo precio</label>
               <input type="text" id="f-precio-sub" placeholder="por m² · esc. base (28% canje)"/>
             </div>
@@ -312,137 +302,49 @@
               <label>% modelo (participación mín.)</label>
               <input type="text" id="f-modelo-pct" placeholder="15%"/>
             </div>
-          </div>
-
-          <div class="form-group full" style="margin-top:14px;">
-            <label>Nota legal</label>
-            <textarea id="f-nota" placeholder="El terreno permanece en manos del grupo inversor…"></textarea>
-          </div>
-
-          <div class="form-group full" style="margin-top:14px;">
-            <label>Datos destacados (4 items)</label>
-            <div class="esc-list" id="dh-list"></div>
-            <button class="esc-add" onclick="addDhRow()">+ Agregar dato</button>
-          </div>
-
-          <div class="form-group full" style="margin-top:14px;">
-            <label>Escenarios (m², %, costo)</label>
-            <div class="esc-list" id="esc-list"></div>
-            <button class="esc-add" onclick="addEscRow()">+ Agregar escenario</button>
-          </div>
-
-          <div class="form-group full" style="margin-top:14px;">
-            <label>Modelo financiero (filas)</label>
-            <div class="modelo-list" id="modelo-list"></div>
-            <button class="esc-add" onclick="addModeloRow()">+ Agregar fila</button>
+            <div class="form-group full">
+              <label>Nota legal</label>
+              <textarea id="f-nota" placeholder="El terreno permanece en manos del grupo inversor…"></textarea>
+            </div>
           </div>
         </div>
 
-        <div class="form-group full" style="margin-top:4px;" id="proximo-nota-field">
-          <label>Descripción (para próximo)</label>
-          <textarea id="f-proximo-nota" placeholder="Próxima oportunidad en estructuración…"></textarea>
+        <div class="modal-section">
+          <div class="modal-section-title">Datos destacados (4 items)</div>
+          <div class="esc-list" id="dh-list"></div>
+          <button class="esc-add" onclick="addDhRow()">+ Agregar dato</button>
         </div>
 
-        <div class="form-group" style="margin-top:14px;">
-          <label>Latitud (para mapa)</label>
-          <input type="number" id="f-lat" placeholder="-34.5602" step="0.0001"/>
+        <div class="modal-section">
+          <div class="modal-section-title">Escenarios (m², %, costo)</div>
+          <div class="esc-list" id="esc-list"></div>
+          <button class="esc-add" onclick="addEscRow()">+ Agregar escenario</button>
         </div>
-        <div class="form-group" style="margin-top:14px;">
-          <label>Longitud (para mapa)</label>
-          <input type="number" id="f-lng" placeholder="-58.4556" step="0.0001"/>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Modelo financiero (filas)</div>
+          <div class="modelo-list" id="modelo-list"></div>
+          <button class="esc-add" onclick="addModeloRow()">+ Agregar fila</button>
+        </div>
+
+      </div><!-- /oportunidad-fields -->
+
+      <!-- ===================== CAMPOS PRÓXIMO ===================== -->
+      <div id="proximo-fields">
+        <div class="modal-section">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Descripción (para próximo)</label>
+              <textarea id="f-proximo-nota" placeholder="Próxima oportunidad en estructuración…"></textarea>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="modal-ftr">
-      <button class="cancel-btn" onclick="closeModal()">Cancelar</button>
-      <button class="save-btn" onclick="saveProyecto()">Guardar proyecto</button>
-    </div>
-  </div>
-</div>
 
-<!-- MODAL TIMELINE -->
-<div class="modal-overlay" id="tl-modal-overlay" onclick="closeTlModalOutside(event)">
-  <div class="modal" style="max-width:480px;">
-    <div class="modal-hdr">
-      <div class="modal-title" id="tl-modal-title">Nuevo hito</div>
-      <button class="modal-close" onclick="closeTlModal()">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Año</label>
-          <input type="text" id="tl-year" placeholder="2026"/>
-        </div>
-        <div class="form-group">
-          <label>¿Completado?</label>
-          <select id="tl-done">
-            <option value="true">Sí</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-        <div class="form-group full">
-          <label>Título del hito</label>
-          <input type="text" id="tl-head" placeholder="Primera operación en Belgrano"/>
-        </div>
-        <div class="form-group full">
-          <label>Descripción</label>
-          <textarea id="tl-body" placeholder="Descripción del hito…"></textarea>
-        </div>
-      </div>
-    </div>
+    </div><!-- /modal-body -->
     <div class="modal-ftr">
-      <button class="cancel-btn" onclick="closeTlModal()">Cancelar</button>
-      <button class="save-btn" onclick="saveTlItem()">Guardar hito</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL TERRENO -->
-<div class="modal-overlay" id="terreno-modal-overlay" onclick="closeTerrenoModalOutside(event)">
-  <div class="modal" style="max-width:540px;">
-    <div class="modal-hdr">
-      <div class="modal-title" id="terreno-modal-title">Nuevo terreno</div>
-      <button class="modal-close" onclick="closeTerrenoModal()">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="form-group full">
-          <label>Dirección</label>
-          <input type="text" id="t-dir" placeholder="Amenábar 696"/>
-        </div>
-        <div class="form-group">
-          <label>Zona</label>
-          <input type="text" id="t-zona" placeholder="Colegiales"/>
-        </div>
-        <div class="form-group">
-          <label>Canje %</label>
-          <input type="text" id="t-canje" placeholder="35% realizado"/>
-        </div>
-        <div class="form-group full">
-          <label>Info / descripción</label>
-          <input type="text" id="t-info" placeholder="Canje realizado"/>
-        </div>
-        <div class="form-group">
-          <label>Subtipo</label>
-          <select id="t-subtipo">
-            <option value="edificio">Edificio</option>
-            <option value="local">Local</option>
-            <option value="venta">Venta</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Latitud</label>
-          <input type="number" id="t-lat" placeholder="-34.5756" step="0.0001"/>
-        </div>
-        <div class="form-group">
-          <label>Longitud</label>
-          <input type="number" id="t-lng" placeholder="-58.4489" step="0.0001"/>
-        </div>
-      </div>
-    </div>
-    <div class="modal-ftr">
-      <button class="cancel-btn" onclick="closeTerrenoModal()">Cancelar</button>
-      <button class="save-btn" onclick="saveTerrenoModal()">Guardar terreno</button>
+      <button class="cancel-btn" onclick="closePinModal()">Cancelar</button>
+      <button class="save-btn" onclick="savePin()">Guardar pin</button>
     </div>
   </div>
 </div>
@@ -489,28 +391,23 @@ function changePassword() {
   toast('Contraseña actualizada');
 }
 
-// Check session
-if (sessionStorage.getItem(SESSION_KEY)) {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('admin-wrap').classList.add('show');
-  // renderAll called after data setup
-}
-
 document.getElementById('pwd-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') doLogin();
 });
 
+if (sessionStorage.getItem(SESSION_KEY)) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-wrap').classList.add('show');
+}
+
 // ============================================================
 // DATA
 // ============================================================
-const defaultTimeline = [
-  { year: '2013', done: true, head: 'Primeras operaciones en Belgrano', body: 'Juramento 1543 marca el inicio del modelo: compra de terreno, canje por m² con el developer.' },
-  { year: '2016', done: true, head: 'Consolidación en Colegiales', body: 'Cinco operaciones consecutivas en el corredor Amenábar–Forest. Canjes entre 23.6% y 35%.' },
-  { year: '2019', done: true, head: 'Expansión a Villa Crespo', body: 'El modelo se extiende a barrios con mayor tracción de desarrolladores. Darwin 566, primer canje en la zona.' },
-  { year: '2022', done: true, head: '+USD 10M invertidos en tierra', body: 'Más de 15 terrenos comprados. Los primeros inversores reciben sus metros cuadrados escriturados.' },
-  { year: '2024', done: true, head: '+25.000 m² vendibles generados', body: 'Track record consolidado: 29.8% promedio de canje. Rango histórico 23.6%–35%.' },
-  { year: '2026', done: false, head: 'Tres proyectos activos hoy', body: 'Ugarte 2729, Amenábar 2546 y Serrano 534 con cupos disponibles para nuevos inversores.' }
-];
+function saveData(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+function loadData(key, fallback) {
+  try { const s = localStorage.getItem(key); return s ? JSON.parse(s) : fallback; }
+  catch { return fallback; }
+}
 
 const defaultProyectos = [
   {
@@ -583,122 +480,320 @@ const defaultProyectos = [
     lat: -34.5946, lng: -58.4413
   },
   {
+    id: 'moldes-2661', estado: 'abierto', badge_mes: '',
+    nombre: 'Moldes', numero: '2661', zona: 'Belgrano · CABA',
+    precio_desde: '', precio_sub: '', escritura: '', participacion_disponible: '',
+    dh: [], nota: '', escenarios: [], modelo_pct: '', modelo: [],
+    lat: -34.5606, lng: -58.4546
+  },
+  {
     id: 'lacroze-rosetti', estado: 'proximo',
-    nombre: 'Lacroze', numero: 'y Rosetti', zona: 'Colegiales / Villa Urquiza · CABA',
-    nota: 'Próxima oportunidad en estructuración. Registrate para recibir la ficha cuando esté disponible.',
+    nombre: 'Lacroze', numero: 'y Rossetti', zona: 'Colegiales / Villa Urquiza · CABA',
+    nota: 'Próxima oportunidad en estructuración.',
     lat: -34.5742, lng: -58.4535
+  },
+  {
+    id: 'larralde-2362', estado: 'proximo',
+    nombre: 'Larralde', numero: '2362', zona: 'Villa Urquiza · CABA',
+    nota: 'Próxima oportunidad en estructuración.',
+    lat: -34.5713, lng: -58.4491
+  },
+  {
+    id: 'independencia-4102', estado: 'proximo',
+    nombre: 'Av. Independencia', numero: '4102', zona: 'Caballito · CABA',
+    nota: 'Próxima oportunidad en estructuración.',
+    lat: -34.6155, lng: -58.4481
   }
 ];
 
-function saveData(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
-function loadData(key, fallback) {
-  try { const s = localStorage.getItem(key); return s ? JSON.parse(s) : fallback; }
-  catch { return fallback; }
-}
+const defaultTerrenosCerrados = [
+  // --- Canje Finalizado ---
+  { dir: 'Cabildo y Aguilar', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5621, lng: -58.4518 },
+  { dir: 'Olleros 2636', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5653, lng: -58.4553 },
+  { dir: 'Amenábar y Lacroze', zona: 'Colegiales', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5748, lng: -58.4509 },
+  { dir: 'Av. Forest 1236', zona: 'Colegiales', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5783, lng: -58.4474 },
+  { dir: 'Vidal 2697', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5641, lng: -58.4560 },
+  { dir: 'Moldes 2982', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5599, lng: -58.4587 },
+  { dir: 'Darwin 566', zona: 'Villa Crespo', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5978, lng: -58.4438 },
+  { dir: 'Cramer 2848', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5612, lng: -58.4570 },
+  { dir: 'Juramento 1537', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5592, lng: -58.4531 },
+  // --- Local ---
+  { dir: 'Santa Fe y Araoz', zona: 'Palermo', canje: 'Local', info: 'Local comercial', subtipo: 'local', lat: -34.5938, lng: -58.4214 },
+  { dir: 'Amenábar 2214', zona: 'Colegiales', canje: 'Local', info: 'Local comercial', subtipo: 'local', lat: -34.5726, lng: -58.4517 },
+  { dir: 'Palpa y Amenábar', zona: 'Colegiales', canje: 'Local', info: 'Local comercial', subtipo: 'local', lat: -34.5732, lng: -58.4523 },
+  // --- Compraventa ---
+  { dir: 'Juana Azurduy 2724', zona: 'Belgrano', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5629, lng: -58.4572 },
+  { dir: 'Amenábar 1001', zona: 'Colegiales', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5764, lng: -58.4499 },
+  { dir: 'Cabildo y Olzabal', zona: 'Belgrano', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5590, lng: -58.4567 },
+  { dir: 'Cuba 2252', zona: 'Belgrano', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5663, lng: -58.4594 },
+  { dir: 'Aguilar 2578', zona: 'Belgrano', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5619, lng: -58.4525 },
+  { dir: 'Humboldt', zona: 'Palermo', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5923, lng: -58.4354 },
+  // --- Desarrollo ---
+  { dir: 'Bonpland 2305', zona: 'Palermo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.5875, lng: -58.4301 },
+  { dir: 'Dorrego 1511', zona: 'Palermo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.5905, lng: -58.4347 },
+  { dir: 'Nicaragua 6078', zona: 'Palermo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.5856, lng: -58.4255 },
+  { dir: 'Newbery 2510', zona: 'Villa Crespo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.5951, lng: -58.4381 },
+  { dir: 'Caseros 435', zona: 'San Telmo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.6213, lng: -58.3768 }
+];
 
 let proyectos = loadData('lv_proyectos', defaultProyectos);
-let timeline = loadData('lv_timeline', defaultTimeline);
+let terrenosCerrados = loadData('lv_terrenos_cerrados', defaultTerrenosCerrados);
 
 // ============================================================
 // RENDER
 // ============================================================
 function renderAll() {
-  renderProyectosList();
-  renderTimelineList();
-  // Terrenos list is rendered on tab switch; no need to render upfront
+  renderMapaList();
 }
 
 if (sessionStorage.getItem(SESSION_KEY)) renderAll();
 
-function renderProyectosList() {
-  const el = document.getElementById('proyectos-list');
-  if (!proyectos.length) {
-    el.innerHTML = '<div class="empty-state"><p>No hay proyectos. Agregá el primero.</p></div>';
-    return;
-  }
-  el.innerHTML = proyectos.map((p, i) => `
-    <div class="item-row">
-      <span class="drag-handle" title="Reordenar">⠿</span>
-      <span class="item-badge ${p.estado}">${p.estado === 'abierto' ? 'Abierto' : 'Próximo'}</span>
-      <div class="item-info">
-        <div class="item-name">${p.nombre} ${p.numero}</div>
-        <div class="item-sub">${p.zona}${p.precio_desde ? ' · desde USD ' + p.precio_desde + '/m²' : ''}</div>
-      </div>
-      <div class="item-actions">
-        <button class="icon-btn edit" onclick="editProyecto(${i})">Editar</button>
-        <button class="icon-btn del" onclick="deleteProyecto(${i})">Eliminar</button>
-      </div>
-    </div>
-  `).join('');
+// Tipo → label y clase badge
+const TIPO_META = {
+  oportunidad: { label: 'Oportunidad', badgeClass: 'abierto' },
+  proximo:     { label: 'Próximamente', badgeClass: 'proximo' },
+  edificio:    { label: 'Canje · Edificio', badgeClass: 'cerrado' },
+  local:       { label: 'Canje · Local', badgeClass: 'cerrado' },
+  venta:       { label: 'Compraventa', badgeClass: 'cerrado' },
+  desarrollo:  { label: 'Desarrollo', badgeClass: 'cerrado' },
+};
+
+function getTipoDeProy(p) {
+  return p.estado === 'abierto' ? 'oportunidad' : 'proximo';
 }
 
-function renderTimelineList() {
-  const el = document.getElementById('timeline-list');
-  if (!timeline.length) {
-    el.innerHTML = '<div class="empty-state"><p>No hay hitos. Agregá el primero.</p></div>';
+function getTipoDeTerreno(t) {
+  return t.subtipo || 'edificio';
+}
+
+function renderMapaList() {
+  const el = document.getElementById('mapa-list');
+
+  // Build a flat list: [{tipo, display, sub, src:'p'|'t', idx}]
+  const rows = [];
+
+  proyectos.forEach((p, i) => {
+    const tipo = getTipoDeProy(p);
+    const nombre = p.nombre + (p.numero ? ' ' + p.numero : '');
+    const sub = p.zona + (p.precio_desde ? ' · desde USD ' + p.precio_desde + '/m²' : '');
+    rows.push({ tipo, display: nombre, sub, src: 'p', idx: i });
+  });
+
+  terrenosCerrados.forEach((t, i) => {
+    const tipo = getTipoDeTerreno(t);
+    const sub = t.zona + (t.canje ? ' · ' + t.canje : '');
+    rows.push({ tipo, display: t.dir, sub, src: 't', idx: i });
+  });
+
+  if (!rows.length) {
+    el.innerHTML = '<div class="empty-state"><p>No hay pins. Agregá el primero.</p></div>';
     return;
   }
-  el.innerHTML = timeline.map((t, i) => `
+
+  el.innerHTML = rows.map((r, flatIdx) => {
+    const meta = TIPO_META[r.tipo] || TIPO_META.edificio;
+    return `
     <div class="item-row">
       <span class="drag-handle" title="Reordenar">⠿</span>
-      <span class="item-badge ${t.done ? 'cerrado' : 'proximo'}">${t.year}</span>
+      <span class="item-badge ${meta.badgeClass}">${meta.label}</span>
       <div class="item-info">
-        <div class="item-name">${t.head}</div>
-        <div class="item-sub">${t.body.substring(0, 80)}…</div>
+        <div class="item-name">${r.display}</div>
+        <div class="item-sub">${r.sub}</div>
       </div>
       <div class="item-actions">
-        <button class="icon-btn edit" onclick="editTlItem(${i})">Editar</button>
-        <button class="icon-btn del" onclick="deleteTlItem(${i})">Eliminar</button>
+        <button class="icon-btn edit" onclick="editPin('${r.src}',${r.idx})">Editar</button>
+        <button class="icon-btn del" onclick="deletePin('${r.src}',${r.idx})">Eliminar</button>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 // ============================================================
-// PROYECTO MODAL
+// PIN MODAL — unificado
 // ============================================================
-let editingIndex = null;
+let editingSrc = null;   // 'p' | 't'
+let editingIdx = null;   // index in the respective array
 
-function openModal(p = null, idx = null) {
-  editingIndex = idx;
-  document.getElementById('modal-title').textContent = p ? 'Editar proyecto' : 'Nuevo proyecto';
+function openPinModal(src, idx) {
+  editingSrc = src !== undefined ? src : null;
+  editingIdx = idx !== undefined ? idx : null;
 
-  document.getElementById('f-estado').value = p?.estado || 'abierto';
-  document.getElementById('f-badge-mes').value = p?.badge_mes || '';
-  document.getElementById('f-nombre').value = p?.nombre || '';
-  document.getElementById('f-numero').value = p?.numero || '';
-  document.getElementById('f-zona').value = p?.zona || '';
-  document.getElementById('f-precio').value = p?.precio_desde || '';
-  document.getElementById('f-precio-sub').value = p?.precio_sub || '';
-  document.getElementById('f-escritura').value = p?.escritura || '';
-  document.getElementById('f-participacion').value = p?.participacion_disponible || '';
-  document.getElementById('f-modelo-pct').value = p?.modelo_pct || '';
-  document.getElementById('f-nota').value = p?.nota || '';
-  document.getElementById('f-proximo-nota').value = p?.nota || '';
-  document.getElementById('f-lat').value = p?.lat || '';
-  document.getElementById('f-lng').value = p?.lng || '';
+  const isNew = editingSrc === null;
+  document.getElementById('pin-modal-title').textContent = isNew ? 'Nuevo pin' : 'Editar pin';
 
-  renderDhList(p?.dh || [{ val: '', lbl: '' }, { val: '', lbl: '' }, { val: '', lbl: '' }, { val: '', lbl: '' }]);
-  renderEscList(p?.escenarios || [{ m2: '', pct: '', costo: '' }]);
-  renderModeloList(p?.modelo || [{ label: '', val: '', n: false }]);
+  if (isNew) {
+    // Reset all fields
+    document.getElementById('f-tipo').value = 'oportunidad';
+    clearCommonFields();
+    clearAbiertoFields();
+    document.getElementById('f-proximo-nota').value = '';
+  } else if (editingSrc === 'p') {
+    const p = proyectos[editingIdx];
+    const tipo = getTipoDeProy(p);
+    document.getElementById('f-tipo').value = tipo;
+    document.getElementById('f-dir').value = p.nombre || '';
+    document.getElementById('f-numero').value = p.numero || '';
+    document.getElementById('f-zona').value = p.zona || '';
+    document.getElementById('f-lat').value = p.lat || '';
+    document.getElementById('f-lng').value = p.lng || '';
 
-  toggleEstadoFields();
-  document.getElementById('modal-overlay').classList.add('show');
+    if (tipo === 'oportunidad') {
+      document.getElementById('f-badge-mes').value = p.badge_mes || '';
+      document.getElementById('f-precio').value = p.precio_desde || '';
+      document.getElementById('f-precio-sub').value = p.precio_sub || '';
+      document.getElementById('f-escritura').value = p.escritura || '';
+      document.getElementById('f-participacion').value = p.participacion_disponible || '';
+      document.getElementById('f-modelo-pct').value = p.modelo_pct || '';
+      document.getElementById('f-nota').value = p.nota || '';
+      renderDhList(p.dh || []);
+      renderEscList(p.escenarios || []);
+      renderModeloList(p.modelo || []);
+    } else {
+      document.getElementById('f-proximo-nota').value = p.nota || '';
+    }
+  } else {
+    // src === 't'
+    const t = terrenosCerrados[editingIdx];
+    const tipo = getTipoDeTerreno(t);
+    document.getElementById('f-tipo').value = tipo;
+    document.getElementById('f-dir').value = t.dir || '';
+    document.getElementById('f-numero').value = '';
+    document.getElementById('f-zona').value = t.zona || '';
+    document.getElementById('f-info').value = t.info || '';
+    document.getElementById('f-lat').value = t.lat || '';
+    document.getElementById('f-lng').value = t.lng || '';
+  }
+
+  toggleTipoFields();
+  document.getElementById('pin-modal-overlay').classList.add('show');
 }
 
-function editProyecto(i) { openModal(proyectos[i], i); }
-function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
-function closeModalOutside(e) { if (e.target.id === 'modal-overlay') closeModal(); }
+function editPin(src, idx) { openPinModal(src, idx); }
+function closePinModal() { document.getElementById('pin-modal-overlay').classList.remove('show'); }
+function closePinModalOutside(e) { if (e.target.id === 'pin-modal-overlay') closePinModal(); }
 
-function toggleEstadoFields() {
-  const est = document.getElementById('f-estado').value;
-  const isAbierto = est === 'abierto';
-  document.getElementById('abierto-fields').style.display = isAbierto ? '' : 'none';
-  document.getElementById('f-badge-mes').closest('.form-group').style.display = isAbierto ? '' : 'none';
-  document.getElementById('proximo-nota-field').style.display = isAbierto ? 'none' : '';
+function clearCommonFields() {
+  ['f-dir','f-numero','f-zona','f-info','f-badge-mes','f-precio','f-precio-sub',
+   'f-escritura','f-participacion','f-modelo-pct','f-nota','f-proximo-nota'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-lat').value = '';
+  document.getElementById('f-lng').value = '';
 }
 
+function clearAbiertoFields() {
+  renderDhList([{ val: '', lbl: '' }, { val: '', lbl: '' }, { val: '', lbl: '' }, { val: '', lbl: '' }]);
+  renderEscList([{ m2: '', pct: '', costo: '' }]);
+  renderModeloList([{ label: '', val: '', n: false }]);
+}
+
+function toggleTipoFields() {
+  const tipo = document.getElementById('f-tipo').value;
+  const isOportunidad = tipo === 'oportunidad';
+  const isProximo = tipo === 'proximo';
+  const isCanje = !isOportunidad && !isProximo;
+
+  document.getElementById('oportunidad-fields').style.display = isOportunidad ? '' : 'none';
+  document.getElementById('proximo-fields').style.display = isProximo ? '' : 'none';
+  document.getElementById('f-info-group').style.display = isCanje ? '' : 'none';
+  document.getElementById('f-numero-group').style.display = isOportunidad ? '' : 'none';
+
+  // Label dirección
+  document.getElementById('f-dir-label').textContent = isOportunidad ? 'Nombre (calle)' : 'Dirección';
+  document.getElementById('f-dir').placeholder = isOportunidad ? 'Ugarte' : 'Amenábar 696';
+
+  if (isOportunidad && !document.getElementById('dh-list').children.length) {
+    clearAbiertoFields();
+  }
+}
+
+function savePin() {
+  const tipo = document.getElementById('f-tipo').value;
+  const dir = document.getElementById('f-dir').value.trim();
+  if (!dir) { alert('Ingresá una dirección o nombre'); return; }
+
+  const lat = parseFloat(document.getElementById('f-lat').value) || null;
+  const lng = parseFloat(document.getElementById('f-lng').value) || null;
+  const zona = document.getElementById('f-zona').value.trim();
+
+  if (tipo === 'oportunidad' || tipo === 'proximo') {
+    // → proyectos array
+    const p = {
+      id: editingSrc === 'p' ? proyectos[editingIdx].id : Date.now().toString(),
+      estado: tipo === 'oportunidad' ? 'abierto' : 'proximo',
+      nombre: dir,
+      numero: document.getElementById('f-numero').value.trim(),
+      zona,
+      lat, lng,
+    };
+
+    if (tipo === 'oportunidad') {
+      p.badge_mes = document.getElementById('f-badge-mes').value.trim();
+      p.precio_desde = document.getElementById('f-precio').value.trim();
+      p.precio_sub = document.getElementById('f-precio-sub').value.trim();
+      p.escritura = document.getElementById('f-escritura').value.trim();
+      p.participacion_disponible = document.getElementById('f-participacion').value.trim();
+      p.modelo_pct = document.getElementById('f-modelo-pct').value.trim();
+      p.nota = document.getElementById('f-nota').value.trim();
+      p.dh = getDhData();
+      p.escenarios = getEscData();
+      p.modelo = getModeloData();
+    } else {
+      p.nota = document.getElementById('f-proximo-nota').value.trim();
+    }
+
+    if (editingSrc === 'p') {
+      proyectos[editingIdx] = p;
+    } else if (editingSrc === 't') {
+      // Moving from terrenos to proyectos (type changed)
+      terrenosCerrados.splice(editingIdx, 1);
+      saveData('lv_terrenos_cerrados', terrenosCerrados);
+      proyectos.push(p);
+    } else {
+      proyectos.push(p);
+    }
+    saveData('lv_proyectos', proyectos);
+
+  } else {
+    // → terrenosCerrados array
+    const subtipo = tipo; // 'edificio'|'local'|'venta'|'desarrollo'
+    const info = document.getElementById('f-info').value.trim();
+    const t = { dir, zona, canje: info, info, subtipo, lat, lng };
+
+    if (editingSrc === 't') {
+      terrenosCerrados[editingIdx] = t;
+    } else if (editingSrc === 'p') {
+      // Moving from proyectos to terrenos (type changed)
+      proyectos.splice(editingIdx, 1);
+      saveData('lv_proyectos', proyectos);
+      terrenosCerrados.push(t);
+    } else {
+      terrenosCerrados.push(t);
+    }
+    saveData('lv_terrenos_cerrados', terrenosCerrados);
+  }
+
+  renderMapaList();
+  closePinModal();
+  toast('Pin guardado');
+}
+
+function deletePin(src, idx) {
+  if (!confirm('¿Eliminar este pin del mapa?')) return;
+  if (src === 'p') {
+    proyectos.splice(idx, 1);
+    saveData('lv_proyectos', proyectos);
+  } else {
+    terrenosCerrados.splice(idx, 1);
+    saveData('lv_terrenos_cerrados', terrenosCerrados);
+  }
+  renderMapaList();
+  toast('Pin eliminado');
+}
+
+// ============================================================
 // DH rows
+// ============================================================
 function renderDhList(dh) {
   document.getElementById('dh-list').innerHTML = dh.map((d, i) => `
     <div class="esc-row" style="grid-template-columns:1fr 1fr auto;">
@@ -717,7 +812,9 @@ function getDhData() {
   return Object.values(map);
 }
 
+// ============================================================
 // ESC rows
+// ============================================================
 function renderEscList(esc) {
   document.getElementById('esc-list').innerHTML = esc.map((e, i) => `
     <div class="esc-row">
@@ -737,7 +834,9 @@ function getEscData() {
   return Object.values(map);
 }
 
+// ============================================================
 // MODELO rows
+// ============================================================
 function renderModeloList(modelo) {
   document.getElementById('modelo-list').innerHTML = modelo.map((m, i) => `
     <div class="modelo-row-edit">
@@ -764,284 +863,23 @@ function getModeloData() {
   return Object.values(map);
 }
 
-function saveProyecto() {
-  const est = document.getElementById('f-estado').value;
-  const p = {
-    id: Date.now().toString(),
-    estado: est,
-    nombre: document.getElementById('f-nombre').value.trim(),
-    numero: document.getElementById('f-numero').value.trim(),
-    zona: document.getElementById('f-zona').value.trim(),
-    lat: parseFloat(document.getElementById('f-lat').value) || null,
-    lng: parseFloat(document.getElementById('f-lng').value) || null,
-  };
-
-  if (est === 'abierto') {
-    p.badge_mes = document.getElementById('f-badge-mes').value.trim();
-    p.precio_desde = document.getElementById('f-precio').value.trim();
-    p.precio_sub = document.getElementById('f-precio-sub').value.trim();
-    p.escritura = document.getElementById('f-escritura').value.trim();
-    p.participacion_disponible = document.getElementById('f-participacion').value.trim();
-    p.modelo_pct = document.getElementById('f-modelo-pct').value.trim();
-    p.nota = document.getElementById('f-nota').value.trim();
-    p.dh = getDhData();
-    p.escenarios = getEscData();
-    p.modelo = getModeloData();
-  } else {
-    p.nota = document.getElementById('f-proximo-nota').value.trim();
-  }
-
-  if (editingIndex !== null) {
-    proyectos[editingIndex] = p;
-  } else {
-    proyectos.push(p);
-  }
-
-  saveData('lv_proyectos', proyectos);
-  renderProyectosList();
-  closeModal();
-  toast('Proyecto guardado');
-}
-
-function deleteProyecto(i) {
-  if (!confirm('¿Eliminar este proyecto?')) return;
-  proyectos.splice(i, 1);
-  saveData('lv_proyectos', proyectos);
-  renderProyectosList();
-  toast('Proyecto eliminado');
-}
-
-// ============================================================
-// TIMELINE MODAL
-// ============================================================
-let editingTlIndex = null;
-
-function openTimelineModal(t = null, idx = null) {
-  editingTlIndex = idx;
-  document.getElementById('tl-modal-title').textContent = t ? 'Editar hito' : 'Nuevo hito';
-  document.getElementById('tl-year').value = t?.year || '';
-  document.getElementById('tl-done').value = t?.done ? 'true' : 'false';
-  document.getElementById('tl-head').value = t?.head || '';
-  document.getElementById('tl-body').value = t?.body || '';
-  document.getElementById('tl-modal-overlay').classList.add('show');
-}
-
-function editTlItem(i) { openTimelineModal(timeline[i], i); }
-function closeTlModal() { document.getElementById('tl-modal-overlay').classList.remove('show'); }
-function closeTlModalOutside(e) { if (e.target.id === 'tl-modal-overlay') closeTlModal(); }
-
-function saveTlItem() {
-  const item = {
-    year: document.getElementById('tl-year').value.trim(),
-    done: document.getElementById('tl-done').value === 'true',
-    head: document.getElementById('tl-head').value.trim(),
-    body: document.getElementById('tl-body').value.trim()
-  };
-  if (editingTlIndex !== null) { timeline[editingTlIndex] = item; }
-  else { timeline.push(item); }
-  saveData('lv_timeline', timeline);
-  renderTimelineList();
-  closeTlModal();
-  toast('Hito guardado');
-}
-
-function deleteTlItem(i) {
-  if (!confirm('¿Eliminar este hito?')) return;
-  timeline.splice(i, 1);
-  saveData('lv_timeline', timeline);
-  renderTimelineList();
-  toast('Hito eliminado');
-}
-
 // ============================================================
 // TABS
 // ============================================================
 function setTab(name) {
-  ['proyectos', 'timeline', 'terrenos', 'leads', 'datos'].forEach(t => {
+  ['mapa', 'datos'].forEach(t => {
     document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
   });
   document.querySelectorAll('.tab').forEach((btn, i) => {
-    btn.classList.toggle('active', ['proyectos', 'timeline', 'terrenos', 'leads', 'datos'][i] === name);
+    btn.classList.toggle('active', ['mapa', 'datos'][i] === name);
   });
-  if (name === 'leads') renderLeads();
-  if (name === 'terrenos') renderTerrenosList();
 }
-
-// ============================================================
-// TERRENOS
-// ============================================================
-const defaultTerrenosCerrados = [
-  { dir: 'Amenábar 696', zona: 'Colegiales', canje: '35% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5756, lng: -58.4489 },
-  { dir: 'Amenábar 1001', zona: 'Colegiales', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5764, lng: -58.4499 },
-  { dir: 'Aguilar 2403', zona: 'Belgrano', canje: '35% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5626, lng: -58.4511 },
-  { dir: 'Aguilar 2578', zona: 'Belgrano', canje: '28% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5619, lng: -58.4525 },
-  { dir: 'Cramer 2848', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5612, lng: -58.4570 },
-  { dir: 'Olleros 2636', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5653, lng: -58.4553 },
-  { dir: 'Forest 1248', zona: 'Colegiales', canje: '23.6% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5783, lng: -58.4474 },
-  { dir: 'Moldes 2982', zona: 'Belgrano', canje: '30% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5599, lng: -58.4587 },
-  { dir: 'Juramento 1543', zona: 'Belgrano', canje: '32.1% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5592, lng: -58.4531 },
-  { dir: 'Moldes 2661', zona: 'Belgrano', canje: '29.1% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5606, lng: -58.4546 },
-  { dir: 'Darwin 566', zona: 'Villa Crespo', canje: '24% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5978, lng: -58.4438 },
-  { dir: 'Vidal 2697', zona: 'Belgrano', canje: '29.3% realizado', info: 'Canje realizado', subtipo: 'edificio', lat: -34.5641, lng: -58.4560 }
-];
-
-let terrenosCerrados = loadData('lv_terrenos_cerrados', defaultTerrenosCerrados);
-
-function renderTerrenosList() {
-  const el = document.getElementById('terrenos-list');
-  if (!terrenosCerrados.length) {
-    el.innerHTML = '<div class="empty-state"><p>No hay terrenos. Agregá el primero.</p></div>';
-    return;
-  }
-  el.innerHTML = terrenosCerrados.map((t, i) => `
-    <div class="item-row">
-      <span class="drag-handle" title="Reordenar">⠿</span>
-      <span class="item-badge cerrado">${t.subtipo || 'edificio'}</span>
-      <div class="item-info">
-        <div class="item-name">${t.dir}</div>
-        <div class="item-sub">${t.zona} · ${t.canje}</div>
-      </div>
-      <div class="item-actions">
-        <button class="icon-btn edit" onclick="openTerrenoModal(${i})">Editar</button>
-        <button class="icon-btn del" onclick="deleteTerrenoItem(${i})">Eliminar</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-let editingTerrenoIndex = null;
-
-function openTerrenoModal(i) {
-  editingTerrenoIndex = (i !== undefined && i !== null) ? i : null;
-  const t = (editingTerrenoIndex !== null) ? terrenosCerrados[editingTerrenoIndex] : null;
-  document.getElementById('terreno-modal-title').textContent = t ? 'Editar terreno' : 'Nuevo terreno';
-  document.getElementById('t-dir').value = t?.dir || '';
-  document.getElementById('t-zona').value = t?.zona || '';
-  document.getElementById('t-canje').value = t?.canje || '';
-  document.getElementById('t-info').value = t?.info || 'Canje realizado';
-  document.getElementById('t-subtipo').value = t?.subtipo || 'edificio';
-  document.getElementById('t-lat').value = t?.lat || '';
-  document.getElementById('t-lng').value = t?.lng || '';
-  document.getElementById('terreno-modal-overlay').classList.add('show');
-}
-
-function closeTerrenoModal() { document.getElementById('terreno-modal-overlay').classList.remove('show'); }
-function closeTerrenoModalOutside(e) { if (e.target.id === 'terreno-modal-overlay') closeTerrenoModal(); }
-
-function saveTerrenoModal() {
-  const item = {
-    dir: document.getElementById('t-dir').value.trim(),
-    zona: document.getElementById('t-zona').value.trim(),
-    canje: document.getElementById('t-canje').value.trim(),
-    info: document.getElementById('t-info').value.trim(),
-    subtipo: document.getElementById('t-subtipo').value,
-    lat: parseFloat(document.getElementById('t-lat').value) || null,
-    lng: parseFloat(document.getElementById('t-lng').value) || null,
-  };
-  if (!item.dir) { alert('Ingresá una dirección'); return; }
-  if (editingTerrenoIndex !== null) {
-    terrenosCerrados[editingTerrenoIndex] = item;
-  } else {
-    terrenosCerrados.push(item);
-  }
-  saveData('lv_terrenos_cerrados', terrenosCerrados);
-  renderTerrenosList();
-  closeTerrenoModal();
-  toast('Terreno guardado');
-}
-
-function deleteTerrenoItem(i) {
-  if (!confirm('¿Eliminar este terreno?')) return;
-  terrenosCerrados.splice(i, 1);
-  saveData('lv_terrenos_cerrados', terrenosCerrados);
-  renderTerrenosList();
-  toast('Terreno eliminado');
-}
-
-// ============================================================
-// LEADS
-// ============================================================
-function getLeads() {
-  try { return JSON.parse(localStorage.getItem('lv_leads') || '[]'); } catch { return []; }
-}
-function saveLeads(arr) {
-  localStorage.setItem('lv_leads', JSON.stringify(arr));
-}
-
-function renderLeads() {
-  const leads = getLeads();
-  const list = document.getElementById('leads-list');
-  const total = document.getElementById('leads-total');
-  const badge = document.getElementById('leads-badge');
-  total.textContent = leads.length;
-  badge.textContent = leads.length;
-  badge.style.display = leads.length ? 'inline' : 'none';
-
-  if (!leads.length) {
-    list.innerHTML = `<div class="empty-state"><p>Todavía no hay contactos registrados.</p><p style="font-size:12px;">Cuando alguien complete el formulario del sitio, aparecerá acá.</p></div>`;
-    return;
-  }
-  list.innerHTML = leads.map((l, i) => {
-    const fecha = new Date(l.fecha);
-    const fechaStr = fecha.toLocaleDateString('es-AR', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
-    const inicial = (l.nombre || '?')[0].toUpperCase();
-    return `
-    <div class="lead-row">
-      <div class="lead-avatar">${inicial}</div>
-      <div class="lead-info">
-        <div class="lead-name">${l.nombre}</div>
-        <div class="lead-wa">📱 ${l.whatsapp}</div>
-      </div>
-      <div class="lead-date">${fechaStr}</div>
-      <button class="lead-del" onclick="deleteLead(${i})">Eliminar</button>
-    </div>`;
-  }).join('');
-}
-
-function deleteLead(i) {
-  const leads = getLeads();
-  leads.splice(i, 1);
-  saveLeads(leads);
-  renderLeads();
-  toast('Contacto eliminado');
-}
-
-function clearLeads() {
-  if (!confirm('¿Eliminar todos los contactos? Esta acción no se puede deshacer.')) return;
-  saveLeads([]);
-  renderLeads();
-  toast('Lista limpiada');
-}
-
-function exportLeads() {
-  const leads = getLeads();
-  if (!leads.length) { toast('No hay contactos para exportar'); return; }
-  const rows = [['Nombre', 'WhatsApp', 'Fecha']];
-  leads.forEach(l => {
-    const fecha = new Date(l.fecha).toLocaleString('es-AR');
-    rows.push([l.nombre, l.whatsapp, fecha]);
-  });
-  const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'leads-landventures.csv'; a.click();
-  URL.revokeObjectURL(url);
-  toast('CSV descargado');
-}
-
-// Mostrar badge en tab al cargar
-window.addEventListener('DOMContentLoaded', () => {
-  const leads = getLeads();
-  const badge = document.getElementById('leads-badge');
-  if (leads.length) { badge.textContent = leads.length; badge.style.display = 'inline'; }
-});
 
 // ============================================================
 // DATA MANAGEMENT
 // ============================================================
 function exportData() {
-  const data = { proyectos, timeline, terrenosCerrados, exported: new Date().toISOString() };
+  const data = { proyectos, terrenosCerrados, exported: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -1058,7 +896,6 @@ function importData(event) {
     try {
       const data = JSON.parse(e.target.result);
       if (data.proyectos) { proyectos = data.proyectos; saveData('lv_proyectos', proyectos); }
-      if (data.timeline) { timeline = data.timeline; saveData('lv_timeline', timeline); }
       if (data.terrenosCerrados) { terrenosCerrados = data.terrenosCerrados; saveData('lv_terrenos_cerrados', terrenosCerrados); }
       renderAll();
       toast('Datos importados correctamente');
@@ -1071,10 +908,8 @@ function importData(event) {
 function resetData() {
   if (!confirm('¿Restablecer todos los datos? Se perderán todos los cambios.')) return;
   localStorage.removeItem('lv_proyectos');
-  localStorage.removeItem('lv_timeline');
   localStorage.removeItem('lv_terrenos_cerrados');
   proyectos = defaultProyectos;
-  timeline = defaultTimeline;
   terrenosCerrados = defaultTerrenosCerrados;
   renderAll();
   toast('Datos restablecidos');
