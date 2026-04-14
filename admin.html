@@ -348,7 +348,8 @@
         <div class="form-group full">
           <label>Tipo de pin</label>
           <select id="f-tipo" onchange="toggleTipoFields()">
-            <option value="oportunidad">Oportunidad (verde)</option>
+            <option value="oportunidad">Oportunidad · Canje (verde)</option>
+            <option value="oficina">Oportunidad · Oficina/Unidad (verde)</option>
             <option value="proximo">Próximamente (violeta)</option>
             <option value="edificio">Canje · Edificio (naranja)</option>
             <option value="local">Canje · Local (naranja)</option>
@@ -499,6 +500,70 @@
           <p style="font-size:10px;color:var(--muted);margin-top:10px;line-height:1.6;">💡 <strong style="color:var(--texto);">Escenarios:</strong> completá las 3 filas con m², % y costo. El del medio es el "escenario base" que aparece en el precio. · <strong style="color:var(--texto);">Modelo:</strong> el % de participación mínima va en el paréntesis; los 3 valores son los que se muestran en la tabla inferior de la ficha.</p>
         </div>
       </div><!-- /oportunidad-fields -->
+
+      <!-- ===================== CAMPOS OFICINA ===================== -->
+      <div id="oficina-fields">
+        <div class="modal-section">
+          <div class="modal-section-title">Datos de la unidad — editá los valores directamente</div>
+          <div class="card-preview">
+
+            <!-- HEAD -->
+            <div class="cp-head">
+              <div class="cp-badge"><div class="cp-badge-dot"></div>Disponible · <input class="cp-input sm" id="f-of-badge" placeholder="May 2026"/></div>
+              <div class="cp-name-row">
+                <span class="cp-name" id="cp-of-name-preview">—</span>
+                <span class="cp-num" id="cp-of-num-preview"></span>
+              </div>
+              <div class="cp-zona" id="cp-of-zona-preview">—</div>
+            </div>
+
+            <!-- PRECIO -->
+            <div class="cp-precio-block">
+              <div class="cp-precio-lbl">Desde</div>
+              <div class="cp-precio-val">USD <input class="cp-input large" id="f-of-precio-m2" placeholder="2.600"/></div>
+              <div class="cp-precio-sub">por m² · <input class="cp-input" style="width:52px;font-size:10px;" id="f-of-superficie" placeholder="130 m²"/> · <input class="cp-input" style="width:52px;font-size:10px;" id="f-of-piso" placeholder="Piso 3"/></div>
+            </div>
+
+            <!-- TOTAL + COCHERA -->
+            <div class="cp-foot">
+              <div class="cp-escritura">Precio total <strong><input class="cp-input sm" id="f-of-total" placeholder="USD 338.000" style="color:var(--blanco);font-weight:600;"/></strong></div>
+              <div class="cp-participacion">Cochera <strong><input class="cp-input" id="f-of-cochera" placeholder="1 disponible" style="width:90px;color:var(--verde);font-size:11px;font-weight:600;"/></strong></div>
+            </div>
+
+            <!-- DH: 4 datos fijos (auto-calculados al guardar) -->
+            <div class="cp-dh">
+              <div class="cp-dh-item"><div class="cp-dh-val" style="color:var(--naranja);font-size:13px;font-weight:700;" id="cp-of-dh0">USD —</div><div class="cp-dh-lbl">Precio total</div></div>
+              <div class="cp-dh-item"><div class="cp-dh-val" style="color:var(--naranja);font-size:13px;font-weight:700;" id="cp-of-dh1">— m²</div><div class="cp-dh-lbl">Superficie</div></div>
+              <div class="cp-dh-item"><div class="cp-dh-val" style="color:var(--naranja);font-size:13px;font-weight:700;" id="cp-of-dh2">—</div><div class="cp-dh-lbl">Nivel</div></div>
+              <div class="cp-dh-item"><div class="cp-dh-val" style="color:var(--naranja);font-size:13px;font-weight:700;" id="cp-of-dh3">—</div><div class="cp-dh-lbl">Cochera</div></div>
+            </div>
+
+            <!-- FINANCIAMIENTO: 2 filas fijas -->
+            <div class="cp-esc-wrap">
+              <div class="cp-esc-lbl">Financiamiento</div>
+              <table class="cp-esc-table">
+                <tr><th>Modalidad</th><th>%</th><th>Monto / condición</th></tr>
+                <tr>
+                  <td><input class="cp-input full-w" id="f-of-fin0-mod" placeholder="Al contado"/></td>
+                  <td><input class="cp-input" id="f-of-fin0-pct" placeholder="50%" style="width:46px;"/></td>
+                  <td><input class="cp-input full-w" id="f-of-fin0-monto" placeholder="USD 169.000" style="color:var(--naranja);font-weight:600;"/></td>
+                </tr>
+                <tr>
+                  <td><input class="cp-input full-w" id="f-of-fin1-mod" placeholder="Cuotas (24)"/></td>
+                  <td><input class="cp-input" id="f-of-fin1-pct" placeholder="50%" style="width:46px;"/></td>
+                  <td><input class="cp-input full-w" id="f-of-fin1-monto" placeholder="Desde inicio de obra" style="color:var(--naranja);font-weight:600;"/></td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- NOTA -->
+            <div class="cp-nota">
+              <input class="cp-input full-w" id="f-of-nota" placeholder="Descripción adicional o condiciones especiales." style="font-size:10px;color:var(--muted);font-style:italic;width:100%;"/>
+            </div>
+
+          </div><!-- /card-preview -->
+        </div>
+      </div><!-- /oficina-fields -->
 
       <!-- ===================== CAMPOS PRÓXIMO ===================== -->
       <div id="proximo-fields">
@@ -742,7 +807,8 @@ if (sessionStorage.getItem(SESSION_KEY)) renderAll();
 
 // Tipo → label y clase badge
 const TIPO_META = {
-  oportunidad: { label: 'Oportunidad', badgeClass: 'abierto' },
+  oportunidad: { label: 'Oportunidad · Canje', badgeClass: 'abierto' },
+  oficina:     { label: 'Oportunidad · Oficina', badgeClass: 'abierto' },
   proximo:     { label: 'Próximamente', badgeClass: 'proximo' },
   edificio:    { label: 'Canje · Edificio', badgeClass: 'cerrado' },
   local:       { label: 'Canje · Local', badgeClass: 'cerrado' },
@@ -751,6 +817,7 @@ const TIPO_META = {
 };
 
 function getTipoDeProy(p) {
+  if (p.estado === 'abierto' && p.subcategoria === 'oficina') return 'oficina';
   return p.estado === 'abierto' ? 'oportunidad' : 'proximo';
 }
 
@@ -830,6 +897,8 @@ function openPinModal(src, idx) {
 
     if (tipo === 'oportunidad') {
       fillOportunidadFields(p);
+    } else if (tipo === 'oficina') {
+      fillOficinaFields(p);
     } else {
       document.getElementById('f-proximo-nota').value = p.nota || '';
     }
@@ -906,6 +975,35 @@ function fillOportunidadFields(p) {
   updateCardPreview(p.nombre, p.numero, p.zona);
 }
 
+function fillOficinaFields(p) {
+  document.getElementById('f-of-badge').value = p.badge_mes || '';
+  document.getElementById('f-of-precio-m2').value = p.precio_desde || '';
+  // precio_sub: "por m² · 130 m² · Piso 3"
+  const subParts = (p.precio_sub || '').split('·');
+  document.getElementById('f-of-superficie').value = (subParts[1] || '').trim();
+  document.getElementById('f-of-piso').value = (subParts[2] || '').trim();
+  document.getElementById('f-of-total').value = (p.dh && p.dh[0]) ? p.dh[0].val : '';
+  document.getElementById('f-of-cochera').value = p.participacion_disponible || '';
+  document.getElementById('f-of-nota').value = p.nota || '';
+  const fin = p.escenarios || [];
+  document.getElementById('f-of-fin0-mod').value = (fin[0] || {}).m2 || '';
+  document.getElementById('f-of-fin0-pct').value = (fin[0] || {}).pct || '';
+  document.getElementById('f-of-fin0-monto').value = (fin[0] || {}).costo || '';
+  document.getElementById('f-of-fin1-mod').value = (fin[1] || {}).m2 || '';
+  document.getElementById('f-of-fin1-pct').value = (fin[1] || {}).pct || '';
+  document.getElementById('f-of-fin1-monto').value = (fin[1] || {}).costo || '';
+  updateOficinaPreview(p.nombre, p.numero, p.zona);
+}
+
+function updateOficinaPreview(nombre, numero, zona) {
+  const n = document.getElementById('cp-of-name-preview');
+  const nu = document.getElementById('cp-of-num-preview');
+  const z = document.getElementById('cp-of-zona-preview');
+  if (n) n.textContent = nombre || '—';
+  if (nu) nu.textContent = numero || '';
+  if (z) z.textContent = zona || '—';
+}
+
 function updateCardPreview(nombre, numero, zona) {
   const n = document.getElementById('cp-name-preview');
   const nu = document.getElementById('cp-num-preview');
@@ -918,16 +1016,18 @@ function updateCardPreview(nombre, numero, zona) {
 function toggleTipoFields() {
   const tipo = document.getElementById('f-tipo').value;
   const isOportunidad = tipo === 'oportunidad';
+  const isOficina = tipo === 'oficina';
   const isProximo = tipo === 'proximo';
-  const isCanje = !isOportunidad && !isProximo;
+  const isCanje = !isOportunidad && !isOficina && !isProximo;
 
   document.getElementById('oportunidad-fields').style.display = isOportunidad ? '' : 'none';
+  document.getElementById('oficina-fields').style.display = isOficina ? '' : 'none';
   document.getElementById('proximo-fields').style.display = isProximo ? '' : 'none';
   document.getElementById('f-info-group').style.display = isCanje ? '' : 'none';
-  document.getElementById('f-numero-group').style.display = isOportunidad ? '' : 'none';
+  document.getElementById('f-numero-group').style.display = (isOportunidad || isOficina) ? '' : 'none';
 
-  document.getElementById('f-dir-label').textContent = isOportunidad ? 'Nombre (calle)' : 'Dirección';
-  document.getElementById('f-dir').placeholder = isOportunidad ? 'Ugarte' : 'Amenábar 696';
+  document.getElementById('f-dir-label').textContent = (isOportunidad || isOficina) ? 'Nombre (calle)' : 'Dirección';
+  document.getElementById('f-dir').placeholder = isOficina ? 'Av. Juramento' : (isOportunidad ? 'Ugarte' : 'Amenábar 696');
   updatePinPreview(tipo);
 }
 
@@ -942,8 +1042,9 @@ function updatePinPreview(tipo) {
   const ampolleta = `<svg width="${S}" height="${S}" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.4237 17.4237L13.2566 13.2566V4.92371" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/><path d="M13.25 25.75C16.5652 25.75 19.7446 24.433 22.0888 22.0888C24.433 19.7446 25.75 16.5652 25.75 13.25C25.75 9.93479 24.433 6.75537 22.0888 4.41117C19.7446 2.06696 16.5652 0.75 13.25 0.75C9.93479 0.75 6.75537 2.06696 4.41117 4.41117C2.06696 6.75537 0.75 9.93479 0.75 13.25C0.75 16.5652 2.06696 19.7446 4.41117 22.0888C6.75537 24.433 9.93479 25.75 13.25 25.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
   const CFG = {
-    oportunidad: { bg:'#4ade80', color:'#0d0c0b', size:40, icon:lv,    label:'Oportunidad' },
-    proximo:     { bg:'#a78bfa', color:'#fff',    size:34, icon:lv,    label:'Próximamente' },
+    oportunidad: { bg:'#4ade80', color:'#0d0c0b', size:40, icon:lv,       label:'Oportunidad · Canje' },
+    oficina:     { bg:'#4ade80', color:'#0d0c0b', size:40, icon:edificio, label:'Oportunidad · Oficina' },
+    proximo:     { bg:'#a78bfa', color:'#fff',    size:34, icon:lv,       label:'Próximamente' },
     edificio:    { bg:'#E8943A', color:'#0d0c0b', size:34, icon:lv,   label:'Canje · Edificio' },
     local:       { bg:'#E8943A', color:'#0d0c0b', size:34, icon:lv,   label:'Canje · Local' },
     venta:       { bg:'#E8943A', color:'#0d0c0b', size:34, icon:peso,  label:'Compraventa' },
@@ -964,11 +1065,25 @@ document.addEventListener('DOMContentLoaded', () => {
   ['f-dir','f-numero','f-zona'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', () => {
-      updateCardPreview(
-        document.getElementById('f-dir').value,
-        document.getElementById('f-numero').value,
-        document.getElementById('f-zona').value
-      );
+      const nombre = document.getElementById('f-dir').value;
+      const numero = document.getElementById('f-numero').value;
+      const zona = document.getElementById('f-zona').value;
+      updateCardPreview(nombre, numero, zona);
+      updateOficinaPreview(nombre, numero, zona);
+    });
+  });
+  // Live preview DH oficina
+  ['f-of-total','f-of-superficie','f-of-piso','f-of-cochera'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => {
+      const dh0 = document.getElementById('cp-of-dh0');
+      const dh1 = document.getElementById('cp-of-dh1');
+      const dh2 = document.getElementById('cp-of-dh2');
+      const dh3 = document.getElementById('cp-of-dh3');
+      if (dh0) dh0.textContent = document.getElementById('f-of-total').value || 'USD —';
+      if (dh1) dh1.textContent = document.getElementById('f-of-superficie').value || '— m²';
+      if (dh2) dh2.textContent = document.getElementById('f-of-piso').value || '—';
+      if (dh3) dh3.textContent = document.getElementById('f-of-cochera').value || '—';
     });
   });
 });
@@ -982,18 +1097,45 @@ function savePin() {
   const lng = parseFloat(document.getElementById('f-lng').value) || null;
   const zona = document.getElementById('f-zona').value.trim();
 
-  if (tipo === 'oportunidad' || tipo === 'proximo') {
+  if (tipo === 'oportunidad' || tipo === 'proximo' || tipo === 'oficina') {
     // → proyectos array
     const p = {
       id: editingSrc === 'p' ? proyectos[editingIdx].id : Date.now().toString(),
-      estado: tipo === 'oportunidad' ? 'abierto' : 'proximo',
+      estado: tipo === 'proximo' ? 'proximo' : 'abierto',
       nombre: dir,
       numero: document.getElementById('f-numero').value.trim(),
       zona,
       lat, lng,
     };
 
-    if (tipo === 'oportunidad') {
+    if (tipo === 'oficina') {
+      p.subcategoria = 'oficina';
+      p.badge_mes = document.getElementById('f-of-badge').value.trim();
+      p.precio_desde = document.getElementById('f-of-precio-m2').value.trim();
+      const sup = document.getElementById('f-of-superficie').value.trim();
+      const piso = document.getElementById('f-of-piso').value.trim();
+      p.precio_sub = `por m² · ${sup} · ${piso}`;
+      p.escritura = '';
+      const cochera = document.getElementById('f-of-cochera').value.trim();
+      p.participacion_disponible = cochera;
+      p.nota = document.getElementById('f-of-nota').value.trim();
+      const total = document.getElementById('f-of-total').value.trim();
+      p.dh = [
+        { val: total,   lbl: 'Precio total' },
+        { val: sup,     lbl: 'Superficie' },
+        { val: piso,    lbl: 'Nivel' },
+        { val: cochera || '—', lbl: 'Cochera' }
+      ];
+      p.escenarios = [
+        { m2: document.getElementById('f-of-fin0-mod').value.trim(),
+          pct: document.getElementById('f-of-fin0-pct').value.trim(),
+          costo: document.getElementById('f-of-fin0-monto').value.trim() },
+        { m2: document.getElementById('f-of-fin1-mod').value.trim(),
+          pct: document.getElementById('f-of-fin1-pct').value.trim(),
+          costo: document.getElementById('f-of-fin1-monto').value.trim() }
+      ].filter(e => e.m2 || e.costo);
+      p.modelo_pct = ''; p.modelo = [];
+    } else if (tipo === 'oportunidad') {
       const pct = document.getElementById('f-precio-pct').value.trim();
       p.badge_mes = document.getElementById('f-badge-mes').value.trim();
       p.precio_desde = document.getElementById('f-precio').value.trim();
