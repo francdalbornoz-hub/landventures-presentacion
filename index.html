@@ -210,7 +210,7 @@
     .proy-section::before{content:'';position:absolute;inset:0;background:url('proyectos-bg.webp') center center/cover no-repeat;opacity:.07;pointer-events:none;z-index:0;}
     .proy-section::after{content:'';position:absolute;inset:0;background:var(--card2);opacity:.88;pointer-events:none;z-index:1;}
     .proy-inner{position:relative;z-index:2;max-width:1060px;margin:0 auto;}
-    .proy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;}
+    .proy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px;}
     .pcard{background:var(--card);border:1px solid var(--borde);border-radius:14px;overflow:hidden;transition:border-color .35s cubic-bezier(.22,1,.36,1),box-shadow .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1);}
     .pcard.clickable{cursor:pointer;}
     .pcard.clickable:hover{border-color:rgba(232,148,58,.35);box-shadow:0 12px 40px rgba(0,0,0,.3),0 4px 16px rgba(232,148,58,.08);transform:translateY(-2px);}
@@ -240,6 +240,16 @@
     .pcard.open .pcard-toggle svg{transform:rotate(90deg);}
     .pcard-detail{max-height:0;overflow:hidden;border-top:0px solid #201e1c;padding:0 20px;transition:max-height .5s cubic-bezier(.22,1,.36,1),padding .4s cubic-bezier(.22,1,.36,1),border-top-width .3s;}
     .pcard.open .pcard-detail{max-height:900px;border-top:1px solid #201e1c;padding:18px 20px;}
+
+    /* ── Fullscreen card overlay ── */
+    #pcard-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);overflow-y:auto;padding:20px 16px;}
+    #pcard-modal.show{display:flex;align-items:flex-start;justify-content:center;}
+    #pcard-modal-inner{position:relative;width:100%;max-width:580px;margin:auto;background:var(--card);border:1px solid rgba(232,148,58,.45);border-radius:16px;overflow:hidden;}
+    #pcard-modal-close{position:absolute;top:14px;right:14px;width:34px;height:34px;background:rgba(255,255,255,.07);border:1px solid var(--borde);border-radius:50%;color:var(--blanco);font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;font-family:sans-serif;}
+    #pcard-modal-close:hover{background:rgba(255,255,255,.14);}
+    .modal-pcard-detail{border-top:1px solid #201e1c;padding:18px 20px;}
+    .modal-cta{padding:0 20px 20px;}
+    .modal-cta .cta-card-btn{margin-top:0;}
     .dh-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px;}
     .dh-item{background:#111;border-radius:7px;padding:10px 12px;}
     .dh-val{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:600;color:var(--naranja);margin-bottom:1px;}
@@ -320,7 +330,7 @@
       .paso-title{font-size:16px;}
       .paso-desc{font-size:13px;}
 
-      .proy-grid{grid-template-columns:repeat(3,1fr);gap:14px;}
+      .proy-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
       .pcard-name{font-size:22px;}
       .precio-val{font-size:36px;}
       .pcard-head{padding:22px 22px 18px;}
@@ -342,7 +352,7 @@
 
     /* ── Landscape iPad / small desktop ── */
     @media(min-width:1025px) and (max-width:1180px){
-      .proy-grid{grid-template-columns:repeat(3,1fr);}
+      .proy-grid{grid-template-columns:repeat(2,1fr);}
     }
 
     /* ── Mobile ── */
@@ -380,7 +390,7 @@
 <div class="hero-wrap">
 <section class="hero">
   <div class="eyebrow fade-up"><div class="eyebrow-dot"></div>Inversiones en tierra · CABA · Cupos limitados</div>
-  <h1 class="fade-up fade-up-d1">Identificamos y compramos terrenos en CABA junto a inversores para <em>maximizar su rentabilidad.</em></h1>
+  <h1 class="fade-up fade-up-d1">compramos terrenos en CABA junto a inversores para <em>maximizar su rentabilidad.</em></h1>
   <p class="hero-sub fade-up fade-up-d2">Nuestros intereses y los del inversor, siempre alineados. Seguridad jurídica en cada operación.</p>
 </section>
 </div>
@@ -456,10 +466,7 @@
       <div class="mapa-legend">
         <span class="leg-lbl">Referencias</span>
         <div class="leg-item"><div class="leg-dot abierto"></div>Oportunidad</div>
-        <div class="leg-item"><div class="leg-dot canje"></div>Canje Finalizado</div>
-        <div class="leg-item"><div class="leg-dot desarrollo"></div>Desarrollo</div>
-        <div class="leg-item"><div class="leg-dot local"></div>Local</div>
-        <div class="leg-item"><div class="leg-dot venta"></div>Compraventa</div>
+        <div class="leg-item"><div class="leg-dot canje"></div>Negocios realizados</div>
         <div class="leg-item"><div class="leg-dot proximo"></div>Próximamente</div>
       </div>
       <div id="map"></div>
@@ -558,7 +565,7 @@ const defaultProyectos = [
     precio_desde: '1.899',
     precio_sub: 'por m² · escenario base (28% canje)',
     escritura: '15 may 2026',
-    participacion_disponible: '42%',
+    participacion_disponible: '30%',
     dh: [
       { val: 'USD 718K', lbl: 'Valor terreno' },
       { val: 'USD 532', lbl: 'Incidencia /m²' },
@@ -589,7 +596,7 @@ const defaultProyectos = [
     precio_desde: '2.008',
     precio_sub: 'por m² · escenario base (29% canje)',
     escritura: '15 jun 2026',
-    participacion_disponible: '36%',
+    participacion_disponible: '50%',
     dh: [
       { val: 'USD 990K', lbl: 'Valor terreno' },
       { val: 'USD 582', lbl: 'Incidencia /m²' },
@@ -620,7 +627,7 @@ const defaultProyectos = [
     precio_desde: '1.756',
     precio_sub: 'por m² · escenario base (25% canje)',
     escritura: '1 ago 2026',
-    participacion_disponible: '28%',
+    participacion_disponible: '48%',
     dh: [
       { val: 'USD 790K', lbl: 'Valor terreno' },
       { val: 'USD 439', lbl: 'Incidencia /m²' },
@@ -644,19 +651,32 @@ const defaultProyectos = [
   {
     id: 'moldes-2661',
     estado: 'abierto',
-    badge_mes: '',
+    badge_mes: 'Feb 2026',
     nombre: 'Moldes',
     numero: '2661',
     zona: 'Belgrano · CABA',
-    precio_desde: '',
-    precio_sub: '',
-    escritura: '',
-    participacion_disponible: '',
-    dh: [],
-    nota: '',
-    escenarios: [],
-    modelo_pct: '',
-    modelo: [],
+    precio_desde: '2.000',
+    precio_sub: 'por m² · escenario base (29% canje)',
+    escritura: '5 feb 2026',
+    participacion_disponible: '24%',
+    dh: [
+      { val: 'USD 840K', lbl: 'Valor terreno' },
+      { val: 'USD 579', lbl: 'Incidencia /m²' },
+      { val: '28–30%', lbl: '% canje' },
+      { val: '12% mín.', lbl: 'Participación' }
+    ],
+    nota: 'El terreno permanece en manos del grupo inversor hasta recibir los metros acordados con el developer.',
+    escenarios: [
+      { m2: '406 m²', pct: '28%', costo: 'USD 2.068' },
+      { m2: '420 m²', pct: '29%', costo: 'USD 2.000' },
+      { m2: '435 m²', pct: '30%', costo: 'USD 1.931' }
+    ],
+    modelo_pct: '12%',
+    modelo: [
+      { label: 'Inversión', val: 'USD 100.800', n: true },
+      { label: 'm² a recibir', val: 'Entre 49 m² y 52 m²', n: false },
+      { label: 'Costo m²', val: 'USD 1.931 – 2.068', n: true }
+    ],
     lat: -34.5606, lng: -58.4546
   },
   {
@@ -685,6 +705,32 @@ const defaultProyectos = [
     zona: 'Caballito · CABA',
     nota: 'Próxima oportunidad en estructuración.',
     lat: -34.6155, lng: -58.4481
+  },
+  {
+    id: 'juramento-1537',
+    estado: 'abierto',
+    subcategoria: 'oficina',
+    badge_mes: 'Disponible',
+    nombre: 'Av. Juramento',
+    numero: '1537',
+    zona: 'Belgrano · CABA',
+    precio_desde: '2.600',
+    precio_sub: 'por m² · 130 m² · Piso 3',
+    escritura: '',
+    participacion_disponible: '1 cochera disponible',
+    dh: [
+      { val: 'USD 338.000', lbl: 'Precio total' },
+      { val: '130 m²',      lbl: 'Superficie' },
+      { val: 'Piso 3',      lbl: 'Nivel' },
+      { val: '1 unidad',    lbl: 'Cochera' }
+    ],
+    nota: 'Semipiso de oficina Premium en venta. Financiamiento: 50% al contado + 50% en 24 cuotas desde inicio de obra.',
+    escenarios: [
+      { m2: 'Al contado',  pct: '50%', costo: 'USD 169.000' },
+      { m2: 'Cuotas (24)', pct: '50%', costo: 'Desde inicio de obra' }
+    ],
+    modelo_pct: '', modelo: [],
+    lat: -34.5592, lng: -58.4531
   }
 ];
 
@@ -699,7 +745,7 @@ const defaultTerrenosCerrados = [
   { dir: 'Moldes 2982', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5599, lng: -58.4587 },
   { dir: 'Darwin 566', zona: 'Villa Crespo', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5978, lng: -58.4438 },
   { dir: 'Cramer 2848', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5612, lng: -58.4570 },
-  { dir: 'Juramento 1537', zona: 'Belgrano', canje: 'Canje finalizado', info: 'Canje finalizado', subtipo: 'edificio', lat: -34.5592, lng: -58.4531 },
+  // Juramento 1537 movido a proyectos (subcategoria: 'oficina')
   // --- Local ---
   { dir: 'Santa Fe y Araoz', zona: 'Palermo', canje: 'Local', info: 'Local comercial', subtipo: 'local', lat: -34.5938, lng: -58.4214 },
   { dir: 'Amenábar 2214', zona: 'Colegiales', canje: 'Local', info: 'Local comercial', subtipo: 'local', lat: -34.5726, lng: -58.4517 },
@@ -759,6 +805,7 @@ function renderProyectos() {
 
   grid.innerHTML = proyectos.map((p, i) => {
     if (p.estado === 'proximo') return renderProximoCard(p, i);
+    if (p.subcategoria === 'oficina') return renderOficinaCard(p, i);
     return renderAbiertoCard(p, i);
   }).join('');
 }
@@ -810,6 +857,46 @@ function renderAbiertoCard(p, i) {
   </div>`;
 }
 
+function renderOficinaCard(p, i) {
+  const dhItems = (p.dh || []).map(d =>
+    `<div class="dh-item"><div class="dh-val">${d.val}</div><div class="dh-lbl">${d.lbl}</div></div>`
+  ).join('');
+  const finRows = (p.escenarios || []).map(e =>
+    `<tr><td>${e.m2}</td><td>${e.pct}</td><td class="esc-n">${e.costo}</td></tr>`
+  ).join('');
+  return `
+  <div class="pcard clickable" id="pcard-${i}" onclick="togglePcard(${i})">
+    <div class="pcard-head">
+      <div class="badge abierto"><div class="badge-dot"></div>Disponible · Oficina</div>
+      <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
+      <div class="pcard-zona">${p.zona}</div>
+    </div>
+    <div class="pcard-precio">
+      <div class="precio-label">Desde</div>
+      <div class="precio-val">USD ${p.precio_desde}</div>
+      <div class="precio-sub">${p.precio_sub || ''}</div>
+    </div>
+    <div class="pcard-foot">
+      <div class="pcard-esc">Total <strong>USD 338.000</strong></div>
+      <button class="pcard-toggle">Ver detalle
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="pcard-detail">
+      <div class="dh-grid">${dhItems}</div>
+      ${p.nota ? `<div class="deal-note">${p.nota}</div>` : ''}
+      <div class="esc-lbl">Financiamiento</div>
+      <table class="esc-table">
+        <tr><th>Modalidad</th><th>%</th><th>Monto</th></tr>
+        ${finRows}
+      </table>
+      <div class="dh-grid" style="margin-top:14px;">
+        <div class="dh-item"><div class="dh-val" style="color:var(--verde)">${p.participacion_disponible || '—'}</div><div class="dh-lbl">Extras</div></div>
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderProximoCard(p, i) {
   return `
   <div class="pcard proximo-card">
@@ -831,14 +918,102 @@ function renderProximoCard(p, i) {
 }
 
 function togglePcard(i) {
-  const card = document.getElementById('pcard-' + i);
-  if (!card) return;
-  const isOpen = card.classList.contains('open');
-  // close all
-  document.querySelectorAll('.pcard.open').forEach(c => c.classList.remove('open'));
-  // open this one only if it was closed
-  if (!isOpen) card.classList.add('open');
+  const p = proyectos[i];
+  if (!p || p.estado !== 'abierto') return;
+
+  const dhItems = (p.dh || []).map(d =>
+    `<div class="dh-item"><div class="dh-val">${d.val}</div><div class="dh-lbl">${d.lbl}</div></div>`
+  ).join('');
+
+  if (p.subcategoria === 'oficina') {
+    const finRows = (p.escenarios || []).map(e =>
+      `<tr><td>${e.m2}</td><td>${e.pct}</td><td class="esc-n">${e.costo}</td></tr>`
+    ).join('');
+    document.getElementById('pcard-modal-content').innerHTML = `
+      <div class="pcard-head" style="padding-right:52px;">
+        <div class="badge abierto"><div class="badge-dot"></div>Disponible · Oficina Premium</div>
+        <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
+        <div class="pcard-zona">${p.zona}</div>
+      </div>
+      <div class="pcard-precio">
+        <div class="precio-label">Desde</div>
+        <div class="precio-val">USD ${p.precio_desde}</div>
+        <div class="precio-sub">${p.precio_sub || ''}</div>
+      </div>
+      <div class="pcard-foot">
+        <div class="pcard-esc">Precio total <strong>USD 338.000</strong></div>
+        <div class="pcard-esc" style="color:var(--verde);font-weight:600;">${p.participacion_disponible || ''}</div>
+      </div>
+      <div class="modal-pcard-detail">
+        <div class="dh-grid">${dhItems}</div>
+        ${p.nota ? `<div class="deal-note">${p.nota}</div>` : ''}
+        <div class="esc-lbl">Financiamiento</div>
+        <table class="esc-table">
+          <tr><th>Modalidad</th><th>%</th><th>Monto</th></tr>
+          ${finRows}
+        </table>
+      </div>
+      <div class="modal-cta">
+        <button class="cta-card-btn" onclick="contactarWA('${p.nombre} ${p.numero}')">Quiero más información</button>
+      </div>
+    `;
+  } else {
+    const escRows = (p.escenarios || []).map(e =>
+      `<tr><td>${e.m2}</td><td>${e.pct}</td><td class="esc-n">${e.costo}</td></tr>`
+    ).join('');
+    const modeloRows = (p.modelo || []).map(r =>
+      `<div class="modelo-row"><span class="modelo-label">${r.label}</span><span class="modelo-val ${r.n ? 'n' : ''}">${r.val}</span></div>`
+    ).join('');
+    document.getElementById('pcard-modal-content').innerHTML = `
+      <div class="pcard-head" style="padding-right:52px;">
+        <div class="badge abierto"><div class="badge-dot"></div>Abierto · ${p.badge_mes || ''}</div>
+        <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
+        <div class="pcard-zona">${p.zona}</div>
+      </div>
+      <div class="pcard-precio">
+        <div class="precio-label">Desde</div>
+        <div class="precio-val">USD ${p.precio_desde}</div>
+        <div class="precio-sub">${p.precio_sub || ''}</div>
+      </div>
+      <div class="pcard-foot">
+        <div class="pcard-esc">Escritura <strong>${p.escritura || ''}</strong></div>
+        <div class="pcard-esc">Participación <strong style="color:var(--verde)">${p.participacion_disponible || '—'}</strong></div>
+      </div>
+      <div class="modal-pcard-detail">
+        <div class="dh-grid">${dhItems}</div>
+        ${p.nota ? `<div class="deal-note">${p.nota}</div>` : ''}
+        <div class="esc-lbl">Escenarios</div>
+        <table class="esc-table">
+          <tr><th>m² canje</th><th>%</th><th>Costo /m²</th></tr>
+          ${escRows}
+        </table>
+        <div class="esc-lbl">Modelo (${p.modelo_pct || ''})</div>
+        <div class="modelo-box">${modeloRows}</div>
+      </div>
+      <div class="modal-cta">
+        <button class="cta-card-btn" onclick="contactarWA('${p.nombre} ${p.numero}')">Quiero sumarme a este proyecto</button>
+      </div>
+    `;
+  }
+
+  const modal = document.getElementById('pcard-modal');
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
+
+function closePcardModal(e) {
+  if (e && e.target !== document.getElementById('pcard-modal')) return;
+  document.getElementById('pcard-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function closePcardModalBtn() {
+  document.getElementById('pcard-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// Cerrar con Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePcardModalBtn(); });
 
 // ============================================================
 // MAPA LEAFLET
@@ -883,20 +1058,24 @@ function initMap() {
     // Clock — próximamente
     const ampolleta = `<svg width="${S}" height="${S}" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.4237 17.4237L13.2566 13.2566V4.92371" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/><path d="M13.25 25.75C16.5652 25.75 19.7446 24.433 22.0888 22.0888C24.433 19.7446 25.75 16.5652 25.75 13.25C25.75 9.93479 24.433 6.75537 22.0888 4.41117C19.7446 2.06696 16.5652 0.75 13.25 0.75C9.93479 0.75 6.75537 2.06696 4.41117 4.41117C2.06696 6.75537 0.75 9.93479 0.75 13.25C0.75 16.5652 2.06696 19.7446 4.41117 22.0888C6.75537 24.433 9.93479 25.75 13.25 25.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
-    const icons = {
-      'edificio':   handshake,
-      'local':      shop,
-      'venta':      handshake,
-      'desarrollo': edificio,
-      'abierto':    trebol,
-      'proximo':    ampolleta,
-    };
     const st = subtipo || tipo;
     const isAbierto = tipo === 'abierto';
     const isProximo = tipo === 'proximo';
     const isCanje = tipo === 'canje';
+    const iconW = isAbierto ? 30 : 26; const iconH = isAbierto ? 22 : 19;
+    const lv = `<svg width="${iconW}" height="${iconH}" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26.8243 0.00500281C26.6311 -0.0168706 26.4367 0.0334569 26.2771 0.146672C26.1174 0.259887 26.0034 0.428325 25.956 0.620815C24.0264 5.82101 22.0808 11.0212 20.1191 16.2214C19.9849 16.7335 19.7733 17.221 19.492 17.6665C18.9855 16.3035 18.495 14.998 18.0126 13.6842C16.4047 9.30514 14.7753 4.92603 13.1244 0.546918C13.0199 0.251328 12.9315 0.0214245 12.5375 0.0296353C11.3878 0.0296353 10.2381 0.0296353 9 0.0296353C10.0211 2.64889 11.01 5.16141 11.9908 7.67392C13.7596 12.2227 15.5364 16.7633 17.2891 21.3203C17.3392 21.5394 17.4696 21.7305 17.6536 21.8543C17.8376 21.978 18.0611 22.0249 18.2779 21.9854C19.0408 21.932 19.8064 21.932 20.5693 21.9854C20.7969 22.0273 21.0315 21.9782 21.2245 21.8483C21.4176 21.7184 21.5544 21.5176 21.6064 21.2875C23.7048 15.934 25.8354 10.6134 27.9498 5.25172L30 0.0214245C28.8905 0.0214245 27.8614 0.046057 26.8243 0.00500281Z" fill="currentColor"/><path d="M12.3438 18.5747C9.67619 18.5747 7.0086 18.5747 4.34102 18.5747C3.76882 18.5747 3.63987 18.4023 3.63987 17.8355C3.63987 13.6217 3.63987 9.41609 3.63987 5.20229C3.63987 3.6827 3.63987 2.1631 3.63987 0.643502C3.63987 0.10959 3.48674 -0.0218351 2.99514 0.00280699C2.2143 0.0512547 1.43156 0.0594793 0.649915 0.0274491C0.142187 0.00280699 0.00518138 0.15066 0.00518138 0.668144C0.00518138 4.10161 0.00518138 7.53508 0.00518138 10.9603C0.00518138 14.3856 0.00518138 17.8683 0.00518138 21.3182C0.00518138 21.655 -0.0834695 22 0.472614 22C4.5022 22 8.53179 22 12.5614 22C12.8837 22 12.9966 21.885 12.9966 21.5564C12.9966 20.7761 12.9563 19.9958 12.9966 19.2154C13.0288 18.6733 12.8354 18.5665 12.3438 18.5747Z" fill="currentColor"/></svg>`;
+    const peso = `<svg width="10" height="22" viewBox="0 0 14 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.8567 32C6.6088 32 6.40202 31.9103 6.23637 31.7308C6.07072 31.5514 5.98731 31.3274 5.98615 31.0588V28.1694C4.61692 27.9762 3.43419 27.4993 2.43796 26.7388C1.44173 25.9796 0.651119 24.9305 0.0661248 23.5915C-0.0253892 23.3694 -0.0219147 23.1297 0.0765497 22.8725C0.175014 22.6152 0.33719 22.437 0.563079 22.3379C0.768117 22.2463 0.988214 22.2482 1.22337 22.3435C1.45853 22.4389 1.62418 22.6014 1.72033 22.8311C2.23466 23.9655 2.90711 24.8358 3.73769 25.4419C4.56942 26.0493 5.65832 26.3529 7.00439 26.3529C8.32497 26.3529 9.53145 25.9965 10.6238 25.2838C11.7162 24.571 12.2624 23.4215 12.2624 21.8353C12.2624 20.4963 11.8604 19.4209 11.0565 18.6089C10.2514 17.797 8.74663 17.0071 6.54219 16.2391C4.29604 15.4648 2.7154 14.5801 1.80026 13.5849C0.885116 12.5886 0.427546 11.2916 0.427546 9.69413C0.427546 7.94479 1.04671 6.54746 2.28505 5.50213C3.52338 4.45805 4.75709 3.89334 5.98615 3.80801V0.941189C5.98615 0.673895 6.06956 0.449895 6.23637 0.269189C6.40318 0.0884833 6.60938 -0.00124192 6.85496 1.29818e-05C7.10054 0.00126788 7.30732 0.0909931 7.47528 0.269189C7.64325 0.447385 7.72608 0.671385 7.72376 0.941189V3.80801C8.75822 3.92472 9.67509 4.21272 10.4744 4.67201C11.2737 5.1313 11.9566 5.78448 12.523 6.63154C12.6505 6.84613 12.6846 7.07201 12.6256 7.30919C12.5665 7.54636 12.4246 7.72581 12.1998 7.84754C11.9948 7.96424 11.7805 7.9906 11.5569 7.9266C11.3334 7.8626 11.1341 7.71954 10.9592 7.49742C10.5155 6.91264 9.97338 6.44205 9.33279 6.08566C8.69219 5.73052 7.89521 5.55295 6.94184 5.55295C5.60156 5.55295 4.47038 5.93758 3.54829 6.70683C2.6262 7.47483 2.16515 8.4706 2.16515 9.69413C2.16515 10.8499 2.54337 11.786 3.29981 12.5026C4.05741 13.2204 5.57492 13.9689 7.85234 14.7482C9.96064 15.4711 11.5129 16.4003 12.5091 17.536C13.503 18.6717 14 20.0973 14 21.8127C14 23.7026 13.386 25.2041 12.1581 26.3172C10.9302 27.4303 9.4521 28.0552 7.72376 28.192V31.0588C7.72376 31.3274 7.64094 31.5514 7.47528 31.7308C7.30963 31.9103 7.10286 32 6.85496 32" fill="currentColor"/></svg>`;
+    const icons = {
+      'edificio':   lv,
+      'local':      lv,
+      'venta':      peso,
+      'desarrollo': edificio,
+      'oficina':    edificio,
+      'abierto':    lv,
+      'proximo':    lv,
+    };
     const pinClass = isCanje ? `lv-pin canje canje-${st}` : `lv-pin ${tipo}`;
-    const label = isAbierto ? icons.abierto : isProximo ? icons.proximo : (icons[st] || icons.edificio);
+    const label = icons[st] || lv;
     const size = isAbierto ? 44 : 38;
     return L.divIcon({
       className: '',
@@ -906,11 +1085,14 @@ function initMap() {
     });
   }
 
-  function makePopup(dir, zona, canje, tipo, info) {
+  function makePopup(dir, zona, canje, tipo, info, cardIdx) {
+    const link = cardIdx !== undefined
+      ? `<div style="margin-top:10px;"><a onclick="irAFicha(${cardIdx})" style="color:var(--naranja);font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Ver ficha completa <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#E8943A" stroke-width="1.8" stroke-linecap="round"/></svg></a></div>`
+      : '';
     return `<div class="popup-dir">${dir}</div>
       <div class="popup-zona">${zona}</div>
       <div class="popup-canje ${tipo}">${canje}</div>
-      <div class="popup-info">${info}</div>`;
+      <div class="popup-info">${info}</div>${link}`;
   }
 
   // Cerrados / Canje realizado
@@ -921,12 +1103,12 @@ function initMap() {
   });
 
   // Abiertos y próximos (desde proyectos)
-  proyectos.forEach(p => {
+  proyectos.forEach((p, i) => {
     if (!p.lat || !p.lng) return;
     if (p.estado === 'abierto') {
-      const m = L.marker([p.lat, p.lng], { icon: makeIcon('abierto', 'abierto') });
+      const m = L.marker([p.lat, p.lng], { icon: makeIcon('abierto', p.subcategoria || 'abierto'), zIndexOffset: 1000 });
       const canje = p.dh ? (p.dh.find(d => d.lbl.includes('canje')) || {}).val || '' : '';
-      m.bindPopup(makePopup(p.nombre + ' ' + p.numero, p.zona, canje, 'abierto', `Abierto · ${p.badge_mes || ''} · Participación disponible: ${p.participacion_disponible || '—'}`));
+      m.bindPopup(makePopup(p.nombre + ' ' + p.numero, p.zona, canje, 'abierto', `Abierto · ${p.badge_mes || ''} · Participación disponible: ${p.participacion_disponible || '—'}`, i));
       m.addTo(map);
     } else if (p.estado === 'proximo') {
       const m = L.marker([p.lat, p.lng], { icon: makeIcon('proximo', 'proximo') });
@@ -934,6 +1116,15 @@ function initMap() {
       m.addTo(map);
     }
   });
+}
+
+function irAFicha(i) {
+  togglePcard(i);
+}
+
+function contactarWA(proyecto) {
+  const txt = encodeURIComponent('Hola, me interesa sumarme al proyecto ' + proyecto + '. ¿Podemos hablar?');
+  window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + txt, '_blank');
 }
 
 // ============================================================
@@ -1025,5 +1216,12 @@ function lvScroll(id) {
 renderProyectos();
 initMap();
 </script>
+<!-- FULLSCREEN CARD MODAL -->
+<div id="pcard-modal" onclick="closePcardModal(event)">
+  <div id="pcard-modal-inner">
+    <button id="pcard-modal-close" onclick="closePcardModalBtn()">×</button>
+    <div id="pcard-modal-content"></div>
+  </div>
+</div>
 </body>
 </html>
