@@ -803,27 +803,22 @@ const defaultTerrenosCerrados = [
   { dir: 'Caseros 435', zona: 'San Telmo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.6213, lng: -58.3768 }
 ];
 
-// Versión de datos — mergea defaults nuevos sin borrar pins del usuario
-const DATA_VERSION = '7';
-if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
+// Merge siempre: agrega defaults que falten, preserva pins del usuario
+(function syncDefaults() {
   const storedP = loadData('lv_proyectos', []);
-  if (storedP.length === 0) {
-    saveData('lv_proyectos', defaultProyectos);
-  } else {
-    const ids = new Set(storedP.map(p => p.id));
-    const merged = [...storedP, ...defaultProyectos.filter(p => !ids.has(p.id))];
-    saveData('lv_proyectos', merged);
-  }
+  const ids = new Set(storedP.map(p => p.id));
+  const finalP = storedP.length === 0
+    ? defaultProyectos
+    : [...storedP, ...defaultProyectos.filter(p => !ids.has(p.id))];
+  saveData('lv_proyectos', finalP);
+
   const storedT = loadData('lv_terrenos_cerrados', []);
-  if (storedT.length === 0) {
-    saveData('lv_terrenos_cerrados', defaultTerrenosCerrados);
-  } else {
-    const dirs = new Set(storedT.map(t => t.dir));
-    const mergedT = [...storedT, ...defaultTerrenosCerrados.filter(t => !dirs.has(t.dir))];
-    saveData('lv_terrenos_cerrados', mergedT);
-  }
-  localStorage.setItem('lv_data_version', DATA_VERSION);
-}
+  const dirs = new Set(storedT.map(t => t.dir));
+  const finalT = storedT.length === 0
+    ? defaultTerrenosCerrados
+    : [...storedT, ...defaultTerrenosCerrados.filter(t => !dirs.has(t.dir))];
+  saveData('lv_terrenos_cerrados', finalT);
+})();
 
 let proyectos = loadData('lv_proyectos', defaultProyectos);
 let terrenosCerrados = loadData('lv_terrenos_cerrados', defaultTerrenosCerrados);

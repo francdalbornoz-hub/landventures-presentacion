@@ -775,24 +775,22 @@ function getData(key, fallback) {
   } catch { return fallback; }
 }
 
-const DATA_VERSION = '7';
-if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
+// Merge siempre: agrega defaults que falten, preserva datos del usuario
+(function syncDefaults() {
   const storedP = getData('lv_proyectos', []);
-  if (storedP.length === 0) {
-    localStorage.setItem('lv_proyectos', JSON.stringify(defaultProyectos));
-  } else {
-    const ids = new Set(storedP.map(p => p.id));
-    localStorage.setItem('lv_proyectos', JSON.stringify([...storedP, ...defaultProyectos.filter(p => !ids.has(p.id))]));
-  }
+  const ids = new Set(storedP.map(p => p.id));
+  const finalP = storedP.length === 0
+    ? defaultProyectos
+    : [...storedP, ...defaultProyectos.filter(p => !ids.has(p.id))];
+  localStorage.setItem('lv_proyectos', JSON.stringify(finalP));
+
   const storedT = getData('lv_terrenos_cerrados', []);
-  if (storedT.length === 0) {
-    localStorage.setItem('lv_terrenos_cerrados', JSON.stringify(defaultTerrenosCerrados));
-  } else {
-    const dirs = new Set(storedT.map(t => t.dir));
-    localStorage.setItem('lv_terrenos_cerrados', JSON.stringify([...storedT, ...defaultTerrenosCerrados.filter(t => !dirs.has(t.dir))]));
-  }
-  localStorage.setItem('lv_data_version', DATA_VERSION);
-}
+  const dirs = new Set(storedT.map(t => t.dir));
+  const finalT = storedT.length === 0
+    ? defaultTerrenosCerrados
+    : [...storedT, ...defaultTerrenosCerrados.filter(t => !dirs.has(t.dir))];
+  localStorage.setItem('lv_terrenos_cerrados', JSON.stringify(finalT));
+})();
 
 const timeline = getData('lv_timeline', defaultTimeline);
 const proyectos = getData('lv_proyectos', defaultProyectos);
