@@ -877,7 +877,7 @@ function renderOficinaCard(p, i) {
       <div class="precio-sub">${p.precio_sub || ''}</div>
     </div>
     <div class="pcard-foot">
-      <div class="pcard-esc">Total <strong>USD 338.000</strong></div>
+      <div class="pcard-esc">Total <strong>${(p.dh && p.dh[0]) ? p.dh[0].val : '—'}</strong></div>
       <button class="pcard-toggle">Ver detalle
         <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
@@ -890,9 +890,6 @@ function renderOficinaCard(p, i) {
         <tr><th>Modalidad</th><th>%</th><th>Monto</th></tr>
         ${finRows}
       </table>
-      <div class="dh-grid" style="margin-top:14px;">
-        <div class="dh-item"><div class="dh-val" style="color:var(--verde)">${p.participacion_disponible || '—'}</div><div class="dh-lbl">Extras</div></div>
-      </div>
     </div>
   </div>`;
 }
@@ -941,8 +938,8 @@ function togglePcard(i) {
         <div class="precio-sub">${p.precio_sub || ''}</div>
       </div>
       <div class="pcard-foot">
-        <div class="pcard-esc">Precio total <strong>USD 338.000</strong></div>
-        <div class="pcard-esc" style="color:var(--verde);font-weight:600;">${p.participacion_disponible || ''}</div>
+        <div class="pcard-esc">Precio total <strong>${(p.dh && p.dh[0]) ? p.dh[0].val : '—'}</strong></div>
+        <div class="pcard-esc"><strong style="color:var(--verde);">${(p.dh && p.dh[3]) ? p.dh[3].val + ' cochera' : ''}</strong></div>
       </div>
       <div class="modal-pcard-detail">
         <div class="dh-grid">${dhItems}</div>
@@ -1107,8 +1104,17 @@ function initMap() {
     if (!p.lat || !p.lng) return;
     if (p.estado === 'abierto') {
       const m = L.marker([p.lat, p.lng], { icon: makeIcon('abierto', p.subcategoria || 'abierto'), zIndexOffset: 1000 });
-      const canje = p.dh ? (p.dh.find(d => d.lbl.includes('canje')) || {}).val || '' : '';
-      m.bindPopup(makePopup(p.nombre + ' ' + p.numero, p.zona, canje, 'abierto', `Abierto · ${p.badge_mes || ''} · Participación disponible: ${p.participacion_disponible || '—'}`, i));
+      let popupCanje, popupInfo;
+      if (p.subcategoria === 'oficina') {
+        popupCanje = 'Disponible · Oficina';
+        const total = (p.dh && p.dh[0]) ? p.dh[0].val : '';
+        const cochera = (p.dh && p.dh[3]) ? p.dh[3].val : '';
+        popupInfo = `USD ${p.precio_desde}/m² · ${total}${cochera ? ' · ' + cochera + ' cochera' : ''}`;
+      } else {
+        popupCanje = p.dh ? (p.dh.find(d => d.lbl.includes('canje')) || {}).val || '' : '';
+        popupInfo = `Abierto · ${p.badge_mes || ''} · Participación disponible: ${p.participacion_disponible || '—'}`;
+      }
+      m.bindPopup(makePopup(p.nombre + ' ' + p.numero, p.zona, popupCanje, 'abierto', popupInfo, i));
       m.addTo(map);
     } else if (p.estado === 'proximo') {
       const m = L.marker([p.lat, p.lng], { icon: makeIcon('proximo', 'proximo') });
