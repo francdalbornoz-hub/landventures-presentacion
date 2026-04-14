@@ -643,7 +643,7 @@ const defaultProyectos = [
     id: 'ugarte-2729', estado: 'abierto', badge_mes: 'May 2026',
     nombre: 'Ugarte', numero: '2729', zona: 'Belgrano · CABA',
     precio_desde: '1.899', precio_sub: 'por m² · escenario base (28% canje)',
-    escritura: '15 may 2026', participacion_disponible: '42%',
+    escritura: '15 may 2026', participacion_disponible: '30%',
     dh: [
       { val: 'USD 718K', lbl: 'Valor terreno' }, { val: 'USD 532', lbl: 'Incidencia /m²' },
       { val: '27–29%', lbl: '% canje' }, { val: '15% mín.', lbl: 'Participación' }
@@ -666,7 +666,7 @@ const defaultProyectos = [
     id: 'amenábar-2546', estado: 'abierto', badge_mes: 'Jun 2026',
     nombre: 'Amenábar', numero: '2546', zona: 'Colegiales · CABA',
     precio_desde: '2.008', precio_sub: 'por m² · escenario base (29% canje)',
-    escritura: '15 jun 2026', participacion_disponible: '36%',
+    escritura: '15 jun 2026', participacion_disponible: '50%',
     dh: [
       { val: 'USD 990K', lbl: 'Valor terreno' }, { val: 'USD 582', lbl: 'Incidencia /m²' },
       { val: '28–30%', lbl: '% canje' }, { val: '10% mín.', lbl: 'Participación' }
@@ -689,7 +689,7 @@ const defaultProyectos = [
     id: 'serrano-534', estado: 'abierto', badge_mes: 'Ago 2026',
     nombre: 'Serrano', numero: '534', zona: 'Villa Crespo · CABA',
     precio_desde: '1.756', precio_sub: 'por m² · escenario base (25% canje)',
-    escritura: '1 ago 2026', participacion_disponible: '28%',
+    escritura: '1 ago 2026', participacion_disponible: '48%',
     dh: [
       { val: 'USD 790K', lbl: 'Valor terreno' }, { val: 'USD 439', lbl: 'Incidencia /m²' },
       { val: '24–26%', lbl: '% canje' }, { val: '12% mín.', lbl: 'Participación' }
@@ -711,7 +711,7 @@ const defaultProyectos = [
   {
     id: 'moldes-2661', estado: 'abierto', badge_mes: '',
     nombre: 'Moldes', numero: '2661', zona: 'Belgrano · CABA',
-    precio_desde: '', precio_sub: '', escritura: '', participacion_disponible: '',
+    precio_desde: '', precio_sub: '', escritura: '', participacion_disponible: '24%',
     dh: [], nota: '', escenarios: [], modelo_pct: '', modelo: [],
     lat: -34.5606, lng: -58.4546
   },
@@ -786,7 +786,7 @@ const defaultTerrenosCerrados = [
 ];
 
 // Versión de datos — mergea defaults nuevos sin borrar pins del usuario
-const DATA_VERSION = '5';
+const DATA_VERSION = '6';
 if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
   const storedP = loadData('lv_proyectos', []);
   if (storedP.length === 0) {

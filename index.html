@@ -775,7 +775,7 @@ function getData(key, fallback) {
   } catch { return fallback; }
 }
 
-const DATA_VERSION = '5';
+const DATA_VERSION = '6';
 if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
   const storedP = getData('lv_proyectos', []);
   if (storedP.length === 0) {
