@@ -786,7 +786,7 @@ const defaultTerrenosCerrados = [
 ];
 
 // Versión de datos — mergea defaults nuevos sin borrar pins del usuario
-const DATA_VERSION = '4';
+const DATA_VERSION = '5';
 if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
   const storedP = loadData('lv_proyectos', []);
   if (storedP.length === 0) {
