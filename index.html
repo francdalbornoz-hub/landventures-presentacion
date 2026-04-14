@@ -827,7 +827,13 @@ function renderProyectos() {
   const abiertos = proyectos.filter(p => p.estado === 'abierto').length;
   sub.textContent = `${abiertos} ${abiertos === 1 ? 'proyecto' : 'proyectos'} con cupos disponibles. Tocá cada uno para ver el detalle.`;
 
-  grid.innerHTML = proyectos.map((p, i) => {
+  const sorted = [...proyectos].sort((a, b) => {
+    if (a.estado === 'proximo' && b.estado !== 'proximo') return 1;
+    if (a.estado !== 'proximo' && b.estado === 'proximo') return -1;
+    return 0;
+  });
+  grid.innerHTML = sorted.map((p) => {
+    const i = proyectos.indexOf(p);
     if (p.estado === 'proximo') return renderProximoCard(p, i);
     if (p.subcategoria === 'oficina') return renderOficinaCard(p, i);
     return renderAbiertoCard(p, i);
