@@ -974,9 +974,6 @@ function togglePcard(i) {
           ${finRows}
         </table>
       </div>
-      <div class="modal-cta">
-        <button class="cta-card-btn" onclick="contactarWA('${p.nombre} ${p.numero}')">Quiero más información</button>
-      </div>
     `;
   } else {
     const escRows = (p.escenarios || []).map(e =>
@@ -1010,9 +1007,6 @@ function togglePcard(i) {
         </table>
         <div class="esc-lbl">Modelo (${p.modelo_pct || ''})</div>
         <div class="modelo-box">${modeloRows}</div>
-      </div>
-      <div class="modal-cta">
-        <button class="cta-card-btn" onclick="contactarWA('${p.nombre} ${p.numero}')">Quiero sumarme a este proyecto</button>
       </div>
     `;
   }
