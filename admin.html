@@ -535,7 +535,7 @@
                   <td><input class="cp-input full-w" id="f-of-fin0-monto" placeholder="USD 169.000" style="color:var(--naranja);font-weight:600;"/></td>
                 </tr>
                 <tr>
-                  <td><input class="cp-input full-w" id="f-of-fin1-mod" placeholder="Cuotas (24)"/></td>
+                  <td><input class="cp-input full-w" id="f-of-fin1-mod" placeholder="24 cuotas (desde inicio de obra)"/></td>
                   <td><input class="cp-input" id="f-of-fin1-pct" placeholder="50%" style="width:46px;"/></td>
                   <td><input class="cp-input full-w" id="f-of-fin1-monto" placeholder="Desde inicio de obra" style="color:var(--naranja);font-weight:600;"/></td>
                 </tr>
@@ -754,8 +754,8 @@ const defaultProyectos = [
     ],
     nota: 'Semipiso de oficina Premium en venta. Financiamiento: 50% al contado + 50% en 24 cuotas desde inicio de obra.',
     escenarios: [
-      { m2: 'Al contado',  pct: '50%', costo: 'USD 169.000' },
-      { m2: 'Cuotas (24)', pct: '50%', costo: 'Desde inicio de obra' }
+      { m2: 'Al contado',              pct: '50%', costo: 'USD 169.000' },
+      { m2: '24 cuotas (desde inicio de obra)', pct: '50%', costo: 'USD 169.000' }
     ],
     modelo_pct: '', modelo: [],
     lat: -34.5592, lng: -58.4531
@@ -803,6 +803,7 @@ const defaultTerrenosCerrados = [
           const def = defaultProyectos.find(d => d.id === p.id);
           // Si el entry guardado está vacío y el default tiene datos, usar default
           if (def && !p.precio_desde && def.precio_desde) return def;
+          if (def && p.id === 'juramento-1537' && (p.escenarios || []).some(e => e.m2 === 'Cuotas (24)')) return def;
           return p;
         }),
         ...defaultProyectos.filter(p => !ids.has(p.id))
