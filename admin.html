@@ -335,7 +335,7 @@
 </div>
 
 <!-- MODAL PIN (unificado) -->
-<div class="modal-overlay" id="pin-modal-overlay" onclick="closePinModalOutside(event)">
+<div class="modal-overlay" id="pin-modal-overlay">
   <div class="modal">
     <div class="modal-hdr">
       <div class="modal-title" id="pin-modal-title">Nuevo pin</div>
@@ -528,14 +528,6 @@
             <div class="cp-foot">
               <div class="cp-escritura">Precio total <strong><input class="cp-input sm" id="f-of-total" placeholder="USD 338.000" style="color:var(--blanco);font-weight:600;"/></strong></div>
               <div class="cp-participacion">Cochera <strong><input class="cp-input" id="f-of-cochera" placeholder="1 disponible" style="width:90px;color:var(--verde);font-size:11px;font-weight:600;"/></strong></div>
-            </div>
-
-            <!-- DH: 4 datos fijos (auto-calculados al guardar) -->
-            <div class="cp-dh">
-              <div class="cp-dh-item"><div class="cp-dh-val" style="color:var(--naranja);font-size:13px;font-weight:700;" id="cp-of-dh0">USD —</div><div class="cp-dh-lbl">Precio total</div></div>
-              <div class="cp-dh-item"><div class="cp-dh-val" style="color:var(--naranja);font-size:13px;font-weight:700;" id="cp-of-dh1">— m²</div><div class="cp-dh-lbl">Superficie</div></div>
-              <div class="cp-dh-item"><div class="cp-dh-val" style="color:var(--naranja);font-size:13px;font-weight:700;" id="cp-of-dh2">—</div><div class="cp-dh-lbl">Nivel</div></div>
-              <div class="cp-dh-item"><div class="cp-dh-val" style="color:var(--naranja);font-size:13px;font-weight:700;" id="cp-of-dh3">—</div><div class="cp-dh-lbl">Cochera</div></div>
             </div>
 
             <!-- FINANCIAMIENTO: 2 filas fijas -->
@@ -922,7 +914,7 @@ function openPinModal(src, idx) {
 
 function editPin(src, idx) { openPinModal(src, idx); }
 function closePinModal() { document.getElementById('pin-modal-overlay').classList.remove('show'); }
-function closePinModalOutside(e) { if (e.target.id === 'pin-modal-overlay') closePinModal(); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePinModal(); });
 
 function clearCommonFields() {
   ['f-dir','f-numero','f-zona','f-info','f-badge-mes','f-precio','f-precio-pct',
@@ -1070,20 +1062,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const zona = document.getElementById('f-zona').value;
       updateCardPreview(nombre, numero, zona);
       updateOficinaPreview(nombre, numero, zona);
-    });
-  });
-  // Live preview DH oficina
-  ['f-of-total','f-of-superficie','f-of-piso','f-of-cochera'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', () => {
-      const dh0 = document.getElementById('cp-of-dh0');
-      const dh1 = document.getElementById('cp-of-dh1');
-      const dh2 = document.getElementById('cp-of-dh2');
-      const dh3 = document.getElementById('cp-of-dh3');
-      if (dh0) dh0.textContent = document.getElementById('f-of-total').value || 'USD —';
-      if (dh1) dh1.textContent = document.getElementById('f-of-superficie').value || '— m²';
-      if (dh2) dh2.textContent = document.getElementById('f-of-piso').value || '—';
-      if (dh3) dh3.textContent = document.getElementById('f-of-cochera').value || '—';
     });
   });
 });
