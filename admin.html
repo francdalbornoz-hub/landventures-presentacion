@@ -785,11 +785,25 @@ const defaultTerrenosCerrados = [
   { dir: 'Caseros 435', zona: 'San Telmo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.6213, lng: -58.3768 }
 ];
 
-// Versión de datos — incrementar cuando cambian los defaults para forzar recarga
+// Versión de datos — mergea defaults nuevos sin borrar pins del usuario
 const DATA_VERSION = '4';
 if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
-  localStorage.removeItem('lv_proyectos');
-  localStorage.removeItem('lv_terrenos_cerrados');
+  const storedP = loadData('lv_proyectos', []);
+  if (storedP.length === 0) {
+    saveData('lv_proyectos', defaultProyectos);
+  } else {
+    const ids = new Set(storedP.map(p => p.id));
+    const merged = [...storedP, ...defaultProyectos.filter(p => !ids.has(p.id))];
+    saveData('lv_proyectos', merged);
+  }
+  const storedT = loadData('lv_terrenos_cerrados', []);
+  if (storedT.length === 0) {
+    saveData('lv_terrenos_cerrados', defaultTerrenosCerrados);
+  } else {
+    const dirs = new Set(storedT.map(t => t.dir));
+    const mergedT = [...storedT, ...defaultTerrenosCerrados.filter(t => !dirs.has(t.dir))];
+    saveData('lv_terrenos_cerrados', mergedT);
+  }
   localStorage.setItem('lv_data_version', DATA_VERSION);
 }
 

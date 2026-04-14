@@ -777,8 +777,20 @@ function getData(key, fallback) {
 
 const DATA_VERSION = '4';
 if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
-  localStorage.removeItem('lv_proyectos');
-  localStorage.removeItem('lv_terrenos_cerrados');
+  const storedP = getData('lv_proyectos', []);
+  if (storedP.length === 0) {
+    localStorage.setItem('lv_proyectos', JSON.stringify(defaultProyectos));
+  } else {
+    const ids = new Set(storedP.map(p => p.id));
+    localStorage.setItem('lv_proyectos', JSON.stringify([...storedP, ...defaultProyectos.filter(p => !ids.has(p.id))]));
+  }
+  const storedT = getData('lv_terrenos_cerrados', []);
+  if (storedT.length === 0) {
+    localStorage.setItem('lv_terrenos_cerrados', JSON.stringify(defaultTerrenosCerrados));
+  } else {
+    const dirs = new Set(storedT.map(t => t.dir));
+    localStorage.setItem('lv_terrenos_cerrados', JSON.stringify([...storedT, ...defaultTerrenosCerrados.filter(t => !dirs.has(t.dir))]));
+  }
   localStorage.setItem('lv_data_version', DATA_VERSION);
 }
 
