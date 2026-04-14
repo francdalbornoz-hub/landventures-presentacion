@@ -524,22 +524,13 @@
               <input class="cp-input full-w" id="f-of-nota" placeholder="Descripción adicional o condiciones especiales." style="font-size:10px;color:var(--muted);font-style:italic;width:100%;"/>
             </div>
 
-            <!-- FINANCIAMIENTO: 2 filas fijas -->
+            <!-- FINANCIAMIENTO: filas dinámicas -->
             <div class="cp-esc-wrap">
               <div class="cp-esc-lbl">Financiamiento</div>
-              <table class="cp-esc-table">
-                <tr><th>Modalidad</th><th>%</th><th>Monto / condición</th></tr>
-                <tr>
-                  <td><input class="cp-input full-w" id="f-of-fin0-mod" placeholder="Al contado"/></td>
-                  <td><input class="cp-input" id="f-of-fin0-pct" placeholder="50%" style="width:46px;"/></td>
-                  <td><input class="cp-input full-w" id="f-of-fin0-monto" placeholder="USD 169.000" style="color:var(--naranja);font-weight:600;"/></td>
-                </tr>
-                <tr>
-                  <td><input class="cp-input full-w" id="f-of-fin1-mod" placeholder="24 cuotas (desde inicio de obra)"/></td>
-                  <td><input class="cp-input" id="f-of-fin1-pct" placeholder="50%" style="width:46px;"/></td>
-                  <td><input class="cp-input full-w" id="f-of-fin1-monto" placeholder="Desde inicio de obra" style="color:var(--naranja);font-weight:600;"/></td>
-                </tr>
+              <table class="cp-esc-table" id="of-fin-table">
+                <tr><th>Modalidad</th><th>%</th><th>Monto</th><th></th></tr>
               </table>
+              <button type="button" onclick="addOfFinRow()" style="margin-top:6px;font-size:10px;color:var(--naranja);background:none;border:none;cursor:pointer;padding:0;">+ Agregar línea</button>
             </div>
 
           </div><!-- /card-preview -->
@@ -1003,14 +994,19 @@ function fillOficinaFields(p) {
   while (dhTable.rows.length > 1) dhTable.deleteRow(1);
   (p.dh || []).forEach(d => addOfDhRow(d.val, d.lbl));
   document.getElementById('f-of-nota').value = p.nota || '';
-  const fin = p.escenarios || [];
-  document.getElementById('f-of-fin0-mod').value = (fin[0] || {}).m2 || '';
-  document.getElementById('f-of-fin0-pct').value = (fin[0] || {}).pct || '';
-  document.getElementById('f-of-fin0-monto').value = (fin[0] || {}).costo || '';
-  document.getElementById('f-of-fin1-mod').value = (fin[1] || {}).m2 || '';
-  document.getElementById('f-of-fin1-pct').value = (fin[1] || {}).pct || '';
-  document.getElementById('f-of-fin1-monto').value = (fin[1] || {}).costo || '';
+  const finTbl = document.getElementById('of-fin-table');
+  while (finTbl.rows.length > 1) finTbl.deleteRow(1);
+  (p.escenarios || []).forEach(e => addOfFinRow(e.m2, e.pct, e.costo));
   updateOficinaPreview(p.nombre, p.numero, p.zona);
+}
+
+function addOfFinRow(mod, pct, monto) {
+  mod = mod || ''; pct = pct || ''; monto = monto || '';
+  const tbody = document.getElementById('of-fin-table');
+  const tr = document.createElement('tr');
+  const q = s => s.replace(/"/g,'&quot;');
+  tr.innerHTML = `<td><input class="cp-input full-w" placeholder="Al contado" value="${q(mod)}"/></td><td><input class="cp-input" placeholder="50%" style="width:46px;" value="${q(pct)}"/></td><td><input class="cp-input full-w" placeholder="USD 169.000" style="color:var(--naranja);font-weight:600;" value="${q(monto)}"/></td><td><button type="button" onclick="this.closest('tr').remove()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;">×</button></td>`;
+  tbody.appendChild(tr);
 }
 
 function addOfDhRow(val, lbl) {
@@ -1146,14 +1142,11 @@ function savePin() {
         const ins = tr.querySelectorAll('input');
         return { val: ins[0].value.trim(), lbl: ins[1].value.trim() };
       }).filter(d => d.val || d.lbl);
-      p.escenarios = [
-        { m2: document.getElementById('f-of-fin0-mod').value.trim(),
-          pct: document.getElementById('f-of-fin0-pct').value.trim(),
-          costo: document.getElementById('f-of-fin0-monto').value.trim() },
-        { m2: document.getElementById('f-of-fin1-mod').value.trim(),
-          pct: document.getElementById('f-of-fin1-pct').value.trim(),
-          costo: document.getElementById('f-of-fin1-monto').value.trim() }
-      ].filter(e => e.m2 || e.costo);
+      const finRows = document.querySelectorAll('#of-fin-table tr:not(:first-child)');
+      p.escenarios = Array.from(finRows).map(tr => {
+        const ins = tr.querySelectorAll('input');
+        return { m2: ins[0].value.trim(), pct: ins[1].value.trim(), costo: ins[2].value.trim() };
+      }).filter(e => e.m2 || e.costo);
       p.modelo_pct = ''; p.modelo = [];
     } else if (tipo === 'oportunidad') {
       const pct = document.getElementById('f-precio-pct').value.trim();
