@@ -710,7 +710,7 @@ const defaultProyectos = [
     id: 'juramento-1537',
     estado: 'abierto',
     subcategoria: 'oficina',
-    badge_mes: 'Disponible',
+    badge_tipo: 'Oficina',
     nombre: 'Av. Juramento',
     numero: '1537',
     zona: 'Belgrano · CABA',
@@ -785,7 +785,7 @@ function getData(key, fallback) {
         ...storedP.map(p => {
           const def = defaultProyectos.find(d => d.id === p.id);
           if (def && !p.precio_desde && def.precio_desde) return def;
-          if (def && p.id === 'juramento-1537' && (p.escenarios || []).some(e => e.m2 === 'Cuotas (24)')) return def;
+          if (def && p.id === 'juramento-1537' && ((p.escenarios || []).some(e => e.m2 === 'Cuotas (24)') || !p.badge_tipo)) return def;
           return p;
         }),
         ...defaultProyectos.filter(p => !ids.has(p.id))
@@ -898,7 +898,7 @@ function renderOficinaCard(p, i) {
   return `
   <div class="pcard clickable" id="pcard-${i}" onclick="togglePcard(${i})">
     <div class="pcard-head">
-      <div class="badge abierto"><div class="badge-dot"></div>Disponible · Oficina</div>
+      <div class="badge abierto"><div class="badge-dot"></div>Disponible · ${p.badge_tipo || 'Oficina'}</div>
       <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
       <div class="pcard-zona">${p.zona}</div>
     </div>
@@ -959,7 +959,7 @@ function togglePcard(i) {
     ).join('');
     document.getElementById('pcard-modal-content').innerHTML = `
       <div class="pcard-head" style="padding-right:52px;">
-        <div class="badge abierto"><div class="badge-dot"></div>Disponible · Oficina Premium</div>
+        <div class="badge abierto"><div class="badge-dot"></div>Disponible · ${p.badge_tipo || 'Oficina'}</div>
         <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
         <div class="pcard-zona">${p.zona}</div>
       </div>

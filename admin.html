@@ -495,7 +495,7 @@
 
             <!-- HEAD -->
             <div class="cp-head">
-              <div class="cp-badge"><div class="cp-badge-dot"></div>Disponible · Oficina</div>
+              <div class="cp-badge"><div class="cp-badge-dot"></div>Disponible · <input class="cp-input sm" id="f-of-badge-tipo" placeholder="Oficina" style="width:90px;"/></div>
               <div class="cp-name-row">
                 <span class="cp-name" id="cp-of-name-preview">—</span>
                 <span class="cp-num" id="cp-of-num-preview"></span>
@@ -742,7 +742,7 @@ const defaultProyectos = [
   },
   {
     id: 'juramento-1537', estado: 'abierto', subcategoria: 'oficina',
-    badge_mes: 'Disponible',
+    badge_tipo: 'Oficina',
     nombre: 'Av. Juramento', numero: '1537', zona: 'Belgrano · CABA',
     precio_desde: '2.600', precio_sub: 'por m² · 130 m² · Piso 3',
     escritura: '', participacion_disponible: '1 cochera disponible',
@@ -803,7 +803,7 @@ const defaultTerrenosCerrados = [
           const def = defaultProyectos.find(d => d.id === p.id);
           // Si el entry guardado está vacío y el default tiene datos, usar default
           if (def && !p.precio_desde && def.precio_desde) return def;
-          if (def && p.id === 'juramento-1537' && (p.escenarios || []).some(e => e.m2 === 'Cuotas (24)')) return def;
+          if (def && p.id === 'juramento-1537' && ((p.escenarios || []).some(e => e.m2 === 'Cuotas (24)') || !p.badge_tipo)) return def;
           return p;
         }),
         ...defaultProyectos.filter(p => !ids.has(p.id))
@@ -996,6 +996,7 @@ function fillOportunidadFields(p) {
 }
 
 function fillOficinaFields(p) {
+  document.getElementById('f-of-badge-tipo').value = p.badge_tipo || 'Oficina';
   document.getElementById('f-of-precio-m2').value = p.precio_desde || '';
   // populate dynamic DH rows
   const dhTable = document.getElementById('of-dh-table');
@@ -1135,6 +1136,7 @@ function savePin() {
 
     if (tipo === 'oficina') {
       p.subcategoria = 'oficina';
+      p.badge_tipo = document.getElementById('f-of-badge-tipo').value.trim() || 'Oficina';
       p.precio_desde = document.getElementById('f-of-precio-m2').value.trim();
       p.precio_sub = '';
       p.escritura = '';
