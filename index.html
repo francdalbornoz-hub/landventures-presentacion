@@ -775,6 +775,13 @@ function getData(key, fallback) {
   } catch { return fallback; }
 }
 
+const DATA_VERSION = '4';
+if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
+  localStorage.removeItem('lv_proyectos');
+  localStorage.removeItem('lv_terrenos_cerrados');
+  localStorage.setItem('lv_data_version', DATA_VERSION);
+}
+
 const timeline = getData('lv_timeline', defaultTimeline);
 const proyectos = getData('lv_proyectos', defaultProyectos);
 const terrenosCerrados = getData('lv_terrenos_cerrados', defaultTerrenosCerrados);
