@@ -777,7 +777,7 @@ function getData(key, fallback) {
 
 // Merge siempre: agrega defaults que falten, preserva datos del usuario
 (function syncDefaults() {
-  const storedP = getData('lv_proyectos', []);
+  const storedP = getData('lv_proyectos', []).filter(p => p && p.id);
   const ids = new Set(storedP.map(p => p.id));
   const finalP = storedP.length === 0
     ? defaultProyectos
