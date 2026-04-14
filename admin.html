@@ -709,10 +709,28 @@ const defaultProyectos = [
     lat: -34.5946, lng: -58.4413
   },
   {
-    id: 'moldes-2661', estado: 'abierto', badge_mes: '',
+    id: 'moldes-2661', estado: 'abierto', badge_mes: 'Feb 2026',
     nombre: 'Moldes', numero: '2661', zona: 'Belgrano · CABA',
-    precio_desde: '', precio_sub: '', escritura: '', participacion_disponible: '24%',
-    dh: [], nota: '', escenarios: [], modelo_pct: '', modelo: [],
+    precio_desde: '2.000', precio_sub: 'por m² · escenario base (29% canje)',
+    escritura: '5 feb 2026', participacion_disponible: '24%',
+    dh: [
+      { val: 'USD 840K', lbl: 'Valor terreno' },
+      { val: 'USD 579',  lbl: 'Incidencia /m²' },
+      { val: '28–30%',   lbl: '% canje' },
+      { val: '12% mín.', lbl: 'Participación' }
+    ],
+    nota: 'El terreno permanece en manos del grupo inversor hasta recibir los metros acordados con el developer.',
+    escenarios: [
+      { m2: '406 m²', pct: '28%', costo: 'USD 2.068' },
+      { m2: '420 m²', pct: '29%', costo: 'USD 2.000' },
+      { m2: '435 m²', pct: '30%', costo: 'USD 1.931' }
+    ],
+    modelo_pct: '12%',
+    modelo: [
+      { label: 'Inversión',    val: 'USD 100.800',        n: true },
+      { label: 'm² a recibir', val: 'Entre 49 m² y 52 m²', n: false },
+      { label: 'Costo m²',    val: 'USD 1.931 – 2.068',  n: true }
+    ],
     lat: -34.5606, lng: -58.4546
   },
   {
@@ -786,7 +804,7 @@ const defaultTerrenosCerrados = [
 ];
 
 // Versión de datos — mergea defaults nuevos sin borrar pins del usuario
-const DATA_VERSION = '6';
+const DATA_VERSION = '7';
 if (localStorage.getItem('lv_data_version') !== DATA_VERSION) {
   const storedP = loadData('lv_proyectos', []);
   if (storedP.length === 0) {
