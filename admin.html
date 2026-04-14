@@ -809,7 +809,15 @@ const defaultTerrenosCerrados = [
   const ids = new Set(storedP.map(p => p.id));
   const finalP = storedP.length === 0
     ? defaultProyectos
-    : [...storedP, ...defaultProyectos.filter(p => !ids.has(p.id))];
+    : [
+        ...storedP.map(p => {
+          const def = defaultProyectos.find(d => d.id === p.id);
+          // Si el entry guardado está vacío y el default tiene datos, usar default
+          if (def && !p.precio_desde && def.precio_desde) return def;
+          return p;
+        }),
+        ...defaultProyectos.filter(p => !ids.has(p.id))
+      ];
   saveData('lv_proyectos', finalP);
 
   const storedT = loadData('lv_terrenos_cerrados', []);
