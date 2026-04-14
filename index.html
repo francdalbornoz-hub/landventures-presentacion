@@ -961,10 +961,6 @@ function togglePcard(i) {
         <div class="precio-val">USD ${p.precio_desde}</div>
         <div class="precio-sub">${p.precio_sub || ''}</div>
       </div>
-      <div class="pcard-foot">
-        <div class="pcard-esc">Precio total <strong>${(p.dh && p.dh[0]) ? p.dh[0].val : '—'}</strong></div>
-        <div class="pcard-esc"><strong style="color:var(--verde);">${(p.dh && p.dh[3]) ? p.dh[3].val + ' cochera' : ''}</strong></div>
-      </div>
       <div class="modal-pcard-detail">
         <div class="dh-grid">${dhItems}</div>
         ${p.nota ? `<div class="deal-note">${p.nota}</div>` : ''}
