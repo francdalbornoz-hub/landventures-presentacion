@@ -457,17 +457,17 @@
               <table class="cp-esc-table">
                 <tr><th>m² canje</th><th>%</th><th>Costo /m²</th></tr>
                 <tr>
-                  <td><input class="cp-input full-w" id="esc-0-m2" placeholder="365 m²"/></td>
+                  <td><input class="cp-input full-w" id="esc-0-m2" placeholder="365"/></td>
                   <td><input class="cp-input" id="esc-0-pct" placeholder="27%" style="width:46px;"/></td>
                   <td><input class="cp-input full-w" id="esc-0-costo" placeholder="USD 1.970" style="color:var(--naranja);font-weight:600;"/></td>
                 </tr>
                 <tr>
-                  <td><input class="cp-input full-w" id="esc-1-m2" placeholder="378 m²"/></td>
+                  <td><input class="cp-input full-w" id="esc-1-m2" placeholder="378"/></td>
                   <td><input class="cp-input" id="esc-1-pct" placeholder="28%" style="width:46px;"/></td>
                   <td><input class="cp-input full-w" id="esc-1-costo" placeholder="USD 1.899" style="color:var(--naranja);font-weight:600;"/></td>
                 </tr>
                 <tr>
-                  <td><input class="cp-input full-w" id="esc-2-m2" placeholder="392 m²"/></td>
+                  <td><input class="cp-input full-w" id="esc-2-m2" placeholder="392"/></td>
                   <td><input class="cp-input" id="esc-2-pct" placeholder="29%" style="width:46px;"/></td>
                   <td><input class="cp-input full-w" id="esc-2-costo" placeholder="USD 1.834" style="color:var(--naranja);font-weight:600;"/></td>
                 </tr>
@@ -483,7 +483,7 @@
               </div>
               <div class="cp-modelo-row">
                 <span class="cp-modelo-lbl">m² a recibir</span>
-                <span class="cp-modelo-val"><input class="cp-input" id="mod-1-val" placeholder="Entre 55 m² y 59 m²" style="font-size:11px;width:140px;text-align:right;"/></span>
+                <span class="cp-modelo-val"><input class="cp-input" id="mod-1-val" placeholder="Entre 55 y 59" style="font-size:11px;width:140px;text-align:right;"/></span>
               </div>
               <div class="cp-modelo-row">
                 <span class="cp-modelo-lbl">Costo m²</span>
@@ -521,7 +521,7 @@
             <div class="cp-precio-block">
               <div class="cp-precio-lbl">Desde</div>
               <div class="cp-precio-val">USD <input class="cp-input large" id="f-of-precio-m2" placeholder="2.600"/></div>
-              <div class="cp-precio-sub">por m² · <input class="cp-input" style="width:52px;font-size:10px;" id="f-of-superficie" placeholder="130 m²"/> · <input class="cp-input" style="width:52px;font-size:10px;" id="f-of-piso" placeholder="Piso 3"/></div>
+              <div class="cp-precio-sub">por m² · <input class="cp-input" style="width:52px;font-size:10px;" id="f-of-superficie" placeholder="130"/> · <input class="cp-input" style="width:52px;font-size:10px;" id="f-of-piso" placeholder="Piso 3"/></div>
             </div>
 
             <!-- TOTAL + COCHERA -->
@@ -1088,6 +1088,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+function addM2(v) {
+  if (!v) return v;
+  return v.includes('m²') ? v : v + ' m²';
+}
+
 function savePin() {
   const tipo = document.getElementById('f-tipo').value;
   const dir = document.getElementById('f-dir').value.trim();
@@ -1112,7 +1117,7 @@ function savePin() {
       p.subcategoria = 'oficina';
       p.badge_mes = document.getElementById('f-of-badge').value.trim();
       p.precio_desde = document.getElementById('f-of-precio-m2').value.trim();
-      const sup = document.getElementById('f-of-superficie').value.trim();
+      const sup = addM2(document.getElementById('f-of-superficie').value.trim());
       const piso = document.getElementById('f-of-piso').value.trim();
       p.precio_sub = `por m² · ${sup} · ${piso}`;
       p.escritura = '';
@@ -1152,7 +1157,7 @@ function savePin() {
       }));
 
       p.escenarios = [0,1,2].map(i => ({
-        m2:    (document.getElementById('esc-' + i + '-m2')    || {}).value?.trim() || '',
+        m2:    addM2((document.getElementById('esc-' + i + '-m2')    || {}).value?.trim() || ''),
         pct:   (document.getElementById('esc-' + i + '-pct')   || {}).value?.trim() || '',
         costo: (document.getElementById('esc-' + i + '-costo') || {}).value?.trim() || '',
       })).filter(e => e.m2 || e.costo);
@@ -1161,7 +1166,7 @@ function savePin() {
       const MOD_N = [true, false, true];
       p.modelo = [0,1,2].map(i => ({
         label: MOD_LABELS[i],
-        val:   (document.getElementById('mod-' + i + '-val') || {}).value?.trim() || '',
+        val:   i === 1 ? addM2((document.getElementById('mod-' + i + '-val') || {}).value?.trim() || '') : (document.getElementById('mod-' + i + '-val') || {}).value?.trim() || '',
         n:     MOD_N[i]
       })).filter(m => m.val);
     } else {
