@@ -454,24 +454,10 @@
             <!-- ESCENARIOS: 3 filas fijas -->
             <div class="cp-esc-wrap">
               <div class="cp-esc-lbl">Escenarios</div>
-              <table class="cp-esc-table">
-                <tr><th>m² canje</th><th>%</th><th>Costo /m²</th></tr>
-                <tr>
-                  <td><input class="cp-input full-w" id="esc-0-m2" placeholder="365"/></td>
-                  <td><input class="cp-input" id="esc-0-pct" placeholder="27%" style="width:46px;"/></td>
-                  <td><input class="cp-input full-w" id="esc-0-costo" placeholder="USD 1.970" style="color:var(--naranja);font-weight:600;"/></td>
-                </tr>
-                <tr>
-                  <td><input class="cp-input full-w" id="esc-1-m2" placeholder="378"/></td>
-                  <td><input class="cp-input" id="esc-1-pct" placeholder="28%" style="width:46px;"/></td>
-                  <td><input class="cp-input full-w" id="esc-1-costo" placeholder="USD 1.899" style="color:var(--naranja);font-weight:600;"/></td>
-                </tr>
-                <tr>
-                  <td><input class="cp-input full-w" id="esc-2-m2" placeholder="392"/></td>
-                  <td><input class="cp-input" id="esc-2-pct" placeholder="29%" style="width:46px;"/></td>
-                  <td><input class="cp-input full-w" id="esc-2-costo" placeholder="USD 1.834" style="color:var(--naranja);font-weight:600;"/></td>
-                </tr>
+              <table class="cp-esc-table" id="esc-table">
+                <tr><th>m² canje</th><th>%</th><th>Costo /m²</th><th></th></tr>
               </table>
+              <button type="button" onclick="addEscRow()" style="margin-top:6px;font-size:10px;color:var(--naranja);background:none;border:none;cursor:pointer;padding:0;">+ Agregar escenario</button>
             </div>
 
             <!-- MODELO: filas fijas -->
@@ -509,7 +495,7 @@
 
             <!-- HEAD -->
             <div class="cp-head">
-              <div class="cp-badge"><div class="cp-badge-dot"></div>Disponible · <input class="cp-input sm" id="f-of-badge" placeholder="May 2026"/></div>
+              <div class="cp-badge"><div class="cp-badge-dot"></div>Disponible · Oficina</div>
               <div class="cp-name-row">
                 <span class="cp-name" id="cp-of-name-preview">—</span>
                 <span class="cp-num" id="cp-of-num-preview"></span>
@@ -521,13 +507,21 @@
             <div class="cp-precio-block">
               <div class="cp-precio-lbl">Desde</div>
               <div class="cp-precio-val">USD <input class="cp-input large" id="f-of-precio-m2" placeholder="2.600"/></div>
-              <div class="cp-precio-sub">por m² · <input class="cp-input" style="width:52px;font-size:10px;" id="f-of-superficie" placeholder="130"/> · <input class="cp-input" style="width:52px;font-size:10px;" id="f-of-piso" placeholder="Piso 3"/></div>
+              <div class="cp-precio-sub" style="font-size:10px;color:var(--muted);">por m²</div>
             </div>
 
-            <!-- TOTAL + COCHERA -->
-            <div class="cp-foot">
-              <div class="cp-escritura">Precio total <strong><input class="cp-input sm" id="f-of-total" placeholder="USD 338.000" style="color:var(--blanco);font-weight:600;"/></strong></div>
-              <div class="cp-participacion">Cochera <strong><input class="cp-input" id="f-of-cochera" placeholder="1 disponible" style="width:90px;color:var(--verde);font-size:11px;font-weight:600;"/></strong></div>
+            <!-- DH GRID DINÁMICO -->
+            <div class="cp-esc-wrap">
+              <div class="cp-esc-lbl">Destacadas</div>
+              <table class="cp-esc-table" id="of-dh-table">
+                <tr><th>Valor</th><th>Etiqueta</th><th></th></tr>
+              </table>
+              <button type="button" onclick="addOfDhRow()" style="margin-top:6px;font-size:10px;color:var(--naranja);background:none;border:none;cursor:pointer;padding:0;">+ Agregar destacada</button>
+            </div>
+
+            <!-- NOTA -->
+            <div class="cp-nota">
+              <input class="cp-input full-w" id="f-of-nota" placeholder="Descripción adicional o condiciones especiales." style="font-size:10px;color:var(--muted);font-style:italic;width:100%;"/>
             </div>
 
             <!-- FINANCIAMIENTO: 2 filas fijas -->
@@ -546,11 +540,6 @@
                   <td><input class="cp-input full-w" id="f-of-fin1-monto" placeholder="Desde inicio de obra" style="color:var(--naranja);font-weight:600;"/></td>
                 </tr>
               </table>
-            </div>
-
-            <!-- NOTA -->
-            <div class="cp-nota">
-              <input class="cp-input full-w" id="f-of-nota" placeholder="Descripción adicional o condiciones especiales." style="font-size:10px;color:var(--muted);font-style:italic;width:100%;"/>
             </div>
 
           </div><!-- /card-preview -->
@@ -963,13 +952,13 @@ function clearCommonFields() {
   ['f-dir','f-numero','f-zona','f-info','f-badge-mes','f-precio','f-precio-pct',
    'f-escritura','f-participacion','f-modelo-pct','f-nota','f-proximo-nota',
    'dh-0-val','dh-1-val','dh-2-val','dh-3-val',
-   'esc-0-m2','esc-0-pct','esc-0-costo',
-   'esc-1-m2','esc-1-pct','esc-1-costo',
-   'esc-2-m2','esc-2-pct','esc-2-costo',
    'mod-0-val','mod-1-val','mod-2-val'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
+  // limpiar tabla dinámica de escenarios
+  const escTbl = document.getElementById('esc-table');
+  if (escTbl) while (escTbl.rows.length > 1) escTbl.deleteRow(1);
   document.getElementById('f-lat').value = '';
   document.getElementById('f-lng').value = '';
 }
@@ -991,14 +980,9 @@ function fillOportunidadFields(p) {
     if (el) el.value = (dh[i] || {}).val || '';
   });
 
-  const esc = p.escenarios || [{m2:'',pct:'',costo:''},{m2:'',pct:'',costo:''},{m2:'',pct:'',costo:''}];
-  [0,1,2].forEach(i => {
-    const e = esc[i] || {};
-    ['m2','pct','costo'].forEach(f => {
-      const el = document.getElementById('esc-' + i + '-' + f);
-      if (el) el.value = e[f] || '';
-    });
-  });
+  const escTbl = document.getElementById('esc-table');
+  if (escTbl) while (escTbl.rows.length > 1) escTbl.deleteRow(1);
+  (p.escenarios || []).forEach(e => addEscRow(e.m2, e.pct, e.costo));
 
   const mod = p.modelo || [{val:''},{val:''},{val:''}];
   [0,1,2].forEach(i => {
@@ -1011,14 +995,11 @@ function fillOportunidadFields(p) {
 }
 
 function fillOficinaFields(p) {
-  document.getElementById('f-of-badge').value = p.badge_mes || '';
   document.getElementById('f-of-precio-m2').value = p.precio_desde || '';
-  // precio_sub: "por m² · 130 m² · Piso 3"
-  const subParts = (p.precio_sub || '').split('·');
-  document.getElementById('f-of-superficie').value = (subParts[1] || '').trim();
-  document.getElementById('f-of-piso').value = (subParts[2] || '').trim();
-  document.getElementById('f-of-total').value = (p.dh && p.dh[0]) ? p.dh[0].val : '';
-  document.getElementById('f-of-cochera').value = p.participacion_disponible || '';
+  // populate dynamic DH rows
+  const dhTable = document.getElementById('of-dh-table');
+  while (dhTable.rows.length > 1) dhTable.deleteRow(1);
+  (p.dh || []).forEach(d => addOfDhRow(d.val, d.lbl));
   document.getElementById('f-of-nota').value = p.nota || '';
   const fin = p.escenarios || [];
   document.getElementById('f-of-fin0-mod').value = (fin[0] || {}).m2 || '';
@@ -1028,6 +1009,23 @@ function fillOficinaFields(p) {
   document.getElementById('f-of-fin1-pct').value = (fin[1] || {}).pct || '';
   document.getElementById('f-of-fin1-monto').value = (fin[1] || {}).costo || '';
   updateOficinaPreview(p.nombre, p.numero, p.zona);
+}
+
+function addOfDhRow(val, lbl) {
+  val = val || ''; lbl = lbl || '';
+  const tbody = document.getElementById('of-dh-table');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><input class="cp-input full-w" placeholder="USD 338.000" value="${val.replace(/"/g,'&quot;')}"/></td><td><input class="cp-input full-w" placeholder="Precio total" value="${lbl.replace(/"/g,'&quot;')}"/></td><td><button type="button" onclick="this.closest('tr').remove()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;">×</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function addEscRow(m2, pct, costo) {
+  m2 = m2 || ''; pct = pct || ''; costo = costo || '';
+  const tbody = document.getElementById('esc-table');
+  const tr = document.createElement('tr');
+  const q = s => s.replace(/"/g,'&quot;');
+  tr.innerHTML = `<td><input class="cp-input full-w" placeholder="365 m²" value="${q(m2)}"/></td><td><input class="cp-input" placeholder="27%" style="width:46px;" value="${q(pct)}"/></td><td><input class="cp-input full-w" placeholder="USD 1.970" style="color:var(--naranja);font-weight:600;" value="${q(costo)}"/></td><td><button type="button" onclick="this.closest('tr').remove()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;">×</button></td>`;
+  tbody.appendChild(tr);
 }
 
 function updateOficinaPreview(nombre, numero, zona) {
@@ -1136,22 +1134,15 @@ function savePin() {
 
     if (tipo === 'oficina') {
       p.subcategoria = 'oficina';
-      p.badge_mes = document.getElementById('f-of-badge').value.trim();
       p.precio_desde = document.getElementById('f-of-precio-m2').value.trim();
-      const sup = addM2(document.getElementById('f-of-superficie').value.trim());
-      const piso = document.getElementById('f-of-piso').value.trim();
-      p.precio_sub = `por m² · ${sup} · ${piso}`;
+      p.precio_sub = '';
       p.escritura = '';
-      const cochera = document.getElementById('f-of-cochera').value.trim();
-      p.participacion_disponible = cochera;
       p.nota = document.getElementById('f-of-nota').value.trim();
-      const total = document.getElementById('f-of-total').value.trim();
-      p.dh = [
-        { val: total,   lbl: 'Precio total' },
-        { val: sup,     lbl: 'Superficie' },
-        { val: piso,    lbl: 'Nivel' },
-        { val: cochera || '—', lbl: 'Cochera' }
-      ];
+      const dhRows = document.querySelectorAll('#of-dh-table tr:not(:first-child)');
+      p.dh = Array.from(dhRows).map(tr => {
+        const ins = tr.querySelectorAll('input');
+        return { val: ins[0].value.trim(), lbl: ins[1].value.trim() };
+      }).filter(d => d.val || d.lbl);
       p.escenarios = [
         { m2: document.getElementById('f-of-fin0-mod').value.trim(),
           pct: document.getElementById('f-of-fin0-pct').value.trim(),
@@ -1177,11 +1168,11 @@ function savePin() {
         lbl: DH_LABELS[i]
       }));
 
-      p.escenarios = [0,1,2].map(i => ({
-        m2:    addM2((document.getElementById('esc-' + i + '-m2')    || {}).value?.trim() || ''),
-        pct:   (document.getElementById('esc-' + i + '-pct')   || {}).value?.trim() || '',
-        costo: (document.getElementById('esc-' + i + '-costo') || {}).value?.trim() || '',
-      })).filter(e => e.m2 || e.costo);
+      const escRows = document.querySelectorAll('#esc-table tr:not(:first-child)');
+      p.escenarios = Array.from(escRows).map(tr => {
+        const ins = tr.querySelectorAll('input');
+        return { m2: addM2(ins[0].value.trim()), pct: ins[1].value.trim(), costo: ins[2].value.trim() };
+      }).filter(e => e.m2 || e.costo);
 
       const MOD_LABELS = ['Inversión', 'm² a recibir', 'Costo m²'];
       const MOD_N = [true, false, true];
