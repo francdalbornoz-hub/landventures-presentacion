@@ -145,20 +145,27 @@
     .lv-pin.canje{width:38px;height:38px;background:var(--naranja);box-shadow:0 0 0 6px rgba(232,148,58,.2),0 0 14px rgba(232,148,58,.3);color:#0d0c0b;border:2px solid rgba(255,255,255,.3);}
     .lv-pin.canje-edificio,.lv-pin.canje-local,.lv-pin.canje-venta,.lv-pin.canje-desarrollo{background:var(--naranja);box-shadow:0 0 0 6px rgba(232,148,58,.2),0 0 14px rgba(232,148,58,.3);color:#0d0c0b;}
     .lv-pin.proximo{width:38px;height:38px;background:var(--proximo);box-shadow:0 0 0 6px rgba(167,139,250,.18),0 0 14px rgba(167,139,250,.3);color:#fff;border:2px solid rgba(255,255,255,.25);}
-    .leaflet-popup-content-wrapper{background:#1e1c1a !important;border:1px solid #3a3230 !important;border-radius:10px !important;box-shadow:0 6px 24px rgba(0,0,0,.6) !important;color:var(--blanco) !important;}
-    .leaflet-popup-tip{background:#1e1c1a !important;}
-    .leaflet-popup-content{margin:13px 16px !important;font-family:'Montserrat',sans-serif !important;min-width:170px;}
-    .leaflet-popup-close-button{color:var(--texto) !important;}
-    .popup-status{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--verde);margin-bottom:6px;}
+    .leaflet-popup-content-wrapper{background:#1a1917 !important;border:1px solid #2e2b28 !important;border-radius:14px !important;box-shadow:0 8px 32px rgba(0,0,0,.7) !important;color:var(--blanco) !important;}
+    .leaflet-popup-tip{background:#1a1917 !important;}
+    .leaflet-popup-content{margin:18px 20px !important;font-family:'Montserrat',sans-serif !important;min-width:220px;}
+    .leaflet-popup-close-button{color:var(--texto) !important;font-size:18px !important;top:10px !important;right:12px !important;}
+    /* Popup abierto */
+    .popup-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 11px;font-size:11px;color:var(--texto);margin-bottom:14px;white-space:nowrap;}
+    .popup-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--verde);flex-shrink:0;}
+    .popup-pill strong{color:var(--blanco);font-weight:600;}
+    .popup-name{font-size:22px;font-weight:800;color:var(--blanco);line-height:1.1;margin-bottom:4px;}
+    .popup-zona{font-size:11px;color:var(--texto);margin-bottom:14px;}
+    .popup-canje-row{font-size:13px;color:var(--texto);margin-bottom:6px;}
+    .popup-canje-row span{color:var(--naranja);font-weight:700;}
+    .popup-partic-row{font-size:13px;color:var(--texto);margin-bottom:14px;}
+    .popup-partic-row span{color:var(--verde);font-weight:700;}
+    /* Popup genérico (cerrados/próximos) */
     .popup-dir{font-weight:600;font-size:14px;margin-bottom:2px;color:var(--blanco);}
-    .popup-zona{font-size:10px;color:var(--texto);margin-bottom:8px;}
     .popup-canje{font-size:13px;font-weight:700;margin-bottom:4px;}
     .popup-canje.abierto{color:var(--verde);}
     .popup-canje.cerrado{color:var(--naranja);}
     .popup-canje.canje{color:var(--naranja);}
     .popup-canje.proximo{color:var(--proximo);}
-    .popup-fecha{font-size:11px;color:var(--texto);margin-bottom:3px;}
-    .popup-participacion{font-size:11px;color:var(--texto);margin-bottom:2px;}
     .popup-info{font-size:11px;color:var(--texto);}
     .leaflet-container{background:#0d0c0b !important;}
     .leaflet-control-attribution{display:none;}
@@ -1114,17 +1121,15 @@ function initMap() {
 
   function makeAbiertoPopup(p, cardIdx) {
     const canjeVal = p.dh ? (p.dh.find(d => d.lbl.toLowerCase().includes('canje')) || {}).val || '' : '';
-    const canjeStr = canjeVal ? `Canje ${canjeVal}` : '';
     const fecha = p.badge_mes || '';
     const participacion = p.participacion_disponible || '—';
-    const link = `<div style="margin-top:10px;"><a onclick="irAFicha(${cardIdx})" style="color:var(--naranja);font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Ver ficha completa <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#E8943A" stroke-width="1.8" stroke-linecap="round"/></svg></a></div>`;
+    const link = `<a onclick="irAFicha(${cardIdx})" style="color:var(--naranja);font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;">Ver ficha completa</a>`;
     return `
-      <div class="popup-status">Oportunidad disponible</div>
-      <div class="popup-dir">${p.nombre} ${p.numero}</div>
+      <div class="popup-pill"><span class="popup-pill-dot"></span>Oportunidad disponible${fecha ? ' · <strong>' + fecha + '</strong>' : ''}</div>
+      <div class="popup-name">${p.nombre} ${p.numero}</div>
       <div class="popup-zona">${p.zona}</div>
-      ${canjeStr ? `<div class="popup-canje abierto">${canjeStr}</div>` : ''}
-      ${fecha ? `<div class="popup-fecha"><span style="color:var(--naranja);font-weight:600;">${fecha}</span></div>` : ''}
-      <div class="popup-participacion">Participación disponible <strong style="color:var(--verde);">${participacion}</strong></div>
+      ${canjeVal ? `<div class="popup-canje-row">Canje <span>${canjeVal}</span></div>` : ''}
+      <div class="popup-partic-row">Participación disponible <span>${participacion}</span></div>
       ${link}`;
   }
 
