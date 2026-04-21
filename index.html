@@ -198,15 +198,15 @@
       box-shadow:0 16px 48px rgba(0,0,0,.32),0 4px 16px rgba(232,148,58,.06);
     }
     .paso:hover::before{opacity:1;}
-    .paso-n{
-      font-family:'Montserrat',sans-serif;
-      font-size:52px;font-weight:600;line-height:1;margin-bottom:16px;
-      background:linear-gradient(135deg,var(--terracota) 0%,var(--naranja) 100%);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      opacity:.55;
-      transition:opacity .35s ease;
+    .paso-icon{
+      width:44px;height:44px;border-radius:10px;
+      background:rgba(232,148,58,.1);border:1px solid rgba(232,148,58,.2);
+      display:flex;align-items:center;justify-content:center;
+      margin-bottom:18px;
+      opacity:.7;transition:opacity .35s ease;
     }
-    .paso:hover .paso-n{opacity:.9;}
+    .paso-icon svg{display:block;}
+    .paso:hover .paso-icon{opacity:1;}
     .paso-title{font-size:14px;font-weight:600;margin-bottom:8px;color:var(--blanco);transition:color .3s ease;}
     .paso-desc{font-size:12px;color:var(--texto);line-height:1.7;}
     .paso.highlight{
@@ -214,7 +214,7 @@
       border:1px solid rgba(232,148,58,.22);
     }
     .paso.highlight::before{opacity:1;}
-    .paso.highlight .paso-n{opacity:.85;}
+    .paso.highlight .paso-icon{opacity:1;background:rgba(232,148,58,.15);border-color:rgba(232,148,58,.35);}
     .paso.highlight .paso-title{color:var(--naranja);}
     .paso.highlight:hover{border-color:rgba(232,148,58,.5);box-shadow:0 16px 48px rgba(0,0,0,.32),0 4px 20px rgba(232,148,58,.12);}
 
@@ -268,6 +268,9 @@
     .dh-val{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:600;color:var(--naranja);margin-bottom:1px;}
     .dh-lbl{font-size:10px;color:var(--texto);}
     .deal-note{font-size:12px;color:var(--texto);margin-bottom:12px;padding:10px 12px;background:#111;border-radius:7px;border-left:2px solid rgba(232,148,58,.4);line-height:1.65;}
+    .lote-bar{display:flex;gap:12px;flex-wrap:wrap;background:#111;border-radius:7px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--texto);}
+    .lote-bar strong{color:var(--blanco);font-weight:600;}
+    .gastos-nota{font-size:10px;color:var(--muted);margin-top:10px;}
     .esc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--texto);font-weight:600;margin-bottom:7px;}
     .esc-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;}
     .esc-table th{padding:6px 9px;text-align:left;font-size:10px;color:var(--texto);border-bottom:1px solid var(--borde);}
@@ -339,7 +342,7 @@
 
       .pasos-grid{grid-template-columns:repeat(3,1fr);}
       .paso{padding:30px 26px 26px;}
-      .paso-n{font-size:56px;}
+      .paso-icon{width:48px;height:48px;}
       .paso-title{font-size:16px;}
       .paso-desc{font-size:13px;}
 
@@ -392,7 +395,7 @@
     </a>
     <div class="nav-links">
       <a href="#historia">Historia</a>
-      <a href="#proyectos">Proyectos</a>
+      <a href="#proyectos">Oportunidades</a>
       <a href="#mapa">Mapa</a>
       <a href="#modelo">El modelo</a>
       </div>
@@ -402,22 +405,61 @@
 <!-- HERO -->
 <div class="hero-wrap">
 <section class="hero">
-  <div class="eyebrow fade-up"><div class="eyebrow-dot"></div>Inversiones en tierra · CABA · Cupos limitados</div>
-  <h1 class="fade-up fade-up-d1">compramos terrenos en CABA junto a inversores para <em>maximizar su rentabilidad.</em></h1>
-  <p class="hero-sub fade-up fade-up-d2">Nuestros intereses y los del inversor, siempre alineados. Seguridad jurídica en cada operación.</p>
+  <div class="eyebrow fade-up"><div class="eyebrow-dot"></div>Inversiones en tierra · CABA</div>
+  <h1 class="fade-up fade-up-d1">Compramos terrenos en CABA junto a inversores para <em>maximizar su rentabilidad.</em></h1>
 </section>
 </div>
+
+<!-- COMO FUNCIONA -->
+<section class="como" id="modelo">
+  <div class="sec-eyebrow fade-section">El modelo</div>
+  <div class="sec-title fade-section fade-section-d1">Cómo funciona tu inversión</div>
+  <div class="pasos-grid">
+    <div class="paso fade-section fade-section-d1">
+      <div class="paso-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
+      <div class="paso-title">Identificamos el terreno</div>
+      <div class="paso-desc">LV detecta y analiza oportunidades en CABA antes de ofrecerlas al grupo.</div>
+    </div>
+    <div class="paso fade-section fade-section-d2">
+      <div class="paso-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="paso-title">Invertís junto a LV</div>
+      <div class="paso-desc">Participás desde el 10% del valor. Tu capital entra en la escritura del terreno.</div>
+    </div>
+    <div class="paso fade-section fade-section-d3">
+      <div class="paso-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      </div>
+      <div class="paso-title">Hacemos el canje</div>
+      <div class="paso-desc">El terreno queda del grupo hasta recibir los m² acordados. Explícito en el instrumento.</div>
+    </div>
+    <div class="paso fade-section fade-section-d4">
+      <div class="paso-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="paso-title">Adjudicamos los metros</div>
+      <div class="paso-desc">Una vez aprobado el plano, recibís tu proporción de m² a precio de costo.</div>
+    </div>
+    <div class="paso highlight fade-section fade-section-d5">
+      <div class="paso-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="paso-title">LV invierte en todos los proyectos</div>
+      <div class="paso-desc">Participamos como inversores en cada operación. Nuestros intereses siempre alineados con los tuyos.</div>
+    </div>
+  </div>
+</section>
 
 <!-- HISTORIA -->
 <section class="historia" id="historia">
   <div class="historia-inner">
     <div class="sec-eyebrow fade-section">Track record</div>
-    <div class="sec-title fade-section fade-section-d1">Diez años operando en el mercado de tierras de CABA</div>
+    <div class="sec-title fade-section fade-section-d1">Más de 10 años de experiencia en el mercado de tierras de CABA</div>
     <div style="margin-top:40px;">
-      <p class="historia-lead fade-section fade-section-d2">
-        Land Ventures nació con una premisa simple: identificar y comprar las mejores oportunidades de terrenos en CABA y estructurar cada negocio para maximizar la rentabilidad del grupo inversor. Para eso, desarrollamos un modelo propio que alinea nuestros intereses con los de cada inversor, con seguridad jurídica en cada paso.
-      </p>
-      <div class="historia-metrics fade-section fade-section-d3">
+      <div class="historia-metrics fade-section fade-section-d2">
         <div class="hm-card"><div class="hm-n">+20</div><div class="hm-l">Terrenos comprados y canjeados en CABA</div></div>
         <div class="hm-card"><div class="hm-n">+USD 15M</div><div class="hm-l">Invertidos en tierra desde el inicio</div></div>
         <div class="hm-card"><div class="hm-n">~29.8%</div><div class="hm-l">Promedio histórico de canje</div></div>
@@ -431,7 +473,7 @@
 <section class="pilares" id="pilares">
   <div class="pilares-inner">
     <div class="sec-eyebrow fade-section">Por qué Land Ventures</div>
-    <div class="sec-title fade-section fade-section-d1">Cuatro razones únicas</div>
+    <div class="sec-title fade-section fade-section-d1">Cuatro ventajas únicas</div>
     <div class="pilares-grid">
       <div class="pilar fade-section fade-section-d2">
         <div class="pilar-icon">
@@ -484,39 +526,6 @@
       </div>
       <div id="map"></div>
 
-    </div>
-  </div>
-</section>
-
-<!-- COMO FUNCIONA -->
-<section class="como" id="modelo">
-  <div class="sec-eyebrow fade-section">El modelo</div>
-  <div class="sec-title fade-section fade-section-d1">Cómo funciona tu inversión</div>
-  <div class="pasos-grid">
-    <div class="paso fade-section fade-section-d1">
-      <div class="paso-n">01</div>
-      <div class="paso-title">Identificamos el terreno</div>
-      <div class="paso-desc">LV detecta oportunidades estratégicas en CABA con due diligence completo antes de ofrecerlas.</div>
-    </div>
-    <div class="paso fade-section fade-section-d2">
-      <div class="paso-n">02</div>
-      <div class="paso-title">Invertís junto a LV</div>
-      <div class="paso-desc">Participás desde el 10% del valor. Tu capital entra para la escritura del terreno. Precio cerrado en USD.</div>
-    </div>
-    <div class="paso fade-section fade-section-d3">
-      <div class="paso-n">03</div>
-      <div class="paso-title">Cerramos el canje</div>
-      <div class="paso-desc">El terreno queda del grupo inversor hasta recibir los m² acordados con el developer. Explícito en el instrumento.</div>
-    </div>
-    <div class="paso fade-section fade-section-d4">
-      <div class="paso-n">04</div>
-      <div class="paso-title">Recibís tus metros</div>
-      <div class="paso-desc">Una vez aprobado el plano, recibís tu proporción de m² a precio muy por debajo del valor de lista del proyecto.</div>
-    </div>
-    <div class="paso highlight fade-section fade-section-d5">
-      <div class="paso-n">05</div>
-      <div class="paso-title">LV invierte en todos los proyectos</div>
-      <div class="paso-desc">Land Ventures participa como inversor en cada operación. Nuestros intereses están alineados con los tuyos desde el primer día.</div>
     </div>
   </div>
 </section>
@@ -576,12 +585,13 @@ const defaultProyectos = [
     escritura: '15 may 2026',
     participacion_disponible: '30%',
     dh: [
-      { val: 'USD 718K', lbl: 'Valor del terreno' },
+      { val: 'USD 718.000', lbl: 'Valor del terreno' },
       { val: 'USD 532', lbl: 'Incidencia /m²' },
       { val: '27–29%', lbl: '% canje' },
-      { val: '15% mín.', lbl: 'Participación' }
+      { val: 'Desde 15%', lbl: 'Participación mínima' }
     ],
-    nota: 'El terreno permanece en manos del grupo inversor hasta recibir los metros acordados con el developer.',
+    lote: { frente: '[completar]', fondo: '[completar]', pisos: '[completar]', m2_vendibles: '[completar]' },
+    nota: '',
     escenarios: [
       { m2: '365 m²', pct: '27%', costo: 'USD 1.970' },
       { m2: '378 m²', pct: '28%', costo: 'USD 1.899' },
@@ -607,12 +617,13 @@ const defaultProyectos = [
     escritura: '15 jun 2026',
     participacion_disponible: '50%',
     dh: [
-      { val: 'USD 990K', lbl: 'Valor del terreno' },
+      { val: 'USD 990.000', lbl: 'Valor del terreno' },
       { val: 'USD 582', lbl: 'Incidencia /m²' },
       { val: '28–30%', lbl: '% canje' },
-      { val: '10% mín.', lbl: 'Participación' }
+      { val: 'Desde 10%', lbl: 'Participación mínima' }
     ],
-    nota: 'El terreno permanece en manos del grupo inversor hasta recibir los metros acordados con el developer.',
+    lote: { frente: '[completar]', fondo: '[completar]', pisos: '[completar]', m2_vendibles: '[completar]' },
+    nota: '',
     escenarios: [
       { m2: '476 m²', pct: '28%', costo: 'USD 2.080' },
       { m2: '493 m²', pct: '29%', costo: 'USD 2.008' },
@@ -638,12 +649,13 @@ const defaultProyectos = [
     escritura: '1 ago 2026',
     participacion_disponible: '48%',
     dh: [
-      { val: 'USD 790K', lbl: 'Valor del terreno' },
+      { val: 'USD 790.000', lbl: 'Valor del terreno' },
       { val: 'USD 439', lbl: 'Incidencia /m²' },
       { val: '24–26%', lbl: '% canje' },
-      { val: '12% mín.', lbl: 'Participación' }
+      { val: 'Desde 12%', lbl: 'Participación mínima' }
     ],
-    nota: 'El terreno permanece en manos del grupo inversor hasta recibir los metros acordados con el developer.',
+    lote: { frente: '[completar]', fondo: '[completar]', pisos: '[completar]', m2_vendibles: '[completar]' },
+    nota: '',
     escenarios: [
       { m2: '432 m²', pct: '24%', costo: 'USD 1.829' },
       { m2: '450 m²', pct: '25%', costo: 'USD 1.756' },
@@ -669,12 +681,13 @@ const defaultProyectos = [
     escritura: '5 feb 2026',
     participacion_disponible: '24%',
     dh: [
-      { val: 'USD 840K', lbl: 'Valor del terreno' },
+      { val: 'USD 840.000', lbl: 'Valor del terreno' },
       { val: 'USD 579', lbl: 'Incidencia /m²' },
       { val: '28–30%', lbl: '% canje' },
-      { val: '12% mín.', lbl: 'Participación' }
+      { val: 'Desde 12%', lbl: 'Participación mínima' }
     ],
-    nota: 'El terreno permanece en manos del grupo inversor hasta recibir los metros acordados con el developer.',
+    lote: { frente: '[completar]', fondo: '[completar]', pisos: '[completar]', m2_vendibles: '[completar]' },
+    nota: '',
     escenarios: [
       { m2: '406 m²', pct: '28%', costo: 'USD 2.068' },
       { m2: '420 m²', pct: '29%', costo: 'USD 2.000' },
@@ -689,19 +702,10 @@ const defaultProyectos = [
     lat: -34.5606, lng: -58.4546
   },
   {
-    id: 'lacroze-rosetti',
-    estado: 'proximo',
-    nombre: 'Lacroze',
-    numero: 'y Rossetti',
-    zona: 'Colegiales / Villa Urquiza · CABA',
-    nota: 'Próxima oportunidad en estructuración.',
-    lat: -34.5742, lng: -58.4535
-  },
-  {
     id: 'larralde-2362',
     estado: 'proximo',
     nombre: 'Larralde',
-    numero: '2362',
+    numero: '',
     zona: 'Villa Urquiza · CABA',
     nota: 'Próxima oportunidad en estructuración.',
     lat: -34.5713, lng: -58.4491
@@ -710,7 +714,7 @@ const defaultProyectos = [
     id: 'independencia-4102',
     estado: 'proximo',
     nombre: 'Av. Independencia',
-    numero: '4102',
+    numero: '',
     zona: 'Caballito · CABA',
     nota: 'Próxima oportunidad en estructuración.',
     lat: -34.6155, lng: -58.4481
@@ -721,7 +725,7 @@ const defaultProyectos = [
     subcategoria: 'oficina',
     badge_tipo: 'Oficina',
     nombre: 'Av. Juramento',
-    numero: '1537',
+    numero: 'y Libertador',
     zona: 'Belgrano · CABA',
     precio_desde: '2.600',
     precio_sub: 'por m² · 130 m² · Piso 3',
@@ -794,17 +798,19 @@ function getData(key, fallback) {
         ...storedP.map(p => {
           const def = defaultProyectos.find(d => d.id === p.id);
           if (def && !p.precio_desde && def.precio_desde) return def;
-          if (def && p.id === 'juramento-1537' && ((p.escenarios || []).some(e => e.m2 === 'Cuotas (24)') || !p.badge_tipo)) return def;
+          if (def && p.id === 'juramento-1537' && ((p.escenarios || []).some(e => e.m2 === 'Cuotas (24)') || !p.badge_tipo || p.numero === '1537')) return def;
+          if (def && (p.id === 'larralde-2362' || p.id === 'independencia-4102') && p.numero) return def;
           return p;
         }),
         ...defaultProyectos.filter(p => !ids.has(p.id))
       ];
-  const LABEL_FIX = { 'Valor terreno': 'Valor del terreno', 'Inversión': 'Inversión total' };
-  finalP.forEach(p => {
+  const LABEL_FIX = { 'Valor terreno': 'Valor del terreno', 'Inversión': 'Inversión total', 'Participación': 'Participación mínima' };
+  const filtered = finalP.filter(p => p.id !== 'lacroze-rosetti');
+  filtered.forEach(p => {
     if (p.dh) p.dh = p.dh.map(d => ({ ...d, lbl: LABEL_FIX[d.lbl] || d.lbl }));
     if (p.modelo) p.modelo = p.modelo.map(m => ({ ...m, label: LABEL_FIX[m.label] || m.label }));
   });
-  localStorage.setItem('lv_proyectos', JSON.stringify(finalP));
+  localStorage.setItem('lv_proyectos', JSON.stringify(filtered));
 
   const storedT = getData('lv_terrenos_cerrados', []);
   const dirs = new Set(storedT.map(t => t.dir));
@@ -886,6 +892,7 @@ function renderAbiertoCard(p, i) {
     </div>
     <div class="pcard-detail">
       <div class="dh-grid">${dhItems}</div>
+      ${p.lote ? `<div class="lote-bar"><span>Frente <strong>${p.lote.frente}</strong></span><span>Fondo <strong>${p.lote.fondo}</strong></span><span>Pisos <strong>${p.lote.pisos}</strong></span><span>Vendibles <strong>${p.lote.m2_vendibles}</strong></span></div>` : ''}
       ${p.nota ? `<div class="deal-note">${p.nota}</div>` : ''}
       <div class="esc-lbl">Escenarios</div>
       <table class="esc-table">
@@ -898,6 +905,7 @@ function renderAbiertoCard(p, i) {
         <div class="dh-item"><div class="dh-val">${p.escritura || '—'}</div><div class="dh-lbl">Fecha escrituración</div></div>
         <div class="dh-item"><div class="dh-val" style="color:var(--verde)">${p.participacion_disponible || '—'}</div><div class="dh-lbl">Participación disponible</div></div>
       </div>
+      <div class="gastos-nota">* Gastos de escrituración incluidos</div>
     </div>
   </div>`;
 }
@@ -1016,6 +1024,7 @@ function togglePcard(i) {
       </div>
       <div class="modal-pcard-detail">
         <div class="dh-grid">${dhItems}</div>
+        ${p.lote ? `<div class="lote-bar"><span>Frente <strong>${p.lote.frente}</strong></span><span>Fondo <strong>${p.lote.fondo}</strong></span><span>Pisos <strong>${p.lote.pisos}</strong></span><span>Vendibles <strong>${p.lote.m2_vendibles}</strong></span></div>` : ''}
         ${p.nota ? `<div class="deal-note">${p.nota}</div>` : ''}
         <div class="esc-lbl">Escenarios</div>
         <table class="esc-table">
@@ -1024,6 +1033,7 @@ function togglePcard(i) {
         </table>
         <div class="esc-lbl">Modelo de inversión (${p.modelo_pct || ''})</div>
         <div class="modelo-box">${modeloRows}</div>
+        <div class="gastos-nota">* Gastos de escrituración incluidos</div>
       </div>
     `;
   }
@@ -1200,7 +1210,7 @@ function initMap() {
       if (p.subcategoria === 'oficina') {
         m.bindPopup(makeOficinaPopup(p, i));
       } else {
-        m.bindPopup(makeAbiertoPopup(p, i));
+        m.on('click', () => irAFicha(i));
       }
       m.addTo(map);
     } else if (p.estado === 'proximo') {
