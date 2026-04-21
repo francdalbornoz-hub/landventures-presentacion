@@ -711,7 +711,7 @@ const defaultProyectos = [
   {
     id: 'larralde-2362',
     estado: 'proximo',
-    nombre: 'Larralde',
+    nombre: 'Larralde e Independencia',
     numero: '',
     zona: 'Villa Urquiza · CABA',
     nota: 'Próxima oportunidad en estructuración.',
@@ -722,6 +722,7 @@ const defaultProyectos = [
     estado: 'proximo',
     nombre: 'Av. Independencia',
     numero: '',
+    calle_corta: '[completar]',
     zona: 'Caballito · CABA',
     nota: 'Próxima oportunidad en estructuración.',
     lat: -34.6155, lng: -58.4481
@@ -806,7 +807,8 @@ function getData(key, fallback) {
           const def = defaultProyectos.find(d => d.id === p.id);
           if (def && !p.precio_desde && def.precio_desde) return def;
           if (def && p.id === 'juramento-1537' && ((p.escenarios || []).some(e => e.m2 === 'Cuotas (24)') || !p.badge_tipo || p.numero === '1537')) return def;
-          if (def && (p.id === 'larralde-2362' || p.id === 'independencia-4102') && p.numero) return def;
+          if (def && p.id === 'larralde-2362' && p.nombre !== 'Larralde e Independencia') return def;
+          if (def && p.id === 'independencia-4102' && (p.numero || !p.calle_corta)) return { ...p, numero: '', calle_corta: def.calle_corta || '[completar]' };
           if (def && def.calle_corta !== undefined && p.calle_corta === undefined) return { ...p, calle_corta: def.calle_corta };
           if (def && def.lote && !p.lote) return { ...p, lote: def.lote };
           return p;
@@ -967,7 +969,7 @@ function renderProximoCard(p, i) {
   <div class="pcard proximo-card">
     <div class="pcard-head">
       <div class="badge proximo"><div class="badge-dot"></div>Próximamente</div>
-      <div class="pcard-name" style="color:var(--muted)">${p.nombre} <span style="color:var(--proximo)">${p.numero}</span></div>
+      <div class="pcard-name" style="color:var(--muted)">${p.nombre}${p.numero ? ` <span style="color:var(--proximo)">${p.numero}</span>` : ''}${p.calle_corta ? `<span class="pcard-corta"> y ${p.calle_corta}</span>` : ''}</div>
       <div class="pcard-zona">${p.zona}</div>
     </div>
     <div class="proximo-body">
@@ -1188,7 +1190,7 @@ function initMap() {
     return `
       <div style="margin-bottom:14px;">${icon}</div>
       <div class="popup-pill popup-pill-proximo"><span class="popup-pill-dot" style="background:#a78bfa;"></span>Próximamente</div>
-      <div class="popup-name" style="font-size:20px;">${p.nombre} ${p.numero}</div>
+      <div class="popup-name" style="font-size:20px;">${p.nombre}${p.numero ? ' ' + p.numero : ''}${p.calle_corta ? ' y ' + p.calle_corta : ''}</div>
       <div class="popup-zona" style="margin-bottom:0;">${p.zona}</div>`;
   }
 
