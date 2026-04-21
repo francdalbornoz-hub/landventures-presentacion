@@ -240,6 +240,7 @@
     .badge.proximo .badge-dot{background:var(--proximo);}
     .pcard-name{font-family:'Montserrat',sans-serif;font-size:23px;font-weight:600;letter-spacing:-.5px;margin-bottom:3px;}
     .pcard-name span{color:var(--naranja);}
+    .pcard-corta{color:var(--texto);font-weight:400;font-size:16px;letter-spacing:0;}
     .pcard-zona{font-size:12px;color:var(--texto);}
     .pcard-precio{padding:16px 20px;border-top:1px solid #201e1c;border-bottom:1px solid #201e1c;text-align:center;}
     .precio-label{font-size:10px;color:var(--texto);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;}
@@ -268,8 +269,10 @@
     .dh-val{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:600;color:var(--naranja);margin-bottom:1px;}
     .dh-lbl{font-size:10px;color:var(--texto);}
     .deal-note{font-size:12px;color:var(--texto);margin-bottom:12px;padding:10px 12px;background:#111;border-radius:7px;border-left:2px solid rgba(232,148,58,.4);line-height:1.65;}
-    .lote-bar{display:flex;gap:12px;flex-wrap:wrap;background:#111;border-radius:7px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--texto);}
-    .lote-bar strong{color:var(--blanco);font-weight:600;}
+    .lote-bar{display:flex;align-items:center;gap:9px;background:#111;border-radius:7px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--texto);}
+    .lote-dims{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+    .lote-dims strong{color:var(--blanco);font-weight:600;}
+    .lote-sep{color:#3a3733;font-size:10px;}
     .gastos-nota{font-size:10px;color:var(--muted);margin-top:10px;}
     .esc-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--texto);font-weight:600;margin-bottom:7px;}
     .esc-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;}
@@ -579,6 +582,7 @@ const defaultProyectos = [
     badge_mes: 'May 2026',
     nombre: 'Ugarte',
     numero: '2729',
+    calle_corta: '[completar]',
     zona: 'Belgrano · CABA',
     precio_desde: '1.899',
     precio_sub: 'por m² · escenario base (28% canje)',
@@ -611,6 +615,7 @@ const defaultProyectos = [
     badge_mes: 'Jun 2026',
     nombre: 'Amenábar',
     numero: '2546',
+    calle_corta: '[completar]',
     zona: 'Colegiales · CABA',
     precio_desde: '2.008',
     precio_sub: 'por m² · escenario base (29% canje)',
@@ -643,6 +648,7 @@ const defaultProyectos = [
     badge_mes: 'Ago 2026',
     nombre: 'Serrano',
     numero: '534',
+    calle_corta: '[completar]',
     zona: 'Villa Crespo · CABA',
     precio_desde: '1.756',
     precio_sub: 'por m² · escenario base (25% canje)',
@@ -675,6 +681,7 @@ const defaultProyectos = [
     badge_mes: 'Feb 2026',
     nombre: 'Moldes',
     numero: '2661',
+    calle_corta: '[completar]',
     zona: 'Belgrano · CABA',
     precio_desde: '2.000',
     precio_sub: 'por m² · escenario base (29% canje)',
@@ -800,6 +807,8 @@ function getData(key, fallback) {
           if (def && !p.precio_desde && def.precio_desde) return def;
           if (def && p.id === 'juramento-1537' && ((p.escenarios || []).some(e => e.m2 === 'Cuotas (24)') || !p.badge_tipo || p.numero === '1537')) return def;
           if (def && (p.id === 'larralde-2362' || p.id === 'independencia-4102') && p.numero) return def;
+          if (def && def.calle_corta !== undefined && p.calle_corta === undefined) return { ...p, calle_corta: def.calle_corta };
+          if (def && def.lote && !p.lote) return { ...p, lote: def.lote };
           return p;
         }),
         ...defaultProyectos.filter(p => !ids.has(p.id))
@@ -861,6 +870,12 @@ function renderProyectos() {
   }).join('');
 }
 
+function makeLoteBar(lote) {
+  if (!lote) return '';
+  const icon = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+  return `<div class="lote-bar">${icon}<span class="lote-dims"><strong>${lote.frente} × ${lote.fondo} m</strong><span class="lote-sep">·</span><strong>${lote.pisos} pisos</strong><span class="lote-sep">·</span><strong>${lote.m2_vendibles} m² vendibles</strong></span></div>`;
+}
+
 function renderAbiertoCard(p, i) {
   const escRows = (p.escenarios || []).map(e =>
     `<tr><td>${e.m2}</td><td>${e.pct}</td><td class="esc-n">${e.costo}</td></tr>`
@@ -876,7 +891,7 @@ function renderAbiertoCard(p, i) {
   <div class="pcard clickable" id="pcard-${i}" onclick="togglePcard(${i})">
     <div class="pcard-head">
       <div class="badge abierto"><div class="badge-dot"></div>Oportunidad disponible · ${p.badge_mes || ''}</div>
-      <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
+      <div class="pcard-name">${p.nombre} <span>${p.numero}</span>${p.calle_corta ? `<span class="pcard-corta"> y ${p.calle_corta}</span>` : ''}</div>
       <div class="pcard-zona">${p.zona}</div>
     </div>
     <div class="pcard-precio">
@@ -892,7 +907,7 @@ function renderAbiertoCard(p, i) {
     </div>
     <div class="pcard-detail">
       <div class="dh-grid">${dhItems}</div>
-      ${p.lote ? `<div class="lote-bar"><span>Frente <strong>${p.lote.frente}</strong></span><span>Fondo <strong>${p.lote.fondo}</strong></span><span>Pisos <strong>${p.lote.pisos}</strong></span><span>Vendibles <strong>${p.lote.m2_vendibles}</strong></span></div>` : ''}
+      ${makeLoteBar(p.lote)}
       ${p.nota ? `<div class="deal-note">${p.nota}</div>` : ''}
       <div class="esc-lbl">Escenarios</div>
       <table class="esc-table">
@@ -1010,7 +1025,7 @@ function togglePcard(i) {
     document.getElementById('pcard-modal-content').innerHTML = `
       <div class="pcard-head" style="padding-right:52px;">
         <div class="badge abierto"><div class="badge-dot"></div>Oportunidad disponible · ${p.badge_mes || ''}</div>
-        <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
+        <div class="pcard-name">${p.nombre} <span>${p.numero}</span>${p.calle_corta ? `<span class="pcard-corta"> y ${p.calle_corta}</span>` : ''}</div>
         <div class="pcard-zona">${p.zona}</div>
       </div>
       <div class="pcard-precio">
@@ -1024,7 +1039,7 @@ function togglePcard(i) {
       </div>
       <div class="modal-pcard-detail">
         <div class="dh-grid">${dhItems}</div>
-        ${p.lote ? `<div class="lote-bar"><span>Frente <strong>${p.lote.frente}</strong></span><span>Fondo <strong>${p.lote.fondo}</strong></span><span>Pisos <strong>${p.lote.pisos}</strong></span><span>Vendibles <strong>${p.lote.m2_vendibles}</strong></span></div>` : ''}
+        ${makeLoteBar(p.lote)}
         ${p.nota ? `<div class="deal-note">${p.nota}</div>` : ''}
         <div class="esc-lbl">Escenarios</div>
         <table class="esc-table">
