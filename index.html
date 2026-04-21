@@ -149,13 +149,16 @@
     .leaflet-popup-tip{background:#1e1c1a !important;}
     .leaflet-popup-content{margin:13px 16px !important;font-family:'Montserrat',sans-serif !important;min-width:170px;}
     .leaflet-popup-close-button{color:var(--texto) !important;}
+    .popup-status{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--verde);margin-bottom:6px;}
     .popup-dir{font-weight:600;font-size:14px;margin-bottom:2px;color:var(--blanco);}
     .popup-zona{font-size:10px;color:var(--texto);margin-bottom:8px;}
-    .popup-canje{font-size:16px;font-weight:600;margin-bottom:3px;}
+    .popup-canje{font-size:13px;font-weight:700;margin-bottom:4px;}
     .popup-canje.abierto{color:var(--verde);}
     .popup-canje.cerrado{color:var(--naranja);}
     .popup-canje.canje{color:var(--naranja);}
     .popup-canje.proximo{color:var(--proximo);}
+    .popup-fecha{font-size:11px;color:var(--texto);margin-bottom:3px;}
+    .popup-participacion{font-size:11px;color:var(--texto);margin-bottom:2px;}
     .popup-info{font-size:11px;color:var(--texto);}
     .leaflet-container{background:#0d0c0b !important;}
     .leaflet-control-attribution{display:none;}
@@ -851,7 +854,7 @@ function renderAbiertoCard(p, i) {
   return `
   <div class="pcard clickable" id="pcard-${i}" onclick="togglePcard(${i})">
     <div class="pcard-head">
-      <div class="badge abierto"><div class="badge-dot"></div>Abierto · ${p.badge_mes || ''}</div>
+      <div class="badge abierto"><div class="badge-dot"></div>Oportunidad disponible · ${p.badge_mes || ''}</div>
       <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
       <div class="pcard-zona">${p.zona}</div>
     </div>
@@ -983,7 +986,7 @@ function togglePcard(i) {
     ).join('');
     document.getElementById('pcard-modal-content').innerHTML = `
       <div class="pcard-head" style="padding-right:52px;">
-        <div class="badge abierto"><div class="badge-dot"></div>Abierto · ${p.badge_mes || ''}</div>
+        <div class="badge abierto"><div class="badge-dot"></div>Oportunidad disponible · ${p.badge_mes || ''}</div>
         <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
         <div class="pcard-zona">${p.zona}</div>
       </div>
@@ -1109,6 +1112,22 @@ function initMap() {
       <div class="popup-info">${info}</div>${link}`;
   }
 
+  function makeAbiertoPopup(p, cardIdx) {
+    const canjeVal = p.dh ? (p.dh.find(d => d.lbl.toLowerCase().includes('canje')) || {}).val || '' : '';
+    const canjeStr = canjeVal ? `Canje ${canjeVal}` : '';
+    const fecha = p.badge_mes || '';
+    const participacion = p.participacion_disponible || '—';
+    const link = `<div style="margin-top:10px;"><a onclick="irAFicha(${cardIdx})" style="color:var(--naranja);font-size:11px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Ver ficha completa <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#E8943A" stroke-width="1.8" stroke-linecap="round"/></svg></a></div>`;
+    return `
+      <div class="popup-status">Oportunidad disponible</div>
+      <div class="popup-dir">${p.nombre} ${p.numero}</div>
+      <div class="popup-zona">${p.zona}</div>
+      ${canjeStr ? `<div class="popup-canje abierto">${canjeStr}</div>` : ''}
+      ${fecha ? `<div class="popup-fecha"><span style="color:var(--naranja);font-weight:600;">${fecha}</span></div>` : ''}
+      <div class="popup-participacion">Participación disponible <strong style="color:var(--verde);">${participacion}</strong></div>
+      ${link}`;
+  }
+
   // Cerrados / Canje realizado
   terrenosCerrados.forEach(t => {
     const m = L.marker([t.lat, t.lng], { icon: makeIcon('canje', t.subtipo || 'edificio') });
@@ -1128,8 +1147,9 @@ function initMap() {
         const cochera = (p.dh && p.dh[3]) ? p.dh[3].val : '';
         popupInfo = `USD ${p.precio_desde}/m² · ${total}${cochera ? ' · ' + cochera + ' cochera' : ''}`;
       } else {
-        popupCanje = p.dh ? (p.dh.find(d => d.lbl.includes('canje')) || {}).val || '' : '';
-        popupInfo = `Abierto · ${p.badge_mes || ''} · Participación disponible: ${p.participacion_disponible || '—'}`;
+        m.bindPopup(makeAbiertoPopup(p, i));
+        m.addTo(map);
+        return;
       }
       m.bindPopup(makePopup(p.nombre + ' ' + p.numero, p.zona, popupCanje, 'abierto', popupInfo, i));
       m.addTo(map);
