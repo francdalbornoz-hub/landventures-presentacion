@@ -574,7 +574,7 @@ const defaultProyectos = [
     escritura: '15 may 2026',
     participacion_disponible: '30%',
     dh: [
-      { val: 'USD 718K', lbl: 'Valor terreno' },
+      { val: 'USD 718K', lbl: 'Valor del terreno' },
       { val: 'USD 532', lbl: 'Incidencia /m²' },
       { val: '27–29%', lbl: '% canje' },
       { val: '15% mín.', lbl: 'Participación' }
@@ -587,7 +587,7 @@ const defaultProyectos = [
     ],
     modelo_pct: '15%',
     modelo: [
-      { label: 'Inversión', val: 'USD 107.700', n: true },
+      { label: 'Inversión total', val: 'USD 107.700', n: true },
       { label: 'm² a recibir', val: 'Entre 55 m² y 59 m²', n: false },
       { label: 'Costo m²', val: 'USD 1.834 – 1.970', n: true }
     ],
@@ -605,7 +605,7 @@ const defaultProyectos = [
     escritura: '15 jun 2026',
     participacion_disponible: '50%',
     dh: [
-      { val: 'USD 990K', lbl: 'Valor terreno' },
+      { val: 'USD 990K', lbl: 'Valor del terreno' },
       { val: 'USD 582', lbl: 'Incidencia /m²' },
       { val: '28–30%', lbl: '% canje' },
       { val: '10% mín.', lbl: 'Participación' }
@@ -618,7 +618,7 @@ const defaultProyectos = [
     ],
     modelo_pct: '10%',
     modelo: [
-      { label: 'Inversión', val: 'USD 99.000', n: true },
+      { label: 'Inversión total', val: 'USD 99.000', n: true },
       { label: 'm² a recibir', val: 'Entre 48 m² y 51 m²', n: false },
       { label: 'Costo m²', val: 'USD 1.941 – 2.080', n: true }
     ],
@@ -636,7 +636,7 @@ const defaultProyectos = [
     escritura: '1 ago 2026',
     participacion_disponible: '48%',
     dh: [
-      { val: 'USD 790K', lbl: 'Valor terreno' },
+      { val: 'USD 790K', lbl: 'Valor del terreno' },
       { val: 'USD 439', lbl: 'Incidencia /m²' },
       { val: '24–26%', lbl: '% canje' },
       { val: '12% mín.', lbl: 'Participación' }
@@ -649,7 +649,7 @@ const defaultProyectos = [
     ],
     modelo_pct: '12%',
     modelo: [
-      { label: 'Inversión', val: 'USD 94.800', n: true },
+      { label: 'Inversión total', val: 'USD 94.800', n: true },
       { label: 'm² a recibir', val: 'Entre 52 m² y 56 m²', n: false },
       { label: 'Costo m²', val: 'USD 1.688 – 1.829', n: true }
     ],
@@ -667,7 +667,7 @@ const defaultProyectos = [
     escritura: '5 feb 2026',
     participacion_disponible: '24%',
     dh: [
-      { val: 'USD 840K', lbl: 'Valor terreno' },
+      { val: 'USD 840K', lbl: 'Valor del terreno' },
       { val: 'USD 579', lbl: 'Incidencia /m²' },
       { val: '28–30%', lbl: '% canje' },
       { val: '12% mín.', lbl: 'Participación' }
@@ -680,7 +680,7 @@ const defaultProyectos = [
     ],
     modelo_pct: '12%',
     modelo: [
-      { label: 'Inversión', val: 'USD 100.800', n: true },
+      { label: 'Inversión total', val: 'USD 100.800', n: true },
       { label: 'm² a recibir', val: 'Entre 49 m² y 52 m²', n: false },
       { label: 'Costo m²', val: 'USD 1.931 – 2.068', n: true }
     ],
@@ -797,6 +797,11 @@ function getData(key, fallback) {
         }),
         ...defaultProyectos.filter(p => !ids.has(p.id))
       ];
+  const LABEL_FIX = { 'Valor terreno': 'Valor del terreno', 'Inversión': 'Inversión total' };
+  finalP.forEach(p => {
+    if (p.dh) p.dh = p.dh.map(d => ({ ...d, lbl: LABEL_FIX[d.lbl] || d.lbl }));
+    if (p.modelo) p.modelo = p.modelo.map(m => ({ ...m, label: LABEL_FIX[m.label] || m.label }));
+  });
   localStorage.setItem('lv_proyectos', JSON.stringify(finalP));
 
   const storedT = getData('lv_terrenos_cerrados', []);
@@ -872,7 +877,7 @@ function renderAbiertoCard(p, i) {
       <div class="precio-sub">${p.precio_sub || ''}</div>
     </div>
     <div class="pcard-foot">
-      <div class="pcard-esc">Escritura <strong>${p.escritura || ''}</strong></div>
+      <div class="pcard-esc">Fecha de escritura <strong>${p.escritura || ''}</strong></div>
       <button class="pcard-toggle">Ver detalle
         <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#E8943A" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
@@ -885,7 +890,7 @@ function renderAbiertoCard(p, i) {
         <tr><th>m² canje</th><th>%</th><th>Costo /m²</th></tr>
         ${escRows}
       </table>
-      <div class="esc-lbl">Modelo (${p.modelo_pct || ''})</div>
+      <div class="esc-lbl">Modelo de inversión (${p.modelo_pct || ''})</div>
       <div class="modelo-box">${modeloRows}</div>
       <div class="dh-grid" style="margin-top:14px;">
         <div class="dh-item"><div class="dh-val">${p.escritura || '—'}</div><div class="dh-lbl">Fecha escrituración</div></div>
@@ -1004,8 +1009,8 @@ function togglePcard(i) {
         <div class="precio-sub">${p.precio_sub || ''}</div>
       </div>
       <div class="pcard-foot">
-        <div class="pcard-esc">Escritura <strong>${p.escritura || ''}</strong></div>
-        <div class="pcard-esc">Participación <strong style="color:var(--verde)">${p.participacion_disponible || '—'}</strong></div>
+        <div class="pcard-esc">Fecha de escritura <strong>${p.escritura || ''}</strong></div>
+        <div class="pcard-esc">Participación disponible <strong style="color:var(--verde)">${p.participacion_disponible || '—'}</strong></div>
       </div>
       <div class="modal-pcard-detail">
         <div class="dh-grid">${dhItems}</div>
@@ -1015,7 +1020,7 @@ function togglePcard(i) {
           <tr><th>m² canje</th><th>%</th><th>Costo /m²</th></tr>
           ${escRows}
         </table>
-        <div class="esc-lbl">Modelo (${p.modelo_pct || ''})</div>
+        <div class="esc-lbl">Modelo de inversión (${p.modelo_pct || ''})</div>
         <div class="modelo-box">${modeloRows}</div>
       </div>
     `;
