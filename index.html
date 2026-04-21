@@ -154,11 +154,12 @@
     .popup-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--verde);flex-shrink:0;}
     .popup-pill strong{color:var(--blanco);font-weight:600;}
     .popup-name{font-size:22px;font-weight:600;color:var(--blanco);line-height:1.1;margin-bottom:4px;}
-    .popup-zona{font-size:11px;color:var(--texto);margin-bottom:14px;}
-    .popup-canje-row{font-size:13px;color:var(--texto);margin-bottom:6px;}
-    .popup-canje-row span{color:var(--naranja);font-weight:700;}
-    .popup-partic-row{font-size:13px;color:var(--texto);margin-bottom:14px;}
-    .popup-partic-row span{color:var(--verde);font-weight:700;}
+    .popup-zona{font-size:11px;color:var(--texto);margin-bottom:18px;}
+    .popup-dh-block{margin-bottom:18px;}
+    .popup-canje-row{font-size:12px;color:var(--texto);margin-bottom:2px;font-weight:400;}
+    .popup-canje-row span{color:var(--naranja);font-weight:400;}
+    .popup-partic-row{font-size:12px;color:var(--texto);margin-bottom:2px;font-weight:400;}
+    .popup-partic-row span{color:var(--verde);font-weight:400;}
     /* Popup genérico (cerrados/próximos) */
     .popup-dir{font-weight:600;font-size:14px;margin-bottom:2px;color:var(--blanco);}
     .popup-canje{font-size:13px;font-weight:700;margin-bottom:4px;}
@@ -1129,7 +1130,7 @@ function initMap() {
       <div class="popup-pill"><span class="popup-pill-dot"></span>${tipo} disponible</div>
       <div class="popup-name">${p.nombre} ${p.numero}</div>
       <div class="popup-zona">${p.zona}</div>
-      ${dhRows}
+      <div class="popup-dh-block">${dhRows}</div>
       ${link}`;
   }
 
@@ -1142,8 +1143,10 @@ function initMap() {
       <div class="popup-pill"><span class="popup-pill-dot"></span>Oportunidad disponible${fecha ? ' · <strong>' + fecha + '</strong>' : ''}</div>
       <div class="popup-name">${p.nombre} ${p.numero}</div>
       <div class="popup-zona">${p.zona}</div>
-      ${canjeVal ? `<div class="popup-canje-row">Canje <span>${canjeVal}</span></div>` : ''}
-      <div class="popup-partic-row">Participación disponible <span>${participacion}</span></div>
+      <div class="popup-dh-block">
+        ${canjeVal ? `<div class="popup-canje-row">Canje <span>${canjeVal}</span></div>` : ''}
+        <div class="popup-partic-row">Participación disponible <span>${participacion}</span></div>
+      </div>
       ${link}`;
   }
 
