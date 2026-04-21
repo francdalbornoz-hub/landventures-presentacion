@@ -525,7 +525,7 @@
 <section class="proy-section" id="proyectos">
   <div class="proy-inner">
     <div class="sec-eyebrow fade-section">Oportunidades activas</div>
-    <div class="sec-title fade-section fade-section-d1">Proyectos abiertos hoy</div>
+    <div class="sec-title fade-section fade-section-d1">Oportunidades disponibles</div>
     <p class="sec-sub" id="proy-subtitle">Cargando proyectos…</p>
     <div class="proy-grid" id="proy-grid"></div>
   </div>
@@ -840,7 +840,7 @@ function renderProyectos() {
   const grid = document.getElementById('proy-grid');
   const sub = document.getElementById('proy-subtitle');
   const abiertos = proyectos.filter(p => p.estado === 'abierto').length;
-  sub.textContent = `${abiertos} ${abiertos === 1 ? 'proyecto' : 'proyectos'} con cupos disponibles. Tocá cada uno para ver el detalle.`;
+  sub.textContent = 'Oportunidades con participación disponible. Tocá cada una para ver el detalle.';
 
   const sorted = [...proyectos].sort((a, b) => {
     if (a.estado === 'proximo' && b.estado !== 'proximo') return 1;
