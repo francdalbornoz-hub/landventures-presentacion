@@ -419,8 +419,8 @@
             <!-- DH GRID: 4 datos destacados fijos -->
             <div class="cp-dh">
               <div class="cp-dh-item">
-                <div class="cp-dh-val"><input class="cp-input full-w" id="dh-0-val" placeholder="USD 718K" style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
-                <div class="cp-dh-lbl">Valor terreno</div>
+                <div class="cp-dh-val"><input class="cp-input full-w" id="dh-0-val" placeholder="USD 718.000" style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
+                <div class="cp-dh-lbl">Valor del terreno</div>
               </div>
               <div class="cp-dh-item">
                 <div class="cp-dh-val"><input class="cp-input full-w" id="dh-1-val" placeholder="USD 532" style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
@@ -431,8 +431,37 @@
                 <div class="cp-dh-lbl">% canje</div>
               </div>
               <div class="cp-dh-item">
-                <div class="cp-dh-val"><input class="cp-input full-w" id="dh-3-val" placeholder="15% mín." style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
-                <div class="cp-dh-lbl">Participación</div>
+                <div class="cp-dh-val"><input class="cp-input full-w" id="dh-3-val" placeholder="Desde 15%" style="color:var(--naranja);font-weight:700;font-size:13px;"/></div>
+                <div class="cp-dh-lbl">Participación mínima</div>
+              </div>
+            </div>
+
+            <!-- INTERSECCIÓN -->
+            <div class="cp-nota" style="margin-bottom:8px;">
+              <div class="cp-esc-lbl" style="margin-bottom:4px;">Calle que corta (intersección)</div>
+              <input class="cp-input full-w" id="f-calle-corta" placeholder="[completar]" style="font-size:11px;width:100%;"/>
+            </div>
+
+            <!-- LOTE -->
+            <div class="cp-nota" style="margin-bottom:8px;">
+              <div class="cp-esc-lbl" style="margin-bottom:4px;">Lote</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;">
+                <div>
+                  <div style="font-size:9px;color:var(--muted);margin-bottom:2px;">Frente (m)</div>
+                  <input class="cp-input full-w" id="f-lote-frente" placeholder="8.66" style="font-size:11px;"/>
+                </div>
+                <div>
+                  <div style="font-size:9px;color:var(--muted);margin-bottom:2px;">Fondo (m)</div>
+                  <input class="cp-input full-w" id="f-lote-fondo" placeholder="20" style="font-size:11px;"/>
+                </div>
+                <div>
+                  <div style="font-size:9px;color:var(--muted);margin-bottom:2px;">Pisos</div>
+                  <input class="cp-input full-w" id="f-lote-pisos" placeholder="12" style="font-size:11px;"/>
+                </div>
+                <div>
+                  <div style="font-size:9px;color:var(--muted);margin-bottom:2px;">m² vendibles</div>
+                  <input class="cp-input full-w" id="f-lote-m2" placeholder="1350" style="font-size:11px;"/>
+                </div>
               </div>
             </div>
 
@@ -527,9 +556,14 @@
         <div class="modal-section">
           <div class="form-grid">
             <div class="form-group full">
+              <label>Calle que corta (intersección)</label>
+              <input type="text" id="f-proximo-calle-corta" placeholder="[completar]"/>
+              <span class="form-hint">Muestra "Nombre y [calle corta]" en el popup del mapa</span>
+            </div>
+            <div class="form-group full">
               <label>Descripción</label>
               <textarea id="f-proximo-nota" placeholder="Próxima oportunidad en estructuración…"></textarea>
-              <span class="form-hint">Aparece en el globo del mapa al tocar el pin violeta. No tiene ficha desplegable. Ejemplo: "Terreno en análisis, próxima incorporación al portfolio."</span>
+              <span class="form-hint">Aparece en el globo del mapa al tocar el pin violeta.</span>
             </div>
           </div>
         </div>
@@ -886,6 +920,7 @@ function openPinModal(src, idx) {
     document.getElementById('f-tipo').value = 'oportunidad';
     clearCommonFields();
     document.getElementById('f-proximo-nota').value = '';
+    document.getElementById('f-proximo-calle-corta').value = '';
   } else if (editingSrc === 'p') {
     const p = proyectos[editingIdx];
     const tipo = getTipoDeProy(p);
@@ -902,6 +937,7 @@ function openPinModal(src, idx) {
       fillOficinaFields(p);
     } else {
       document.getElementById('f-proximo-nota').value = p.nota || '';
+      document.getElementById('f-proximo-calle-corta').value = p.calle_corta || '';
     }
   } else {
     // src === 't'
@@ -928,6 +964,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closePinModa
 function clearCommonFields() {
   ['f-dir','f-numero','f-zona','f-info','f-badge-mes','f-precio','f-precio-pct',
    'f-escritura','f-participacion','f-modelo-pct','f-nota','f-proximo-nota',
+   'f-calle-corta','f-proximo-calle-corta',
+   'f-lote-frente','f-lote-fondo','f-lote-pisos','f-lote-m2',
    'dh-0-val','dh-1-val','dh-2-val','dh-3-val',
    'mod-0-val','mod-1-val','mod-2-val'].forEach(id => {
     const el = document.getElementById(id);
@@ -950,6 +988,12 @@ function fillOportunidadFields(p) {
   document.getElementById('f-participacion').value = p.participacion_disponible || '';
   document.getElementById('f-modelo-pct').value = p.modelo_pct || '';
   document.getElementById('f-nota').value = p.nota || '';
+  document.getElementById('f-calle-corta').value = p.calle_corta || '';
+  const lote = p.lote || {};
+  document.getElementById('f-lote-frente').value = lote.frente || '';
+  document.getElementById('f-lote-fondo').value = lote.fondo || '';
+  document.getElementById('f-lote-pisos').value = lote.pisos || '';
+  document.getElementById('f-lote-m2').value = lote.m2_vendibles || '';
 
   const dh = p.dh || [{val:''},{val:''},{val:''},{val:''}];
   [0,1,2,3].forEach(i => {
@@ -1137,13 +1181,19 @@ function savePin() {
       const pct = document.getElementById('f-precio-pct').value.trim();
       p.badge_mes = document.getElementById('f-badge-mes').value.trim();
       p.precio_desde = document.getElementById('f-precio').value.trim();
-      p.precio_sub = `por m² · esc. base (${pct}) canje`;
+      p.precio_sub = `por m² · escenario base (${pct} canje)`;
       p.escritura = document.getElementById('f-escritura').value.trim();
       p.participacion_disponible = document.getElementById('f-participacion').value.trim();
       p.modelo_pct = document.getElementById('f-modelo-pct').value.trim();
       p.nota = document.getElementById('f-nota').value.trim();
+      p.calle_corta = document.getElementById('f-calle-corta').value.trim();
+      const loteF = document.getElementById('f-lote-frente').value.trim();
+      const loteD = document.getElementById('f-lote-fondo').value.trim();
+      const loteP = document.getElementById('f-lote-pisos').value.trim();
+      const loteM = document.getElementById('f-lote-m2').value.trim();
+      p.lote = (loteF || loteD || loteP || loteM) ? { frente: loteF, fondo: loteD, pisos: loteP, m2_vendibles: loteM } : null;
 
-      const DH_LABELS = ['Valor terreno', 'Incidencia /m²', '% canje', 'Participación'];
+      const DH_LABELS = ['Valor del terreno', 'Incidencia /m²', '% canje', 'Participación mínima'];
       p.dh = [0,1,2,3].map(i => ({
         val: (document.getElementById('dh-' + i + '-val') || {}).value?.trim() || '',
         lbl: DH_LABELS[i]
@@ -1155,7 +1205,7 @@ function savePin() {
         return { m2: addM2(ins[0].value.trim()), pct: ins[1].value.trim(), costo: ins[2].value.trim() };
       }).filter(e => e.m2 || e.costo);
 
-      const MOD_LABELS = ['Inversión', 'm² a recibir', 'Costo m²'];
+      const MOD_LABELS = ['Inversión total', 'm² a recibir', 'Costo m²'];
       const MOD_N = [true, false, true];
       p.modelo = [0,1,2].map(i => ({
         label: MOD_LABELS[i],
@@ -1164,6 +1214,7 @@ function savePin() {
       })).filter(m => m.val);
     } else {
       p.nota = document.getElementById('f-proximo-nota').value.trim();
+      p.calle_corta = document.getElementById('f-proximo-calle-corta').value.trim();
     }
 
     if (editingSrc === 'p') {
