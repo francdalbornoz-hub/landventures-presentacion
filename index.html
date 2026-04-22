@@ -392,10 +392,13 @@
 
       #map{height:480px;}
 
-      .pasos-grid{grid-template-columns:repeat(5,1fr);}
-      .paso{padding:44px 18px 38px;}
-      .paso-icon{width:56px;height:56px;}
-      .paso-title{font-size:13px;}
+      .pasos-grid{grid-template-columns:1fr;border-radius:16px;}
+      .paso{flex-direction:row;align-items:center;text-align:left;padding:24px 32px;gap:24px;border-right:none;border-bottom:1px solid rgba(232,148,58,.1);}
+      .paso:last-child{border-bottom:none;}
+      .paso::before{top:0;bottom:0;left:0;right:auto;height:auto;width:2px;}
+      .paso-num{margin-bottom:0;font-size:32px;min-width:44px;}
+      .paso-icon{margin-bottom:0;flex-shrink:0;width:60px;height:60px;}
+      .paso-title{text-align:left;font-size:15px;}
 
       .proy-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
       .pcard-name{font-size:22px;}
@@ -428,10 +431,13 @@
       .hero{padding:56px 16px 48px;}
       .proy-grid{grid-template-columns:1fr;}
       .pilares-grid{grid-template-columns:1fr;}
-      .pasos-grid{grid-template-columns:repeat(2,1fr);border-radius:14px;}
-      .paso{border-right:1px solid rgba(232,148,58,.1);border-bottom:1px solid rgba(232,148,58,.1);}
-      .paso:nth-child(2n){border-right:none;}
-      .paso:last-child:nth-child(odd){grid-column:1/-1;border-right:none;}
+      .pasos-grid{grid-template-columns:1fr;border-radius:14px;}
+      .paso{flex-direction:row;align-items:center;text-align:left;padding:20px 24px;gap:18px;border-right:none;border-bottom:1px solid rgba(232,148,58,.1);}
+      .paso:last-child{border-bottom:none;}
+      .paso::before{top:0;bottom:0;left:0;right:auto;height:auto;width:2px;}
+      .paso-num{margin-bottom:0;font-size:26px;min-width:36px;}
+      .paso-icon{margin-bottom:0;flex-shrink:0;width:52px;height:52px;}
+      .paso-title{text-align:left;font-size:14px;}
       .pilares,.como,.proy-section,.mapa-section,.historia,.cta-section{padding-left:16px;padding-right:16px;}
       footer{padding:20px 16px;}
       .historia-metrics{grid-template-columns:repeat(4,1fr);}
