@@ -723,10 +723,10 @@ const defaultProyectos = [
     estado: 'proximo',
     nombre: 'Av. Independencia',
     numero: '',
-    calle_corta: '[completar]',
+    calle_corta: 'Treinta y Tres Orientales',
     zona: 'Caballito · CABA',
     nota: 'Próxima oportunidad en estructuración.',
-    lat: -34.6221, lng: -58.4279
+    lat: -34.62149, lng: -58.42387
   },
   {
     id: 'juramento-1537',
@@ -809,7 +809,7 @@ function getData(key, fallback) {
           if (def && !p.precio_desde && def.precio_desde) return def;
           if (def && p.id === 'juramento-1537' && ((p.escenarios || []).some(e => e.m2 === 'Cuotas (24)') || !p.badge_tipo || p.numero === '1537')) return def;
           if (def && p.id === 'larralde-2362' && (p.nombre !== 'Larralde' || p.calle_corta !== 'Cabildo')) return def;
-          if (def && p.id === 'independencia-4102' && (p.numero || !p.calle_corta)) return { ...p, numero: '', calle_corta: def.calle_corta || '[completar]' };
+          if (def && p.id === 'independencia-4102' && (p.numero || !p.calle_corta || p.calle_corta === '[completar]')) return { ...p, numero: '', calle_corta: def.calle_corta };
           if (def && p.nota && p.nota.startsWith('El terreno permanece')) return { ...p, nota: '' };
           if (def && p.dh && p.dh.some(d => /K$/.test(d.val) || /mín\./.test(d.val))) return def;
           if (def && def.calle_corta !== undefined && (!p.calle_corta || p.calle_corta === '[completar]')) return { ...p, calle_corta: def.calle_corta };
