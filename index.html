@@ -656,7 +656,7 @@ const defaultProyectos = [
       { val: '27–29%', lbl: '% canje' },
       { val: 'Desde 15%', lbl: 'Participación mínima' }
     ],
-    lote: { frente: '[completar]', fondo: '[completar]', pisos: '[completar]', m2_vendibles: '1.350' },
+    lote: { frente: '8,90', fondo: '20', pisos: '3', m2_vendibles: '1.350' },
     nota: '',
     escenarios: [
       { m2: '365 m²', pct: '27%', costo: 'USD 1.970' },
@@ -689,7 +689,7 @@ const defaultProyectos = [
       { val: '28–30%', lbl: '% canje' },
       { val: 'Desde 10%', lbl: 'Participación mínima' }
     ],
-    lote: { frente: '[completar]', fondo: '[completar]', pisos: '[completar]', m2_vendibles: '1.700' },
+    lote: { frente: '8,90', fondo: '20', pisos: '3', m2_vendibles: '1.700' },
     nota: '',
     escenarios: [
       { m2: '476 m²', pct: '28%', costo: 'USD 2.080' },
@@ -722,7 +722,7 @@ const defaultProyectos = [
       { val: '24–26%', lbl: '% canje' },
       { val: 'Desde 12%', lbl: 'Participación mínima' }
     ],
-    lote: { frente: '[completar]', fondo: '[completar]', pisos: '[completar]', m2_vendibles: '1.800' },
+    lote: { frente: '8,90', fondo: '20', pisos: '3', m2_vendibles: '1.800' },
     nota: '',
     escenarios: [
       { m2: '432 m²', pct: '24%', costo: 'USD 1.829' },
@@ -755,7 +755,7 @@ const defaultProyectos = [
       { val: '28–30%', lbl: '% canje' },
       { val: 'Desde 12%', lbl: 'Participación mínima' }
     ],
-    lote: { frente: '[completar]', fondo: '[completar]', pisos: '[completar]', m2_vendibles: '1.450' },
+    lote: { frente: '8,90', fondo: '20', pisos: '3', m2_vendibles: '1.350' },
     nota: '',
     escenarios: [
       { m2: '406 m²', pct: '28%', costo: 'USD 2.068' },
@@ -875,7 +875,7 @@ function getData(key, fallback) {
           if (def && p.nota && p.nota.startsWith('El terreno permanece')) return { ...p, nota: '' };
           if (def && p.dh && p.dh.some(d => /K$/.test(d.val) || /mín\./.test(d.val))) return def;
           if (def && def.calle_corta !== undefined && (!p.calle_corta || p.calle_corta === '[completar]')) return { ...p, calle_corta: def.calle_corta };
-          if (def && def.lote && (!p.lote || p.lote.m2_vendibles === '[completar]')) return { ...p, lote: def.lote };
+          if (def && def.lote && (!p.lote || p.lote.m2_vendibles === '[completar]' || p.lote.frente === '[completar]')) return { ...p, lote: def.lote };
           if (def && (p.lat !== def.lat || p.lng !== def.lng)) return { ...p, lat: def.lat, lng: def.lng };
           if (def && def.zona && p.zona !== def.zona) return { ...p, zona: def.zona };
           return p;
