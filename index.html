@@ -240,7 +240,7 @@
     .badge.proximo .badge-dot{background:var(--proximo);}
     .pcard-name{font-family:'Montserrat',sans-serif;font-size:23px;font-weight:600;letter-spacing:-.5px;margin-bottom:3px;}
     .pcard-name span{color:var(--naranja);}
-    .pcard-corta{color:var(--texto);font-weight:400;font-size:16px;letter-spacing:0;}
+    .pcard-corta{color:var(--blanco);font-weight:600;}
     .pcard-zona{font-size:12px;color:var(--texto);}
     .pcard-precio{padding:16px 20px;border-top:1px solid #201e1c;border-bottom:1px solid #201e1c;text-align:center;}
     .precio-label{font-size:10px;color:var(--texto);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;}
@@ -902,7 +902,7 @@ function renderAbiertoCard(p, i) {
   <div class="pcard clickable" id="pcard-${i}" onclick="togglePcard(${i})">
     <div class="pcard-head">
       <div class="badge abierto"><div class="badge-dot"></div>Oportunidad disponible · ${p.badge_mes || ''}</div>
-      <div class="pcard-name">${p.nombre} <span>${p.numero}</span>${p.calle_corta ? `<span class="pcard-corta"> y ${p.calle_corta}</span>` : ''}</div>
+      <div class="pcard-name">${p.nombre} <span>${p.numero}</span>${p.calle_corta ? `<span class="pcard-corta"> & ${p.calle_corta}</span>` : ''}</div>
       <div class="pcard-zona">${p.zona}</div>
     </div>
     <div class="pcard-precio">
@@ -978,7 +978,7 @@ function renderProximoCard(p, i) {
   <div class="pcard proximo-card">
     <div class="pcard-head">
       <div class="badge proximo"><div class="badge-dot"></div>Próximamente</div>
-      <div class="pcard-name" style="color:var(--muted)">${p.nombre}${p.numero ? ` <span style="color:var(--proximo)">${p.numero}</span>` : ''}${p.calle_corta ? `<span class="pcard-corta"> y ${p.calle_corta}</span>` : ''}</div>
+      <div class="pcard-name" style="color:var(--muted)">${p.nombre}${p.numero ? ` <span style="color:var(--proximo)">${p.numero}</span>` : ''}${p.calle_corta ? `<span class="pcard-corta"> & ${p.calle_corta}</span>` : ''}</div>
       <div class="pcard-zona">${p.zona}</div>
     </div>
     <div class="proximo-body">
@@ -1036,7 +1036,7 @@ function togglePcard(i) {
     document.getElementById('pcard-modal-content').innerHTML = `
       <div class="pcard-head" style="padding-right:52px;">
         <div class="badge abierto"><div class="badge-dot"></div>Oportunidad disponible · ${p.badge_mes || ''}</div>
-        <div class="pcard-name">${p.nombre} <span>${p.numero}</span>${p.calle_corta ? `<span class="pcard-corta"> y ${p.calle_corta}</span>` : ''}</div>
+        <div class="pcard-name">${p.nombre} <span>${p.numero}</span>${p.calle_corta ? `<span class="pcard-corta"> & ${p.calle_corta}</span>` : ''}</div>
         <div class="pcard-zona">${p.zona}</div>
       </div>
       <div class="pcard-precio">
@@ -1199,7 +1199,7 @@ function initMap() {
     return `
       <div style="margin-bottom:14px;">${icon}</div>
       <div class="popup-pill popup-pill-proximo"><span class="popup-pill-dot" style="background:#a78bfa;"></span>Próximamente</div>
-      <div class="popup-name" style="font-size:20px;">${p.nombre}${p.numero ? ' ' + p.numero : ''}${p.calle_corta ? ' y ' + p.calle_corta : ''}</div>
+      <div class="popup-name" style="font-size:20px;">${p.nombre}${p.numero ? ' ' + p.numero : ''}${p.calle_corta ? ' & ' + p.calle_corta : ''}</div>
       <div class="popup-zona" style="margin-bottom:0;">${p.zona}</div>`;
   }
 
