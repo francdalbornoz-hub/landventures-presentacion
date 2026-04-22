@@ -582,7 +582,7 @@ const defaultProyectos = [
     badge_mes: 'May 2026',
     nombre: 'Ugarte',
     numero: '2729',
-    calle_corta: '[completar]',
+    calle_corta: 'Moldes',
     zona: 'Belgrano · CABA',
     precio_desde: '1.899',
     precio_sub: 'por m² · escenario base (28% canje)',
@@ -615,7 +615,7 @@ const defaultProyectos = [
     badge_mes: 'Jun 2026',
     nombre: 'Amenábar',
     numero: '2546',
-    calle_corta: '[completar]',
+    calle_corta: 'Roosevelt',
     zona: 'Colegiales · CABA',
     precio_desde: '2.008',
     precio_sub: 'por m² · escenario base (29% canje)',
@@ -648,7 +648,7 @@ const defaultProyectos = [
     badge_mes: 'Ago 2026',
     nombre: 'Serrano',
     numero: '534',
-    calle_corta: '[completar]',
+    calle_corta: 'Av. Corrientes',
     zona: 'Villa Crespo · CABA',
     precio_desde: '1.756',
     precio_sub: 'por m² · escenario base (25% canje)',
@@ -681,7 +681,7 @@ const defaultProyectos = [
     badge_mes: 'Feb 2026',
     nombre: 'Moldes',
     numero: '2661',
-    calle_corta: '[completar]',
+    calle_corta: 'Pedro Ignacio Rivera',
     zona: 'Belgrano · CABA',
     precio_desde: '2.000',
     precio_sub: 'por m² · escenario base (29% canje)',
@@ -811,7 +811,7 @@ function getData(key, fallback) {
           if (def && p.id === 'independencia-4102' && (p.numero || !p.calle_corta)) return { ...p, numero: '', calle_corta: def.calle_corta || '[completar]' };
           if (def && p.nota && p.nota.startsWith('El terreno permanece')) return { ...p, nota: '' };
           if (def && p.dh && p.dh.some(d => /K$/.test(d.val) || /mín\./.test(d.val))) return def;
-          if (def && def.calle_corta !== undefined && p.calle_corta === undefined) return { ...p, calle_corta: def.calle_corta };
+          if (def && def.calle_corta !== undefined && (!p.calle_corta || p.calle_corta === '[completar]')) return { ...p, calle_corta: def.calle_corta };
           if (def && def.lote && (!p.lote || p.lote.m2_vendibles === '[completar]')) return { ...p, lote: def.lote };
           return p;
         }),
