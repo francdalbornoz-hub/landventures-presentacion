@@ -1003,7 +1003,7 @@ function renderOficinaCard(p, i) {
     `<tr><td>${e.m2}</td><td>${e.pct}</td><td class="esc-n">${e.costo}</td></tr>`
   ).join('');
   return `
-  <div class="pcard clickable" id="pcard-${i}" onclick="togglePcard(${i})">
+  <div class="pcard clickable" id="pcard-${i}" onclick="irAFicha(${i})">
     <div class="pcard-head">
       <div class="badge abierto"><div class="badge-dot"></div>Disponible · ${p.badge_tipo || 'Oficina'}</div>
       <div class="pcard-name">${p.nombre} <span>${p.numero}</span></div>
@@ -1292,11 +1292,7 @@ function initMap() {
     if (!p.lat || !p.lng) return;
     if (p.estado === 'abierto') {
       const m = L.marker([p.lat, p.lng], { icon: makeIcon('abierto', p.subcategoria || 'abierto'), zIndexOffset: 1000 });
-      if (p.subcategoria === 'oficina') {
-        m.bindPopup(makeOficinaPopup(p, i));
-      } else {
-        m.on('click', () => irAFicha(i));
-      }
+      m.on('click', () => irAFicha(i));
       m.addTo(map);
     } else if (p.estado === 'proximo') {
       const m = L.marker([p.lat, p.lng], { icon: makeIcon('proximo', 'proximo') });
