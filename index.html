@@ -1198,8 +1198,14 @@ function descargarFichaPDF(i) {
       }
       y += modRowH;
     });
-    y += 4;
+    y += 5;
   }
+
+  // ======== DISCLAIMER (abajo del último cuadro, arriba del footer) ========
+  pdf.setFont('helvetica','italic'); pdf.setFontSize(8);
+  txt(C.muted);
+  pdf.text('* Gastos de escrituración incluidos', M, y);
+  y += 6;
 
   // ======== NOTA ========
   if (p.nota) {
@@ -1215,20 +1221,19 @@ function descargarFichaPDF(i) {
   drw(C.border); pdf.setLineWidth(0.4); pdf.line(M, footY - 8, PW - M, footY - 8);
   // Brand izquierda
   pdf.setFont('helvetica','bold'); pdf.setFontSize(10);
-  txt(C.orange); pdf.text('LAND', M, footY - 2);
+  txt(C.orange); pdf.text('LAND', M, footY);
   const fLogoW = pdf.getTextWidth('LAND');
-  txt(C.white); pdf.text('VENTURES', M + fLogoW + 1.4, footY - 2);
-  // Disclaimer abajo izquierda
+  txt(C.white); pdf.text('VENTURES', M + fLogoW + 1.4, footY);
   pdf.setFont('helvetica','normal'); pdf.setFontSize(7);
   txt(C.muted);
-  pdf.text('* Gastos de escrituración incluidos', M, footY + 3);
+  pdf.text('Inversiones en tierra · CABA', M, footY + 4);
   // Email derecha
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(8);
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
   txt(C.text);
-  pdf.text('info@landventures.com.ar', PW - M, footY - 2, {align:'right'});
+  pdf.text('info@landventures.com.ar', PW - M, footY, {align:'right'});
   pdf.setFontSize(7);
   txt(C.muted);
-  pdf.text('Land Ventures · CABA · Argentina', PW - M, footY + 3, {align:'right'});
+  pdf.text('Land Ventures · CABA · Argentina', PW - M, footY + 4, {align:'right'});
 
   const safeName = `${p.nombre}_${p.numero || ''}`.replace(/[^\w\d-]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
   pdf.save(`LandVentures_${safeName}.pdf`);
