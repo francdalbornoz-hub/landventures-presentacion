@@ -994,49 +994,63 @@ function renderProyectos() {
   }).join('');
 }
 
-function descargarFichaPDF(i) {
+async function descargarFichaPDF(i) {
   const p = proyectos[i];
   if (!p) return;
-  if (typeof html2pdf === 'undefined') { alert('No se pudo cargar el generador de PDF. Revisá la conexión.'); return; }
+  if (typeof html2canvas === 'undefined' || !window.jspdf) {
+    alert('No se pudo cargar el generador de PDF. Revisá la conexión.');
+    return;
+  }
   const inner = document.getElementById('pcard-modal-inner');
   if (!inner) return;
 
-  // Ocultar botones interactivos sin removerlos (para preservar layout)
   const pdfWrap = inner.querySelector('.pcard-pdf-wrap');
   const closeBtn = document.getElementById('pcard-modal-close');
   if (pdfWrap) pdfWrap.style.visibility = 'hidden';
   if (closeBtn) closeBtn.style.visibility = 'hidden';
 
-  const safeName = `${p.nombre}_${p.numero || ''}`.replace(/[^\w\d-]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
-  const filename = `LandVentures_${safeName}.pdf`;
+  await new Promise(r => setTimeout(r, 60));
 
-  // Pequeño delay para que el browser repinte sin los botones
-  setTimeout(() => {
-    html2pdf().set({
-      margin: [10, 10, 10, 10],
-      filename,
-      image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: {
-        scale: 2,
-        backgroundColor: '#141312',
-        useCORS: true,
-        logging: false,
-        windowWidth: document.documentElement.clientWidth,
-        scrollY: 0,
-        scrollX: 0
-      },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-    }).from(inner).save().then(() => {
-      if (pdfWrap) pdfWrap.style.visibility = '';
-      if (closeBtn) closeBtn.style.visibility = '';
-    }).catch(err => {
-      console.error('PDF error:', err);
-      if (pdfWrap) pdfWrap.style.visibility = '';
-      if (closeBtn) closeBtn.style.visibility = '';
-      alert('Error generando el PDF. Probá de nuevo.');
+  try {
+    const canvas = await html2canvas(inner, {
+      scale: 2,
+      backgroundColor: '#141312',
+      useCORS: true,
+      logging: false
     });
-  }, 50);
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+
+    // Fondo dark de toda la página A4
+    pdf.setFillColor(20, 19, 18);
+    pdf.rect(0, 0, pageW, pageH, 'F');
+
+    // Escalar la ficha para llenar la página manteniendo proporciones
+    const margin = 10;
+    const maxW = pageW - margin * 2;
+    const maxH = pageH - margin * 2;
+    const aspect = canvas.height / canvas.width;
+    let imgW = maxW;
+    let imgH = imgW * aspect;
+    if (imgH > maxH) { imgH = maxH; imgW = imgH / aspect; }
+    const xOff = (pageW - imgW) / 2;
+    const yOff = (pageH - imgH) / 2;
+
+    pdf.addImage(imgData, 'JPEG', xOff, yOff, imgW, imgH);
+
+    const safeName = `${p.nombre}_${p.numero || ''}`.replace(/[^\w\d-]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+    pdf.save(`LandVentures_${safeName}.pdf`);
+  } catch (err) {
+    console.error('PDF error:', err);
+    alert('Error generando el PDF. Probá de nuevo.');
+  } finally {
+    if (pdfWrap) pdfWrap.style.visibility = '';
+    if (closeBtn) closeBtn.style.visibility = '';
+  }
 }
 
 function makeLoteBar(lote) {
