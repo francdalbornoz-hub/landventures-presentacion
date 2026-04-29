@@ -839,7 +839,7 @@ const defaultTerrenosCerrados = [
   { dir: 'Cabildo y Olzabal', zona: 'Belgrano', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5601, lng: -58.4582 },
   { dir: 'Cuba 2252', zona: 'Belgrano', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5595, lng: -58.4561 },
   { dir: 'Aguilar 2578', zona: 'Colegiales', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5708, lng: -58.4485 },
-  { dir: 'Humboldt', zona: 'Palermo', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5834, lng: -58.4337 },
+  { dir: 'Humboldt y Costa Rica', zona: 'Palermo', canje: 'Compraventa', info: 'Compraventa realizada', subtipo: 'venta', lat: -34.5852, lng: -58.4344 },
   // --- Desarrollo ---
   { dir: 'Bonpland 2305', zona: 'Palermo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.5786, lng: -58.4318 },
   { dir: 'Dorrego 1511', zona: 'Palermo', canje: 'En desarrollo', info: 'Proyecto en desarrollo', subtipo: 'desarrollo', lat: -34.5843, lng: -58.4446 },
@@ -889,7 +889,7 @@ function getData(key, fallback) {
   });
   localStorage.setItem('lv_proyectos', JSON.stringify(filtered));
 
-  const storedT = getData('lv_terrenos_cerrados', []);
+  const storedT = getData('lv_terrenos_cerrados', []).map(t => t.dir === 'Humboldt' ? { ...t, dir: 'Humboldt y Costa Rica' } : t);
   const coordMapT = {};
   defaultTerrenosCerrados.forEach(t => { coordMapT[t.dir] = { lat: t.lat, lng: t.lng }; });
   const dirs = new Set(storedT.map(t => t.dir));
