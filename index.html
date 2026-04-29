@@ -1004,12 +1004,11 @@ function descargarFichaPDF(i) {
   const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
   const PW = pdf.internal.pageSize.getWidth();   // 210
   const PH = pdf.internal.pageSize.getHeight();  // 297
-  const M = 16; // margin
+  const M = 15;
 
   const C = {
-    bg:[18,17,16], card:[28,25,22], cardHi:[36,31,26], border:[64,53,42],
-    borderSoft:[42,36,30],
-    orange:[232,148,58], orangeSoft:[240,184,120],
+    bg:[18,17,16], card:[28,25,22], border:[64,53,42], borderSoft:[42,36,30],
+    orange:[232,148,58],
     white:[245,245,245], text:[170,160,148], muted:[120,108,96],
     cream:[196,176,154], green:[134,207,144], greenBg:[16,46,28], greenBd:[34,90,56]
   };
@@ -1019,101 +1018,109 @@ function descargarFichaPDF(i) {
 
   // ======== BACKGROUND ========
   fill(C.bg); pdf.rect(0, 0, PW, PH, 'F');
-  fill(C.orange); pdf.rect(0, 0, PW, 1.6, 'F');
+  fill(C.orange); pdf.rect(0, 0, PW, 1.5, 'F');
 
   // ======== HEADER ========
-  pdf.setFont('helvetica','bold'); pdf.setFontSize(17);
-  txt(C.orange); pdf.text('LAND', M, 17);
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(15);
+  txt(C.orange); pdf.text('LAND', M, 16);
   const logoW = pdf.getTextWidth('LAND');
-  txt(C.white); pdf.text('VENTURES', M + logoW + 2.4, 17);
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(9);
-  txt(C.muted); pdf.text('Ficha de oportunidad · CABA', PW - M, 17, {align:'right'});
-  drw(C.borderSoft); pdf.setLineWidth(0.3); pdf.line(M, 23, PW - M, 23);
+  txt(C.white); pdf.text('VENTURES', M + logoW + 2, 16);
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
+  txt(C.muted); pdf.text('Ficha de oportunidad · CABA', PW - M, 16, {align:'right'});
+  drw(C.borderSoft); pdf.setLineWidth(0.3); pdf.line(M, 21, PW - M, 21);
 
   // ======== BADGE ========
-  let y = 36;
+  let y = 32;
   const badgeStr = `Oportunidad disponible · ${p.badge_mes || ''}`;
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(9);
-  const bw = pdf.getTextWidth(badgeStr) + 11;
-  fill(C.greenBg); pdf.roundedRect(M, y - 5, bw, 8, 2, 2, 'F');
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
+  const bw = pdf.getTextWidth(badgeStr) + 10;
+  fill(C.greenBg); pdf.roundedRect(M, y - 5, bw, 7.5, 2, 2, 'F');
   drw(C.greenBd); pdf.setLineWidth(0.3);
-  pdf.roundedRect(M, y - 5, bw, 8, 2, 2, 'S');
-  fill(C.green); pdf.circle(M + 4, y - 1.2, 1.1, 'F');
-  txt(C.green); pdf.text(badgeStr, M + 7.5, y);
+  pdf.roundedRect(M, y - 5, bw, 7.5, 2, 2, 'S');
+  fill(C.green); pdf.circle(M + 3.5, y - 1.3, 1, 'F');
+  txt(C.green); pdf.text(badgeStr, M + 6.5, y);
 
   // ======== TITLE ========
-  y += 16;
-  pdf.setFont('helvetica','bold'); pdf.setFontSize(34);
+  y += 13;
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(30);
   txt(C.white);
   let tx = M;
   pdf.text(p.nombre, tx, y); tx += pdf.getTextWidth(p.nombre);
   if (p.numero) {
-    tx += 4; txt(C.orange); pdf.text(p.numero, tx, y); tx += pdf.getTextWidth(p.numero);
+    tx += 3.5; txt(C.orange); pdf.text(p.numero, tx, y); tx += pdf.getTextWidth(p.numero);
   }
   if (p.calle_corta) {
-    tx += 5; txt(C.cream); pdf.text(`& ${p.calle_corta}`, tx, y);
+    tx += 4; txt(C.cream); pdf.text(`& ${p.calle_corta}`, tx, y);
   }
-  y += 8;
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(13);
+  y += 7;
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(11.5);
   txt(C.text); pdf.text(p.zona || '', M, y);
 
   // ======== PRICE BLOCK ========
-  y += 12;
-  const priceH = 42;
+  y += 9;
+  const priceH = 36;
   fill(C.card); drw(C.border); pdf.setLineWidth(0.4);
   pdf.roundedRect(M, y, PW - 2*M, priceH, 2.5, 2.5, 'FD');
-  // accent line top
-  fill(C.orange); pdf.rect(M + 2, y, PW - 2*M - 4, 0.6, 'F');
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(9);
+  fill(C.orange); pdf.rect(M + 2, y, PW - 2*M - 4, 0.5, 'F');
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
   txt(C.muted);
-  pdf.text('DESDE', PW/2, y + 9, {align:'center', charSpace: 0.5});
-  pdf.setFont('helvetica','bold'); pdf.setFontSize(46);
-  txt(C.orange); pdf.text(`USD ${p.precio_desde || ''}`, PW/2, y + 27, {align:'center'});
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(10);
-  txt(C.text); pdf.text(p.precio_sub || '', PW/2, y + 36, {align:'center'});
-  y += priceH + 8;
+  pdf.text('DESDE', PW/2, y + 8, {align:'center', charSpace: 0.5});
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(40);
+  txt(C.orange); pdf.text(`USD ${p.precio_desde || ''}`, PW/2, y + 23, {align:'center'});
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(9);
+  txt(C.text); pdf.text(p.precio_sub || '', PW/2, y + 31, {align:'center'});
+  y += priceH + 7;
 
   // ======== INFO ROW (Fecha + Participación) ========
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(8);
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
   txt(C.muted);
   pdf.text('FECHA DE ESCRITURA', M, y, {charSpace: 0.4});
   pdf.text('PARTICIPACIÓN DISPONIBLE', PW - M, y, {align:'right', charSpace: 0.4});
-  y += 7;
-  pdf.setFont('helvetica','bold'); pdf.setFontSize(15);
+  y += 6;
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(13);
   txt(C.white); pdf.text(p.escritura || '—', M, y);
   txt(C.green); pdf.text(p.participacion_disponible || '—', PW - M, y, {align:'right'});
-  y += 11;
+  y += 9;
 
-  // ======== DH GRID (2x2) ========
+  // ======== DH GRID (4 columnas horizontales) ========
   const dhItems = p.dh || [];
   const dhCount = Math.min(4, dhItems.length);
   if (dhCount > 0) {
-    const dhCols = 2;
-    const dhGap = 5;
-    const dhCellW = (PW - 2*M - dhGap) / dhCols;
-    const dhCellH = 22;
+    const dhGap = 3;
+    const dhCellW = (PW - 2*M - dhGap * (dhCount - 1)) / dhCount;
+    const dhCellH = 21;
     for (let k = 0; k < dhCount; k++) {
-      const col = k % dhCols, row = Math.floor(k / dhCols);
-      const cx = M + col * (dhCellW + dhGap);
-      const cy = y + row * (dhCellH + dhGap);
+      const cx = M + k * (dhCellW + dhGap);
+      const cy = y;
       fill(C.card); drw(C.border); pdf.setLineWidth(0.35);
-      pdf.roundedRect(cx, cy, dhCellW, dhCellH, 2.5, 2.5, 'FD');
-      // small left accent
-      fill(C.orange); pdf.rect(cx, cy + 4, 0.8, dhCellH - 8, 'F');
-      pdf.setFont('helvetica','bold'); pdf.setFontSize(16);
-      txt(C.orange); pdf.text(dhItems[k].val || '', cx + 6, cy + 10);
-      pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
-      txt(C.text); pdf.text(dhItems[k].lbl || '', cx + 6, cy + 17);
+      pdf.roundedRect(cx, cy, dhCellW, dhCellH, 2.2, 2.2, 'FD');
+      fill(C.orange); pdf.rect(cx, cy + 4, 0.7, dhCellH - 8, 'F');
+      // dh val
+      pdf.setFont('helvetica','bold');
+      let valSize = 13;
+      pdf.setFontSize(valSize);
+      let valTxt = dhItems[k].val || '';
+      // shrink if needed
+      while (pdf.getTextWidth(valTxt) > dhCellW - 8 && valSize > 9) {
+        valSize -= 0.5;
+        pdf.setFontSize(valSize);
+      }
+      txt(C.orange); pdf.text(valTxt, cx + 4, cy + 11);
+      // dh label
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+      txt(C.text);
+      const lblWrapped = pdf.splitTextToSize(dhItems[k].lbl || '', dhCellW - 8);
+      pdf.text(lblWrapped[0] || '', cx + 4, cy + 16);
+      if (lblWrapped[1]) pdf.text(lblWrapped[1], cx + 4, cy + 19);
     }
-    const dhRows = Math.ceil(dhCount / dhCols);
-    y += dhRows * (dhCellH + dhGap) + 2;
+    y += dhCellH + 6;
   }
 
   // ======== LOTE BAR ========
   if (p.lote) {
-    const loteH = 22;
+    const loteH = 20;
     fill(C.card); drw(C.border); pdf.setLineWidth(0.35);
-    pdf.roundedRect(M, y, PW - 2*M, loteH, 2.5, 2.5, 'FD');
+    pdf.roundedRect(M, y, PW - 2*M, loteH, 2.2, 2.2, 'FD');
     const cells = [
       ['FRENTE', `${p.lote.frente} m`],
       ['FONDO', `${p.lote.fondo} m`],
@@ -1122,35 +1129,35 @@ function descargarFichaPDF(i) {
     ];
     const cellW = (PW - 2*M) / 4;
     cells.forEach((cell, idx) => {
-      const cx = M + idx * cellW + 6;
+      const cx = M + idx * cellW + 5;
       if (idx > 0) {
         drw(C.borderSoft); pdf.setLineWidth(0.25);
         pdf.line(M + idx * cellW, y + 4, M + idx * cellW, y + loteH - 4);
       }
-      pdf.setFont('helvetica','normal'); pdf.setFontSize(8);
-      txt(C.cream); pdf.text(cell[0], cx, y + 8, {charSpace: 0.3});
-      pdf.setFont('helvetica','bold'); pdf.setFontSize(13.5);
-      txt(C.white); pdf.text(cell[1], cx, y + 17);
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+      txt(C.cream); pdf.text(cell[0], cx, y + 7.5, {charSpace: 0.3});
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(12.5);
+      txt(C.white); pdf.text(cell[1], cx, y + 15.5);
     });
-    y += loteH + 10;
+    y += loteH + 8;
   }
 
   // ======== ESCENARIOS ========
   if (p.escenarios && p.escenarios.length) {
-    pdf.setFont('helvetica','bold'); pdf.setFontSize(9);
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(8.5);
     txt(C.text); pdf.text('ESCENARIOS', M, y, {charSpace: 0.6});
-    y += 5;
+    y += 4;
     drw(C.border); pdf.setLineWidth(0.4); pdf.line(M, y, PW - M, y);
-    y += 7;
-    pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
+    y += 6;
+    pdf.setFont('helvetica','normal'); pdf.setFontSize(8);
     txt(C.muted);
     pdf.text('m² canje', M + 3, y, {charSpace: 0.3});
     pdf.text('%', PW/2, y, {align:'center'});
     pdf.text('Costo /m²', PW - M - 3, y, {align:'right', charSpace: 0.3});
-    y += 2.5;
+    y += 2;
     drw(C.borderSoft); pdf.setLineWidth(0.2); pdf.line(M, y, PW - M, y);
-    y += 6;
-    pdf.setFont('helvetica','normal'); pdf.setFontSize(11);
+    y += 5.5;
+    pdf.setFont('helvetica','normal'); pdf.setFontSize(10.5);
     p.escenarios.forEach((e, idx) => {
       txt(C.white); pdf.text(e.m2 || '', M + 3, y);
       pdf.text(e.pct || '', PW/2, y, {align:'center'});
@@ -1159,69 +1166,69 @@ function descargarFichaPDF(i) {
       pdf.setFont('helvetica','normal');
       if (idx < p.escenarios.length - 1) {
         drw([34,30,25]); pdf.setLineWidth(0.15);
-        pdf.line(M, y + 2, PW - M, y + 2);
+        pdf.line(M, y + 1.8, PW - M, y + 1.8);
       }
-      y += 7.5;
+      y += 6.5;
     });
-    y += 4;
+    y += 3;
   }
 
   // ======== MODELO INVERSIÓN ========
   if (p.modelo && p.modelo.length) {
-    pdf.setFont('helvetica','bold'); pdf.setFontSize(9);
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(8.5);
     txt(C.text);
     pdf.text(`MODELO DE INVERSIÓN${p.modelo_pct ? '  ·  '+p.modelo_pct : ''}`, M, y, {charSpace: 0.6});
-    y += 5;
-    drw(C.border); pdf.setLineWidth(0.4); pdf.line(M, y, PW - M, y);
     y += 4;
+    drw(C.border); pdf.setLineWidth(0.4); pdf.line(M, y, PW - M, y);
+    y += 3.5;
     fill(C.card); drw(C.border); pdf.setLineWidth(0.35);
-    const modRowH = 9;
-    const modH = p.modelo.length * modRowH + 6;
-    pdf.roundedRect(M, y, PW - 2*M, modH, 2.5, 2.5, 'FD');
-    y += 6;
+    const modRowH = 8;
+    const modH = p.modelo.length * modRowH + 4;
+    pdf.roundedRect(M, y, PW - 2*M, modH, 2.2, 2.2, 'FD');
+    y += 5;
     p.modelo.forEach((m, idx) => {
-      pdf.setFont('helvetica','normal'); pdf.setFontSize(10);
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(9.5);
       txt(C.text); pdf.text(m.label || '', M + 5, y);
-      pdf.setFont('helvetica','bold'); pdf.setFontSize(11);
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(10.5);
       txt(m.n ? C.orange : C.white);
       pdf.text(m.val || '', PW - M - 5, y, {align:'right'});
       if (idx < p.modelo.length - 1) {
         drw(C.borderSoft); pdf.setLineWidth(0.18);
-        pdf.line(M + 5, y + 2.5, PW - M - 5, y + 2.5);
+        pdf.line(M + 5, y + 2, PW - M - 5, y + 2);
       }
       y += modRowH;
     });
-    y += 2;
+    y += 4;
   }
 
   // ======== NOTA ========
   if (p.nota) {
-    pdf.setFont('helvetica','italic'); pdf.setFontSize(9);
+    pdf.setFont('helvetica','italic'); pdf.setFontSize(8.5);
     txt(C.text);
     const wrapped = pdf.splitTextToSize(p.nota, PW - 2*M);
     pdf.text(wrapped, M, y);
-    y += wrapped.length * 4.2 + 2;
+    y += wrapped.length * 4 + 2;
   }
 
-  // ======== FOOTER ========
+  // ======== FOOTER (fijo al pie) ========
   const footY = PH - 14;
-  drw(C.border); pdf.setLineWidth(0.4); pdf.line(M, footY - 11, PW - M, footY - 11);
-  // Brand
-  pdf.setFont('helvetica','bold'); pdf.setFontSize(11);
-  txt(C.orange); pdf.text('LAND', M, footY - 4);
+  drw(C.border); pdf.setLineWidth(0.4); pdf.line(M, footY - 8, PW - M, footY - 8);
+  // Brand izquierda
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(10);
+  txt(C.orange); pdf.text('LAND', M, footY - 2);
   const fLogoW = pdf.getTextWidth('LAND');
-  txt(C.white); pdf.text('VENTURES', M + fLogoW + 1.6, footY - 4);
-  // Disclaimer
+  txt(C.white); pdf.text('VENTURES', M + fLogoW + 1.4, footY - 2);
+  // Disclaimer abajo izquierda
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(7);
+  txt(C.muted);
+  pdf.text('* Gastos de escrituración incluidos', M, footY + 3);
+  // Email derecha
   pdf.setFont('helvetica','normal'); pdf.setFontSize(8);
-  txt(C.muted);
-  pdf.text('* Gastos de escrituración incluidos', M, footY + 1);
-  // Contact (right)
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
   txt(C.text);
-  pdf.text('info@landventures.com.ar', PW - M, footY - 4, {align:'right'});
-  pdf.setFontSize(7.5);
+  pdf.text('info@landventures.com.ar', PW - M, footY - 2, {align:'right'});
+  pdf.setFontSize(7);
   txt(C.muted);
-  pdf.text('Land Ventures · CABA · Argentina', PW - M, footY + 1, {align:'right'});
+  pdf.text('Land Ventures · CABA · Argentina', PW - M, footY + 3, {align:'right'});
 
   const safeName = `${p.nombre}_${p.numero || ''}`.replace(/[^\w\d-]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
   pdf.save(`LandVentures_${safeName}.pdf`);
