@@ -995,63 +995,202 @@ function renderProyectos() {
   }).join('');
 }
 
-async function descargarFichaPDF(i) {
+function descargarFichaPDF(i) {
   const p = proyectos[i];
   if (!p) return;
-  if (typeof html2canvas === 'undefined' || !window.jspdf) {
-    alert('No se pudo cargar el generador de PDF. Revisá la conexión.');
-    return;
+  if (!window.jspdf) { alert('No se pudo cargar el generador de PDF.'); return; }
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+  const PW = pdf.internal.pageSize.getWidth();   // 210
+  const PH = pdf.internal.pageSize.getHeight();  // 297
+
+  // Paleta
+  const C = {
+    bg:[20,19,18], card:[27,24,22], cardSoft:[33,29,25], border:[58,48,38],
+    orange:[232,148,58], orangeSoft:[240,184,120],
+    white:[245,245,245], text:[156,145,134], muted:[110,100,90],
+    cream:[196,176,154], green:[134,207,144]
+  };
+  const fill = c => pdf.setFillColor(c[0],c[1],c[2]);
+  const txt = c => pdf.setTextColor(c[0],c[1],c[2]);
+  const drw = c => pdf.setDrawColor(c[0],c[1],c[2]);
+
+  // Background A4 dark
+  fill(C.bg); pdf.rect(0, 0, PW, PH, 'F');
+  fill(C.orange); pdf.rect(0, 0, PW, 1.2, 'F');
+
+  // ======== HEADER ========
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(13);
+  txt(C.orange); pdf.text('LAND', 15, 14);
+  const logoW = pdf.getTextWidth('LAND');
+  txt(C.white); pdf.text('VENTURES', 15 + logoW + 1.8, 14);
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+  txt(C.muted); pdf.text('Ficha de oportunidad · CABA', PW - 15, 14, {align:'right'});
+  drw([35,30,25]); pdf.setLineWidth(0.25); pdf.line(15, 19, PW - 15, 19);
+
+  // ======== BADGE ========
+  let y = 30;
+  fill([16,46,28]);
+  pdf.roundedRect(15, y - 4, 75, 6.5, 1.5, 1.5, 'F');
+  drw([28,82,52]); pdf.setLineWidth(0.25);
+  pdf.roundedRect(15, y - 4, 75, 6.5, 1.5, 1.5, 'S');
+  fill(C.green); pdf.circle(18.5, y - 0.7, 0.9, 'F');
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+  txt(C.green);
+  pdf.text(`Oportunidad disponible · ${p.badge_mes || ''}`, 21.5, y);
+
+  // ======== TITLE ========
+  y += 12;
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(26);
+  txt(C.white);
+  let tx = 15;
+  pdf.text(p.nombre, tx, y); tx += pdf.getTextWidth(p.nombre);
+  if (p.numero) {
+    tx += 3; txt(C.orange); pdf.text(p.numero, tx, y); tx += pdf.getTextWidth(p.numero);
   }
-  const inner = document.getElementById('pcard-modal-inner');
-  if (!inner) return;
+  if (p.calle_corta) {
+    tx += 4; txt(C.cream); pdf.text(`& ${p.calle_corta}`, tx, y);
+  }
+  y += 6;
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(10);
+  txt(C.text); pdf.text(p.zona || '', 15, y);
 
-  const pdfWrap = inner.querySelector('.pcard-pdf-wrap');
-  const closeBtn = document.getElementById('pcard-modal-close');
-  if (pdfWrap) pdfWrap.style.visibility = 'hidden';
-  if (closeBtn) closeBtn.style.visibility = 'hidden';
+  // ======== PRICE BLOCK ========
+  y += 14;
+  fill(C.card); drw(C.border); pdf.setLineWidth(0.3);
+  pdf.roundedRect(15, y - 4, PW - 30, 32, 2, 2, 'FD');
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+  txt(C.muted); pdf.text('DESDE', PW/2, y + 2, {align:'center'});
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(34);
+  txt(C.orange); pdf.text(`USD ${p.precio_desde || ''}`, PW/2, y + 14, {align:'center'});
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(8);
+  txt(C.text); pdf.text(p.precio_sub || '', PW/2, y + 21, {align:'center'});
 
-  await new Promise(r => setTimeout(r, 60));
+  // ======== INFO ROW ========
+  y += 36;
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+  txt(C.muted); pdf.text('FECHA DE ESCRITURA', 15, y);
+  pdf.text('PARTICIPACIÓN DISPONIBLE', PW - 15, y, {align:'right'});
+  y += 5;
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(11);
+  txt(C.white); pdf.text(p.escritura || '—', 15, y);
+  txt(C.green); pdf.text(p.participacion_disponible || '—', PW - 15, y, {align:'right'});
 
-  try {
-    const canvas = await html2canvas(inner, {
-      scale: 2,
-      backgroundColor: '#141312',
-      useCORS: true,
-      logging: false
+  // ======== DH GRID (2x2) ========
+  y += 8;
+  const dhItems = p.dh || [];
+  const dhCols = 2, dhCellW = (PW - 30 - 4) / dhCols, dhCellH = 17;
+  for (let k = 0; k < Math.min(4, dhItems.length); k++) {
+    const col = k % dhCols, row = Math.floor(k / dhCols);
+    const cx = 15 + col * (dhCellW + 4);
+    const cy = y + row * (dhCellH + 4);
+    fill(C.card); drw(C.border); pdf.setLineWidth(0.25);
+    pdf.roundedRect(cx, cy, dhCellW, dhCellH, 1.8, 1.8, 'FD');
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(13);
+    txt(C.orange); pdf.text(dhItems[k].val || '', cx + 4, cy + 8);
+    pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+    txt(C.text); pdf.text(dhItems[k].lbl || '', cx + 4, cy + 13);
+  }
+  const dhRows = Math.ceil(Math.min(4, dhItems.length) / dhCols);
+  y += dhRows * (dhCellH + 4) + 2;
+
+  // ======== LOTE BAR ========
+  if (p.lote) {
+    fill(C.card); drw(C.border); pdf.setLineWidth(0.25);
+    pdf.roundedRect(15, y, PW - 30, 16, 1.8, 1.8, 'FD');
+    const cells = [
+      ['FRENTE', `${p.lote.frente} m`],
+      ['FONDO', `${p.lote.fondo} m`],
+      ['PISOS', `${p.lote.pisos}`],
+      ['M² VENDIBLES', `${p.lote.m2_vendibles}`]
+    ];
+    const cellW = (PW - 30) / 4;
+    cells.forEach((cell, idx) => {
+      const cx = 15 + idx * cellW + 4;
+      if (idx > 0) {
+        drw(C.border); pdf.setLineWidth(0.2);
+        pdf.line(15 + idx * cellW, y + 3, 15 + idx * cellW, y + 13);
+      }
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(6.5);
+      txt(C.cream); pdf.text(cell[0], cx, y + 6);
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(10);
+      txt(C.white); pdf.text(cell[1], cx, y + 12);
     });
-
-    const imgData = canvas.toDataURL('image/jpeg', 0.95);
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-    const pageW = pdf.internal.pageSize.getWidth();
-    const pageH = pdf.internal.pageSize.getHeight();
-
-    // Fondo dark de toda la página A4
-    pdf.setFillColor(20, 19, 18);
-    pdf.rect(0, 0, pageW, pageH, 'F');
-
-    // Escalar la ficha para llenar la página manteniendo proporciones
-    const margin = 10;
-    const maxW = pageW - margin * 2;
-    const maxH = pageH - margin * 2;
-    const aspect = canvas.height / canvas.width;
-    let imgW = maxW;
-    let imgH = imgW * aspect;
-    if (imgH > maxH) { imgH = maxH; imgW = imgH / aspect; }
-    const xOff = (pageW - imgW) / 2;
-    const yOff = (pageH - imgH) / 2;
-
-    pdf.addImage(imgData, 'JPEG', xOff, yOff, imgW, imgH);
-
-    const safeName = `${p.nombre}_${p.numero || ''}`.replace(/[^\w\d-]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
-    pdf.save(`LandVentures_${safeName}.pdf`);
-  } catch (err) {
-    console.error('PDF error:', err);
-    alert('Error generando el PDF. Probá de nuevo.');
-  } finally {
-    if (pdfWrap) pdfWrap.style.visibility = '';
-    if (closeBtn) closeBtn.style.visibility = '';
+    y += 20;
   }
+
+  // ======== ESCENARIOS ========
+  if (p.escenarios && p.escenarios.length) {
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(7);
+    txt(C.text); pdf.text('ESCENARIOS', 15, y);
+    y += 4;
+    drw(C.border); pdf.setLineWidth(0.2); pdf.line(15, y, PW - 15, y);
+    y += 5;
+    // headers
+    pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+    txt(C.muted);
+    pdf.text('m² canje', 18, y);
+    pdf.text('%', PW/2 - 5, y);
+    pdf.text('Costo /m²', PW - 18, y, {align:'right'});
+    y += 1.5;
+    drw([28,24,20]); pdf.line(15, y, PW - 15, y);
+    y += 5;
+    pdf.setFont('helvetica','normal'); pdf.setFontSize(9);
+    p.escenarios.forEach(e => {
+      txt(C.white); pdf.text(e.m2 || '', 18, y);
+      pdf.text(e.pct || '', PW/2 - 5, y);
+      txt(C.orange); pdf.setFont('helvetica','bold');
+      pdf.text(e.costo || '', PW - 18, y, {align:'right'});
+      pdf.setFont('helvetica','normal');
+      y += 5.5;
+    });
+    y += 2;
+  }
+
+  // ======== MODELO INVERSIÓN ========
+  if (p.modelo && p.modelo.length) {
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(7);
+    txt(C.text); pdf.text(`MODELO DE INVERSIÓN${p.modelo_pct ? ' ('+p.modelo_pct+')' : ''}`, 15, y);
+    y += 5;
+    fill(C.card); drw(C.border); pdf.setLineWidth(0.25);
+    const modH = p.modelo.length * 7 + 4;
+    pdf.roundedRect(15, y, PW - 30, modH, 1.8, 1.8, 'FD');
+    y += 5;
+    p.modelo.forEach((m, idx) => {
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
+      txt(C.text); pdf.text(m.label || '', 19, y);
+      pdf.setFont('helvetica','bold');
+      txt(m.n ? C.orange : C.white);
+      pdf.text(m.val || '', PW - 19, y, {align:'right'});
+      if (idx < p.modelo.length - 1) {
+        drw([28,24,20]); pdf.setLineWidth(0.15);
+        pdf.line(19, y + 1.5, PW - 19, y + 1.5);
+      }
+      y += 7;
+    });
+    y += 2;
+  }
+
+  // ======== NOTE ========
+  if (p.nota) {
+    pdf.setFont('helvetica','italic'); pdf.setFontSize(7.5);
+    txt(C.text);
+    const wrapped = pdf.splitTextToSize(p.nota, PW - 30);
+    pdf.text(wrapped, 15, y);
+    y += wrapped.length * 3.5 + 2;
+  }
+
+  // ======== FOOTER ========
+  const footY = PH - 15;
+  drw([35,30,25]); pdf.setLineWidth(0.2); pdf.line(15, footY - 6, PW - 15, footY - 6);
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(6.5);
+  txt(C.muted);
+  pdf.text('* Gastos de escrituración incluidos', 15, footY - 1);
+  pdf.text('Land Ventures · CABA · info@landventures.com.ar', PW - 15, footY - 1, {align:'right'});
+
+  const safeName = `${p.nombre}_${p.numero || ''}`.replace(/[^\w\d-]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+  pdf.save(`LandVentures_${safeName}.pdf`);
 }
 
 function makeLoteBar(lote) {
