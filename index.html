@@ -1020,28 +1020,26 @@ function descargarFichaPDF(i) {
   fill(C.bg); pdf.rect(0, 0, PW, PH, 'F');
   fill(C.orange); pdf.rect(0, 0, PW, 1.5, 'F');
 
-  // ======== HEADER ========
+  // ======== HEADER (logo izq + pill verde der) ========
   pdf.setFont('helvetica','bold'); pdf.setFontSize(15);
   txt(C.orange); pdf.text('LAND', M, 16);
   const logoW = pdf.getTextWidth('LAND');
   txt(C.white); pdf.text('VENTURES', M + logoW + 2, 16);
-  pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
-  txt(C.muted); pdf.text('Ficha de oportunidad · CABA', PW - M, 16, {align:'right'});
-  drw(C.borderSoft); pdf.setLineWidth(0.3); pdf.line(M, 21, PW - M, 21);
-
-  // ======== BADGE ========
-  let y = 32;
+  // Pill verde a la derecha
   const badgeStr = `Oportunidad disponible · ${p.badge_mes || ''}`;
   pdf.setFont('helvetica','normal'); pdf.setFontSize(8.5);
   const bw = pdf.getTextWidth(badgeStr) + 10;
-  fill(C.greenBg); pdf.roundedRect(M, y - 5, bw, 7.5, 2, 2, 'F');
+  const bx = PW - M - bw;
+  const by = 11;
+  fill(C.greenBg); pdf.roundedRect(bx, by, bw, 7.5, 2, 2, 'F');
   drw(C.greenBd); pdf.setLineWidth(0.3);
-  pdf.roundedRect(M, y - 5, bw, 7.5, 2, 2, 'S');
-  fill(C.green); pdf.circle(M + 3.5, y - 1.3, 1, 'F');
-  txt(C.green); pdf.text(badgeStr, M + 6.5, y);
+  pdf.roundedRect(bx, by, bw, 7.5, 2, 2, 'S');
+  fill(C.green); pdf.circle(bx + 3.5, by + 3.7, 1, 'F');
+  txt(C.green); pdf.text(badgeStr, bx + 6.5, by + 5);
+  drw(C.borderSoft); pdf.setLineWidth(0.3); pdf.line(M, 23, PW - M, 23);
 
   // ======== TITLE ========
-  y += 13;
+  let y = 36;
   pdf.setFont('helvetica','bold'); pdf.setFontSize(30);
   txt(C.white);
   let tx = M;
